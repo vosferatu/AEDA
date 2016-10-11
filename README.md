@@ -73,7 +73,7 @@ A segunda parte do trabalho será enunciada posteriormente (após a entrega dest
 ### Datas
 + Data de entrega: 
  + dia **18/novembro, até às 23h59m**. 
- + Submeter pelo Moodle: ** Relatório em pdf + Código do programa + documentação**
+ + Submeter pelo Moodle: **Relatório em pdf + Código do programa + documentação**
 + Apresentação do trabalho:  
  + de **21 a 24 de novembro**, em horário a combinar com o docente das aulas práticas
 
