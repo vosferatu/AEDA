@@ -32,7 +32,9 @@ outras opções.
 ### Linhas gerais do trabalho
 
 Trabalho prático - Parte 1
+
 O trabalho agora enunciado apenas se refere à primeira parte do mesmo. 
+
 A segunda parte do trabalho será enunciada posteriormente (após a entrega desta primeira parte).
 
 
@@ -61,14 +63,17 @@ A segunda parte do trabalho será enunciada posteriormente (após a entrega dest
 
 ### Entrega
 + Disponibilizar em um ficheiro <NOME>.zip: 
- + pasta codigo (contém código fonte do programa)
- + pasta documentacao (contém documentação html, criada pelo Doxygen)
- + ficheiro relatorio (documento em formato pdf)
+ + pasta **codigo** (contém código fonte do programa)
+ + pasta **documentacao** (contém documentação html, criada pelo Doxygen)
+ + ficheiro **relatorio** (documento em formato pdf)
 
 + O <NOME> do ficheiro deverá obedecer ao formato AEDA1617_<TURMA>_<GRUPO>, onde turma é o código da turma teórico/prática e <GRUPO> é uma letra que identifica o grupo, conforme indicado na atribuição de trabalhos. Por exemplo: AEDA1617_2MIEIC5_C.zip corresponde ao trabalho realizado pelo grupo C da turma 2MIEIC5
+ + No nosso caso, **AEDA1617_2MIEIC04_G**
 
 ### Datas
-+ Data de entrega: dia 18/novembro, até às 23h59m. Submeter pelo Moodle:
-+ Relatório em pdf + Código do programa + documentação
-+ Apresentação do trabalho:  de 21 a 24 de novembro, em horário a combinar com o docente das aulas práticas
++ Data de entrega: 
+ + dia **18/novembro, até às 23h59m**. 
+ + Submeter pelo Moodle: ** Relatório em pdf + Código do programa + documentação**
++ Apresentação do trabalho:  
+ + de **21 a 24 de novembro**, em horário a combinar com o docente das aulas práticas
 
