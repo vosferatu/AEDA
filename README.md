@@ -1,4 +1,4 @@
-# AEDA 2015/2016 - "Boleias Partilhadas" [projeto C++]
+# AEDA 2016/2017 - "Boleias Partilhadas" [projeto C++] - FEUP
 
 ### Descrição do tema
 
