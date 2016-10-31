@@ -11,9 +11,13 @@ using namespace std;
 class User{
 	unsigned int id;
 	string name;
-	bool hasvehicle;
+	bool vehicle;
 
 public:
+	string getname();
+	unsigned int getid();
+	bool hasvehicle();
+
 
 };
 
