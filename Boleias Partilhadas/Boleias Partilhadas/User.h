@@ -10,7 +10,8 @@ using namespace std;
 
 class User{
 	unsigned int id;
-	string name;
+	string password;
+	string username;
 	bool vehicle;
 
 public:
