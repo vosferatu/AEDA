@@ -15,3 +15,9 @@ bool User::hasvehicle() {
 	return hasvehicle;
 }
 
+RegisteredUser::RegisteredUser(string nome,string password) : User()
+{
+	this->username = nome;
+	this->password = password;
+}
+

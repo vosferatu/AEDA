@@ -10,7 +10,7 @@ using namespace std;
 
 class User{
 	unsigned int id;
-	string name;
+	string username;
 	bool vehicle;
 
 public:
@@ -23,6 +23,10 @@ public:
 
 class RegisteredUser : public User {
 	vector <User> friends;
+	string password;
+
+public:
+	RegisteredUser(string nome, string password);
 
 
 };
