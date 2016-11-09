@@ -1,35 +1,47 @@
+#pragma once
+
 #ifndef USER_H_
 #define USER_H_
 
 #include <string>
 #include <vector>
-#include <iostream>
+#include "Vehicle.h"
+#include "TripDateTime.h"
 
 using namespace std;
 
-
 class User{
 	unsigned int id;
-	string password;
 	string username;
-	bool vehicle;
+	vector<string> route;
+	vector<Trip> Trips;
+	string city;
+	float account;
 
 public:
-	string getname();
+	string getusername();
+	
 	unsigned int getid();
-	bool hasvehicle();
-
-
+	vector<string> getroute();
+	unsigned int getnumTrips();
+	string getCity();
+	float getAccount();
 };
 
 class RegisteredUser : public User {
 	vector <User> friends;
+	float maintainenceTAX;
+	string password;
+	Vehicle* myRide;
 
+public:
+	string getpassword();
 
 };
 
-class GuestUser : public User {
 
+class GuestUser : public User {
+	float tripCosts;
 
 };
 

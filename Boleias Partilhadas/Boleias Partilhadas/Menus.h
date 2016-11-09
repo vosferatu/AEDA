@@ -1,3 +1,4 @@
+#pragma once
 #ifndef MENUS_H_
 #define MENUS_H_
 
