@@ -13,7 +13,6 @@ using namespace std;
 class User{
 	unsigned int id;
 	string username;
-	string password;
 	vector<string> route;
 	vector<Trip> Trips;
 	string city;
@@ -21,7 +20,7 @@ class User{
 
 public:
 	string getusername();
-	string getpassword();
+	
 	unsigned int getid();
 	vector<string> getroute();
 	unsigned int getnumTrips();
@@ -32,17 +31,14 @@ public:
 class RegisteredUser : public User {
 	vector <User> friends;
 	float maintainenceTAX;
+	string password;
+	Vehicle* myRide;
+
+public:
+	string getpassword();
 
 };
 
-class VehicleUser : public RegisteredUser , public User{
-	Vehicle myRide; //create constructor and function for empty vehicle, to distinguish reg users
-};
-
-class RideUser : public RegisteredUser, public User {
-	float TAX;
-
-};
 
 class GuestUser : public User {
 	float tripCosts;

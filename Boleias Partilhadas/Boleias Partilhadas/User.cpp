@@ -7,7 +7,7 @@ string User::getusername() {
 	return username;
 }
 
-string User::getpassword()
+string RegisteredUser::getpassword()
 {
 	return password;
 }
