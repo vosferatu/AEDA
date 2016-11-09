@@ -6,7 +6,7 @@
 
 int main() {
 	
-	cout << endl << "Welcome to Shared Rides, please put your seats and enjoy your travel." << endl;
+	cout << endl << "Welcome to Shared Rides, please put your seatbelts on and enjoy your travel." << endl;
 
 	main_menu();
 

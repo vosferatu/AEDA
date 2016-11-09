@@ -3,15 +3,36 @@
 using namespace std;
 
 
-string User::getname() {
-	return name;
+string User::getusername() {
+	return username;
+}
+
+string User::getpassword()
+{
+	return password;
 }
 
 unsigned int User::getid() {
 	return id; 
 }
 
-bool User::hasvehicle() {
-	return hasvehicle;
+vector<string> User::getroute()
+{
+	return vector<string>();
+}
+
+unsigned int User::getnumTrips()
+{
+	return Trips.size();
+}
+
+string User::getCity()
+{
+	return city;
+}
+
+float User::getAccount()
+{
+	return account;
 }
 
