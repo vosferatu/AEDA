@@ -46,3 +46,9 @@ RegisteredUser::RegisteredUser(string username, string password) : User(username
 	this->password = password;
 }
 
+ostream& operator<<(ostream& os, const RegisteredUser& RU)
+{
+	os << RU.getusername << endl << RU.getpassword << endl;
+	return os;
+}
+

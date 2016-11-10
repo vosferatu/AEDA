@@ -13,7 +13,8 @@ class SharedRides
 
 
 public:
-	static void CreateRegis(string nome, string password);
+	static void CreateRegis();
+	
 	~SharedRides()
 	{
 		for (int i = 0; i < users.size(); ++i)
@@ -25,4 +26,4 @@ public:
 
 
 
-#endif#pragma once
+#endif
