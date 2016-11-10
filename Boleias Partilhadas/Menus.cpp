@@ -1,7 +1,7 @@
 #include "Menus.h"
 #include "Helper.h"
 
-void main_menu() {
+void Menus::main_menu() {
 	
 	int choice = get_input <int>( 
 		"[0] Enter as guest" "\n"

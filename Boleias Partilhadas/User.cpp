@@ -2,6 +2,12 @@
 
 using namespace std;
 
+unsigned int User::next_id = 0;
+
+User::User(string username) : id(next_id++) {
+	this->username = username;
+}
+
 
 string User::getusername() {
 	return username;
@@ -34,5 +40,9 @@ string User::getCity()
 float User::getAccount()
 {
 	return account;
+}
+
+RegisteredUser::RegisteredUser(string username, string password) : User(username) {
+	this->password = password;
 }
 

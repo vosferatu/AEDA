@@ -1,4 +1,5 @@
 #include "Shared_Rides.h"
+#include "User.h"
 
 
 using namespace std;
