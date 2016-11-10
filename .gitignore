@@ -28,6 +28,6 @@
 *.out
 *.app
 
-#User-specific files
+# User-specific files
 *.VC.opendb
 *.VC.db
