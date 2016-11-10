@@ -31,3 +31,8 @@
 # User-specific files
 *.VC.opendb
 *.VC.db
+/Boleias Partilhadas/BoleiasPartilhadas_VS.vcxproj.filters
+/Boleias Partilhadas/BoleiasPartilhadas_VS.vcxproj
+/Boleias Partilhadas/BoleiasPartilhadas_VS.sln
+/Boleias Partilhadas/.vs/BoleiasPartilhadas_VS/v14/.suo
+/Boleias Partilhadas/.vs/BoleiasPartilhadas_VS/v14
