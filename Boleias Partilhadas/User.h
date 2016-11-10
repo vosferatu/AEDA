@@ -11,7 +11,9 @@
 using namespace std;
 
 class User{
-	unsigned int id;
+	const unsigned int id;
+	static unsigned int next_id;
+
 	string username;
 	vector<string> route;
 	vector<Trip> Trips;
@@ -19,6 +21,8 @@ class User{
 	float account;
 
 public:
+	User(string username);
+	
 	string getusername();
 	
 	unsigned int getid();
@@ -35,6 +39,8 @@ class RegisteredUser : public User {
 	Vehicle* myRide;
 
 public:
+	RegisteredUser(string username, string password);
+
 	string getpassword();
 
 };
