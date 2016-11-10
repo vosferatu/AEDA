@@ -1,13 +1,11 @@
-#include "Helper.h"
-#include "Login.h"
-#include "Menus.h"
-#include "User.h"
-#include "Vehicle.h"
+#include "Shared_Rides.h"
 
-int main() {
-	
-	cout << endl << "Welcome to Shared Rides, please put your seatbelts on and enjoy your travel." << endl;
 
-	main_menu();
+using namespace std;
 
+vector<User*> clientes(0);
+
+void SharedRides::CreateRegis(string nome, string password)
+{
+	clientes.push_back(new RegisteredUser(nome, password));
 }
