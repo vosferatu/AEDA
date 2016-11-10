@@ -27,35 +27,7 @@
 *.exe
 *.out
 *.app
-/Boleias Partilhadas/Boleias Partilhadas/Boleias Partilhadas.vcxproj
-/Boleias Partilhadas/Boleias Partilhadas/Boleias Partilhadas.vcxproj.filters
-/Boleias Partilhadas/.vs/Boleias Partilhadas/v14/.suo
-/Boleias Partilhadas/Boleias Partilhadas.sln
-/Boleias Partilhadas/Boleias Partilhadas.VC.db
-/Boleias Partilhadas/Boleias Partilhadas.VC.VC.opendb
-/.vs/BoleiasPartilhadas/v14/.suo
-/BoleiasPartilhadas.vcxproj.filters
-/BoleiasPartilhadas.vcxproj
-/BoleiasPartilhadas.VC.opendb
-/BoleiasPartilhadas.sln
-/BoleiasPartilhadas.sdf
-/.vs/BolasPartilhas_VS/v14
-/BolasPartilhas_VS.sln
-/BolasPartilhas_VS.VC.db
-/BolasPartilhas_VS.VC.VC.opendb
-/BolasPartilhas_VS.vcxproj
-/BolasPartilhas_VS.vcxproj.filters
-/Boleias Partilhadas/Boleias Partilhadas/BoleiasPartilhadas_VS.vcxproj.filters
-/Boleias Partilhadas/Boleias Partilhadas/BoleiasPartilhadas_VS.vcxproj
-/Boleias Partilhadas/Boleias Partilhadas/BoleiasPartilhadas_VS.VC.VC.opendb
-/Boleias Partilhadas/Boleias Partilhadas/BoleiasPartilhadas_VS.VC.db
-/Boleias Partilhadas/Boleias Partilhadas/BoleiasPartilhadas_VS.sln
-/Boleias Partilhadas/Boleias Partilhadas/.vs/BoleiasPartilhadas_VS/v14/.suo
-/Boleias Partilhadas/Boleias Partilhadas/.vs/BoleiasPartilhadas_VS/v14
-/Boleias Partilhadas/Boleias Partilhadas/BoleiasPartilhada_VS.vcxproj.filters
-/Boleias Partilhadas/Boleias Partilhadas/BoleiasPartilhada_VS.vcxproj
-/Boleias Partilhadas/Boleias Partilhadas/BoleiasPartilhada_VS.VC.VC.opendb
-/Boleias Partilhadas/Boleias Partilhadas/BoleiasPartilhada_VS.VC.db
-/Boleias Partilhadas/Boleias Partilhadas/BoleiasPartilhada_VS.sln
-/Boleias Partilhadas/Boleias Partilhadas/.vs/BoleiasPartilhada_VS/v14/.suo
-/Boleias Partilhadas/Boleias Partilhadas/.vs/BoleiasPartilhada_VS/v14
+
+#User-specific files
+*.VC.opendb
+*.VC.db
