@@ -14,14 +14,16 @@ class SharedRides
 
 public:
 	static void CreateRegis();
-	
-	~SharedRides()
-	{
+	void saveUsers() const;
+
+	~SharedRides(){
 		for (unsigned int i = 0; i < users.size(); ++i)
 		{
 			delete users[i];
 		}
 	}
+
+	
 };
 
 

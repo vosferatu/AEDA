@@ -35,7 +35,8 @@ T get_input(const string &strQuery)
 	return out;
 }
 
+string readLine();
 
-bool readYesOrNo(unsigned char yes, unsigned char no);
+string readPassword(const char *prompt, bool show_asterisk);
 
 #endif /* HELPER_H_ */

@@ -11,8 +11,7 @@
 using namespace std;
 
 class User{
-	const unsigned int id;
-	static unsigned int next_id;
+	static unsigned int id;
 
 	string username;
 	vector<string> route;
@@ -25,7 +24,7 @@ public:
 	
 	string getusername() const;
 	
-	unsigned int getid();
+	unsigned int getid() const;
 	vector<string> getroute();
 	unsigned int getnumTrips();
 	string getCity();
@@ -33,7 +32,7 @@ public:
 };
 
 class RegisteredUser : public User {
-	vector <User> friends;
+	vector <User*> friends;
 	float maintainenceTAX;
 	string password;
 	Vehicle* myRide;
@@ -43,7 +42,9 @@ public:
 
 	string getpassword() const;
 
-	friend ostream& operator<<(ostream& os, const RegisteredUser& RU); // for now, only for writing in file of users purpose
+	friend ostream& operator<<(ostream& os, const RegisteredUser* RU); // for now, only for writing in file of users purpose
+
+	void saveUser() const;
 
 };
 
@@ -51,6 +52,8 @@ public:
 class GuestUser : public User {
 	float tripCosts;
 
+public:
+	GuestUser(string username);
 };
 
 

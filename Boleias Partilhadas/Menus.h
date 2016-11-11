@@ -4,6 +4,7 @@
 
 
 	void main_menu();
+	void registereduser_menu();
 
 
 #endif
