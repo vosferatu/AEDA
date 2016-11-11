@@ -16,14 +16,14 @@ class User{
 
 	string username;
 	string homeCity;
-	vector<Trip> Trips;
+	//vector<Trip> Trips;
 	string city;
 	float account;
 
 public:
 	User(string username);
 	
-	string getusername();
+	string getusername() const;
 	
 	unsigned int getid();
 	vector<string> getroute();
@@ -41,7 +41,9 @@ class RegisteredUser : public User {
 public:
 	RegisteredUser(string username, string password);
 
-	string getpassword();
+	string getpassword() const;
+
+	friend ostream& operator<<(ostream& os, const RegisteredUser& RU); // for now, only for writing in file of users purpose
 
 };
 
