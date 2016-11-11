@@ -15,7 +15,7 @@ class User{
 	static unsigned int next_id;
 
 	string username;
-	vector<string> route;
+	string homeCity;
 	vector<Trip> Trips;
 	string city;
 	float account;

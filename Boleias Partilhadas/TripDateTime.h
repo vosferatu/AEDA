@@ -3,54 +3,83 @@
 #ifndef TRIPDATETIME_H_
 #define TRIPDATETIME_H_
 
-#include<string>
+#include <string>
+#include <iostream>
+#include "User.h"
+
+using namespace std;
 
 
 
 class Trip {
-	string ownerName;
-	string startPoint;
-	string endPoint;
-	Time endTime;
-	Time startTime;
-	Date day;
-	float cost;
+		User* owner;
+		string startPoint;
+		string endPoint;
+		Time endTime;
+		Time startTime;
+		Date day;
+
+	public:
+
 };
+
+
+
 
 class Date {
-private:
-	string date;
+	private:
+		unsigned int year;
+		unsigned int month;
+		unsigned int day;
 
-public:
+	public:
 
-	Date();
-	Date(string data); // data na forma DD/MM/AAA  //put "curr" to get current date
-	~Date();
+		Date();
+		~Date() {};
+		Date(unsigned int day, unsigned int month, unsigned int year);
 
-	string getDate() const;
-	void setDate(string data);
+		unsigned int getDay() const;
+		unsigned int getMonth() const;
+		unsigned int getYear() const;
 
-	friend bool operator<(const Data &date1, const Data &date2);
-	friend bool operator==(const Data &date1, const Data &date2); //datas iguais
+		void setDate(unsigned int dia, unsigned int mes, unsigned int ano);
+		void setDay(unsigned int day);
+		void setMonth(unsigned int month);
+		void setYear(unsigned int year);
 
-	friend ostream& operator<<(ostream& out, const Data & data); //mostrar data
+		friend bool truedate(const Date & date);    //verifica a data
+		friend bool operator<(const Date &date1, const Date &date2);
+		friend bool operator==(const Date &date1, const Date &date2); //datas iguais
+
+		friend ostream& operator<<(ostream& out, const Date & data); //mostrar data
+		friend istream& operator>>(istream& in, const Date & data); //escrever data
 };
 
+
+
+
 class Time {
-	string time;
+	unsigned int hours;
+	unsigned int minutes;
 
 public:
 	Time();
-	Time(string horas); // data na forma DD/MM/AAA
-	~Date();
+	Time(unsigned int horas, unsigned int minutos); 
+	~Time() {};
 
-	string getTime() const;
-	void setTime(string horas);
+	unsigned int getHours() const;
+	unsigned int getMinutes() const;
 
+	void setTime(unsigned int horas, unsigned int minutos);
+	void setHours(unsigned int horas);
+	void setMinutes(unsigned int minutos);
+
+	friend bool truetime(const Time & hours);
 	friend bool operator<(const Time &horas1, const Time &horas2);
 	friend bool operator==(const Time &horas1, const Time &horas2); //horas iguais
 
 	friend ostream& operator<<(ostream& out, const Time & horas); //mostrar horas
+	friend istream& operator>> (istream& in, const Time & horas); //escrever horas
 };
 
 
