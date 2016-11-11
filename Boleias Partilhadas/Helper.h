@@ -6,6 +6,9 @@
 #include <string>
 #include <iostream>
 
+#include <conio.h>
+
+
 using namespace std;
 
 
@@ -33,5 +36,6 @@ T get_input(const string &strQuery)
 }
 
 
+bool readYesOrNo(unsigned char yes, unsigned char no);
 
 #endif /* HELPER_H_ */
