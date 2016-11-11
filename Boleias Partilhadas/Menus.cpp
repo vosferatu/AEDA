@@ -1,7 +1,8 @@
 #include "Menus.h"
 #include "Helper.h"
+#include "Shared_Rides.h"
 
-void Menus::main_menu() {
+void main_menu() {
 	
 	int choice = get_input <int>( 
 		"[0] Enter as guest" "\n"
@@ -11,10 +12,10 @@ void Menus::main_menu() {
 
 	switch (choice) {
 	case 1:
-		login();
+		//login();
 		break;
 	case 2:
-		registration();
+		SharedRides::CreateRegis();
 		break;
 	}
 }

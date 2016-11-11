@@ -4,6 +4,7 @@
 
 #include <limits> // for std::numeric_limits
 #include <string>
+#include <iostream>
 
 using namespace std;
 

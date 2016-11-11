@@ -17,7 +17,7 @@ public:
 	
 	~SharedRides()
 	{
-		for (int i = 0; i < users.size(); ++i)
+		for (unsigned int i = 0; i < users.size(); ++i)
 		{
 			delete users[i];
 		}

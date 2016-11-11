@@ -9,11 +9,11 @@ User::User(string username) : id(next_id++) {
 }
 
 
-string User::getusername() {
+string User::getusername() const {
 	return username;
 }
 
-string RegisteredUser::getpassword()
+string RegisteredUser::getpassword() const
 {
 	return password;
 }
@@ -27,10 +27,10 @@ vector<string> User::getroute()
 	return vector<string>();
 }
 
-unsigned int User::getnumTrips()
-{
-	return Trips.size();
-}
+//unsigned int User::getnumTrips()
+//{
+	//return Trips.size();
+//}
 
 string User::getCity()
 {
@@ -48,7 +48,7 @@ RegisteredUser::RegisteredUser(string username, string password) : User(username
 
 ostream& operator<<(ostream& os, const RegisteredUser& RU)
 {
-	os << RU.getusername << endl << RU.getpassword << endl;
+	os << RU.getusername() << endl << RU.getpassword() << endl;
 	return os;
 }
 
