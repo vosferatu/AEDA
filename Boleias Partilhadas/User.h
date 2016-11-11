@@ -14,8 +14,8 @@ class User{
 	static unsigned int id;
 
 	string username;
-	vector<string> route;
-	//vector<Trip> Trips;
+	string homeCity;
+	vector<Trip> Trips;
 	string city;
 	float account;
 
