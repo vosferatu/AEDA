@@ -13,10 +13,11 @@ class SharedRides
 
 
 public:
-	static void CreateRegis(string nome, string password);
+	static void CreateRegis();
+	
 	~SharedRides()
 	{
-		for (int i = 0; i < users.size(); ++i)
+		for (unsigned int i = 0; i < users.size(); ++i)
 		{
 			delete users[i];
 		}
@@ -25,4 +26,4 @@ public:
 
 
 
-#endif#pragma once
+#endif
