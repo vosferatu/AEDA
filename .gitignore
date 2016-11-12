@@ -27,6 +27,41 @@
 *.exe
 *.out
 *.app
+
+# User-specific files
+*.VC.opendb
+*.VC.db
+/Boleias Partilhadas/BoleiasPartilhadas_VS.vcxproj.filters
+/Boleias Partilhadas/BoleiasPartilhadas_VS.vcxproj
+/Boleias Partilhadas/BoleiasPartilhadas_VS.sln
+/Boleias Partilhadas/.vs/BoleiasPartilhadas_VS/v14/.suo
+/Boleias Partilhadas/.vs/BoleiasPartilhadas_VS/v14
+/Boleias Partilhadas/Debug/vc140.pdb
+/Boleias Partilhadas/Debug/vc140.idb
+/Boleias Partilhadas/Debug/BoleiasPartilhadas_VS.log
+/Boleias Partilhadas/Debug/BoleiasP.49067A71.tlog/unsuccessfulbuild
+/Boleias Partilhadas/Debug/BoleiasP.49067A71.tlog/CL.write.1.tlog
+/Boleias Partilhadas/Debug/BoleiasP.49067A71.tlog/CL.read.1.tlog
+/Boleias Partilhadas/Debug/BoleiasP.49067A71.tlog/CL.command.1.tlog
+/Boleias Partilhadas/Debug/BoleiasP.49067A71.tlog/BoleiasPartilhadas_VS.lastbuildstate
+/Boleias Partilhadas/Debug/BoleiasP.49067A71.tlog
+/Boleias Partilhadas/Debug/BoleiasPartilhdas_VS.pdb
+/Boleias Partilhadas/Debug/BoleiasPartilhdas_VS.log
+/Boleias Partilhadas/Debug/BoleiasPartilhdas_VS.ilk
+/Boleias Partilhadas/Debug/BoleiasP.8132F9CA.tlog/link.write.1.tlog
+/Boleias Partilhadas/Debug/BoleiasP.8132F9CA.tlog/link.read.1.tlog
+/Boleias Partilhadas/Debug/BoleiasP.8132F9CA.tlog/link.command.1.tlog
+/Boleias Partilhadas/Debug/BoleiasP.8132F9CA.tlog/CL.write.1.tlog
+/Boleias Partilhadas/Debug/BoleiasP.8132F9CA.tlog/CL.read.1.tlog
+/Boleias Partilhadas/Debug/BoleiasP.8132F9CA.tlog/CL.command.1.tlog
+/Boleias Partilhadas/Debug/BoleiasP.8132F9CA.tlog/BoleiasPartilhdas_VS.lastbuildstate
+/Boleias Partilhadas/Debug/BoleiasP.8132F9CA.tlog
+/Boleias Partilhadas/Debug
+/Boleias Partilhadas/BoleiasPartilhdas_VS.vcxproj.filters
+/Boleias Partilhadas/BoleiasPartilhdas_VS.vcxproj
+/Boleias Partilhadas/BoleiasPartilhdas_VS.sln
+/Boleias Partilhadas/.vs/BoleiasPartilhdas_VS/v14/.suo
+/Boleias Partilhadas/.vs/BoleiasPartilhdas_VS/v14
 /Boleias Partilhadas/Boleias Partilhadas/Boleias Partilhadas.vcxproj
 /Boleias Partilhadas/Boleias Partilhadas/Boleias Partilhadas.vcxproj.filters
 /Boleias Partilhadas/.vs/Boleias Partilhadas/v14/.suo

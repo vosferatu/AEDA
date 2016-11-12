@@ -1,10 +1,13 @@
+#pragma once
 #ifndef HELPER_H_
 #define HELPER_H_
 
 #include <limits> // for std::numeric_limits
 #include <string>
-#include <fstream>
 #include <iostream>
+
+#include <conio.h>
+
 
 using namespace std;
 
@@ -32,6 +35,8 @@ T get_input(const string &strQuery)
 	return out;
 }
 
+string readLine();
 
+string readPassword(const char *prompt, bool show_asterisk);
 
 #endif /* HELPER_H_ */
