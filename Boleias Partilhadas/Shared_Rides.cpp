@@ -6,7 +6,7 @@
 
 using namespace std;
 
-vector<User*> users(0);
+vector<User*> SharedRides::users(0);
 
 
 
@@ -42,14 +42,14 @@ void SharedRides::CreateRegis()
 	// gets vehicle
 
 
-		if (get_input <string>("Do you want to add a vehicle?") == "y") 
-		{
-			Vehicle v1;
-			v1.settype() = get_input <string>("Please specify its brand and model.");
-			v1.setyear() = get_input <unsigned int> ("Please specify its year.");
-			v1.setavaibleseats() = get_input <unsigned int>("Please specify the number of seats of your car.");
+	//	if (get_input <string>("Do you want to add a vehicle?") == "y") 
+	//	{
+			//Vehicle v1;
+			//v1.settype() = get_input <string>("Please specify its brand and model.");
+			//v1.setyear() = get_input <unsigned int> ("Please specify its year.");
+			//v1.setavaibleseats() = get_input <unsigned int>("Please specify the number of seats of your car.");
 		
-		}
+		//}
 
 
 
@@ -65,18 +65,18 @@ void SharedRides::CreateRegis()
 }
 
 
-void SharedRides::saveUsers() const {
-
-	ofstream myfile;
-	myfile.open("users.txt");  // in the users.txt file
-	 
-	myfile << users.size();
-
-	for (size_t i = 0; i < users.size(); i++)
-	{
-		myfile << users[i];
-	}
-
-	myfile.close();
-
-}
+//void SharedRides::saveUsers() const {
+//
+//	ofstream myfile;
+//	myfile.open("users.txt");  // in the users.txt file
+//	 
+//	myfile << users.size();
+//
+//	for (size_t i = 0; i < users.size(); i++)
+//	{
+//		myfile << users[i];
+//	}
+//
+//	myfile.close();
+//
+//}

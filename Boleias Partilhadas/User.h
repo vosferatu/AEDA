@@ -6,7 +6,8 @@
 #include <string>
 #include <vector>
 #include "Vehicle.h"
-#include "TripDateTime.h"
+#include "DateTime.h"
+#include "Trip.h"
 
 using namespace std;
 
@@ -15,7 +16,7 @@ class User{
 
 	string username;
 	string homeCity;
-	vector<Trip> Trips;
+	//vector<Trip> Trips;
 	string city;
 	float account;
 
@@ -44,9 +45,7 @@ public:
 
 	friend ostream& operator<<(ostream& os, const RegisteredUser* RU); // for now, only for writing in file of users purpose
 
-	void saveUser() const;
-
-};
+	};
 
 
 class GuestUser : public User {

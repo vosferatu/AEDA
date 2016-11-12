@@ -5,26 +5,9 @@
 
 #include <string>
 #include <iostream>
-#include "User.h"
+#include "DateTime.h"
 
 using namespace std;
-
-
-
-class Trip {
-		User* owner;
-		string startPoint;
-		string endPoint;
-		Time endTime;
-		Time startTime;
-		Date day;
-
-	public:
-
-};
-
-
-
 
 class Date {
 	private:

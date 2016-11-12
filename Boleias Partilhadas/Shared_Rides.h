@@ -14,7 +14,7 @@ class SharedRides
 
 public:
 	static void CreateRegis();
-	void saveUsers() const;
+	//void saveUsers() const;
 
 	~SharedRides(){
 		for (unsigned int i = 0; i < users.size(); ++i)
