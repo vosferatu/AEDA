@@ -10,6 +10,9 @@ using namespace std;
 class SharedRides
 {
 	static vector<User*> users;
+	static vector<takenTrip> tripsPrinter;
+	static vector<Vehicle> cars;
+	static vector<waitingTrip> tripsWaiting;
 
 
 public:
@@ -20,6 +23,18 @@ public:
 		for (unsigned int i = 0; i < users.size(); ++i)
 		{
 			delete users[i];
+		}
+		for (unsigned int i = 0; i < tripsPrinter.size(); ++i)
+		{
+			delete tripsPrinter[i];
+		}
+		for (unsigned int i = 0; i < tripsWaiting.size(); ++i)
+		{
+			delete tripsWaiting[i];
+		}
+		for (unsigned int i = 0; i < cars.size(); ++i)
+		{
+			delete cars[i];
 		}
 	}
 

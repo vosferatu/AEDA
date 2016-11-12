@@ -4,15 +4,25 @@
 
 #include "User.h"
 #include "DateTime.h"
+#include "Vehicle.h"
 
 
-class Trip {
-	//User owner;
-	//string startPoint;
-	//string endPoint;
-	//Time endTime;
-	//Time startTime;
-	//Date day;
+class takenTrip {
+	User* owner;
+	string startPont;
+	string endPoint;
+	Time endTime;
+	Time startTime;
+	Date day;
+
+public:
+
+};
+
+//class trip 
+class waitingTrip {
+	User* owner;
+	bool full;
 
 public:
 
