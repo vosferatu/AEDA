@@ -3,17 +3,18 @@
 #define VEHICLE_H_
 
 #include <string>
+#include <vector>
 
 class Vehicle {
-	const int numberSeats;
+	const int numberSeats = 0;
 	int avaiableSeats;
-	//string brand; //vehicle type, only for showing purposes 
+	string brand; //vehicle type, only for showing purposes 
 	unsigned int year; //user might not choose this vehicle for this
 	char rate;  //optional. grade from A to F based on vehicle condition
-	//vector<string>& rota;
+	vector<string> rota;
 
 public:
-	Vehicle();
+	Vehicle(int noSeats, string brand, unsigned int year);
 
 };
 

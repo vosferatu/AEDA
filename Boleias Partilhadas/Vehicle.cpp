@@ -2,10 +2,7 @@
 
 using namespace std;
 
-//Vehicle::Vehicle(){
-	//this->numberSeats = 0;
-	//this->year = 0;
-	//this->
-//}
-
-using namespace std;
+Vehicle::Vehicle(int noSeats, string brand, unsigned int year) : numberSeats(noSeats){
+	this->brand = brand;
+	this->year = year;
+}
