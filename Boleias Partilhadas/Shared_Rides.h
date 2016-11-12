@@ -24,18 +24,6 @@ public:
 		{
 			delete users[i];
 		}
-		for (unsigned int i = 0; i < tripsPrinter.size(); ++i)
-		{
-			delete tripsPrinter[i];
-		}
-		for (unsigned int i = 0; i < tripsWaiting.size(); ++i)
-		{
-			delete tripsWaiting[i];
-		}
-		for (unsigned int i = 0; i < cars.size(); ++i)
-		{
-			delete cars[i];
-		}
 	}
 
 	
