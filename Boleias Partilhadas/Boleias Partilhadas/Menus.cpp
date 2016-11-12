@@ -1,5 +1,6 @@
 #include "Menus.h"
 #include "Helper.h"
+#include "User.h"
 
 void main_menu() {
 	
@@ -10,11 +11,13 @@ void main_menu() {
 		"[3] Exit");
 
 	switch (choice) {
+	case 0:
+		//menu_guest_user();
 	case 1:
-		login();
+		//login();
 		break;
 	case 2:
-		registration();
+		´//user_registration();
 		break;
 	}
 }
