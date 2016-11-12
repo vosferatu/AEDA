@@ -10,6 +10,9 @@ using namespace std;
 class SharedRides
 {
 	static vector<User*> users;
+	static vector<takenTrip> tripsPrinter;
+	static vector<Vehicle> cars;
+	static vector<waitingTrip> tripsWaiting;
 
 
 public:

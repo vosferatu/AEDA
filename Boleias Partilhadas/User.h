@@ -12,36 +12,38 @@
 using namespace std;
 
 class User{
-	static unsigned int id;
 
+	static unsigned int id;
 	string username;
 	string homeCity;
-	//vector<Trip> Trips;
-	string city;
+	vector<takenTrip> Trips; //user may want to see his trips
 	float account;
 
 public:
 	User(string username);
-	
-	string getusername() const;
-	
+
 	unsigned int getid() const;
-	vector<string> getroute();
-	unsigned int getnumTrips();
-	string getCity();
-	float getAccount();
+	string getusername() const;
+	unsigned int getnumTrips() const;
+	string getCity() const;
+	vector<Trip> getTrips() const;
+	float getAccount() const;
 };
 
 class RegisteredUser : public User {
 	vector <User*> friends;
 	float maintainenceTAX;
 	string password;
-	Vehicle* myRide;
+	unsigned int vehicleID;
 
 public:
+
 	RegisteredUser(string username, string password);
 
 	string getpassword() const;
+	float getmaintainenceTAX() const;
+	unsigned int getVehicle() const;
+	vector<User*> getBuddies() const;
 
 	friend ostream& operator<<(ostream& os, const RegisteredUser* RU); // for now, only for writing in file of users purpose
 

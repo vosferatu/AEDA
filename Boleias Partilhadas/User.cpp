@@ -21,29 +21,24 @@ string User::getusername() const {
 	return username;
 }
 
-
+vector<Trip> User::getTrips() const {
+	return Trips;
+}
 
 unsigned int User::getid() const {
 	return id; 
 }
 
-vector<string> User::getroute()
-{
-	return vector<string>();
+
+unsigned int User::getnumTrips() const{
+	return Trips.size();
 }
 
-//unsigned int User::getnumTrips()
-//{
-	//return Trips.size();
-//}
-
-string User::getCity()
-{
-	return city;
+string User::getCity() const{
+	return homeCity;
 }
 
-float User::getAccount()
-{
+float User::getAccount() const{
 	return account;
 }
 
@@ -58,6 +53,18 @@ string RegisteredUser::getpassword() const
 	return password;
 }
 
+float RegisteredUser::getmaintainenceTAX() const{
+	return maintainenceTAX;
+}
+
+unsigned int RegisteredUser::getVehicle() const {
+	return vehicleID;
+}
+
+vector<User*> RegisteredUser::getBuddies() const{
+	return friends;
+}
+
 ostream& operator<<(ostream& os, const RegisteredUser* RU)
 {
 	os << RU->getid() << endl << RU->getusername() << endl << RU->getpassword() << endl;
@@ -70,3 +77,4 @@ ostream& operator<<(ostream& os, const RegisteredUser* RU)
 
 GuestUser::GuestUser(string username) : User(username) {
 }
+
