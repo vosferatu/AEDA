@@ -13,6 +13,7 @@ class Vehicle {
 	unsigned int year; //user might not choose this vehicle for this
 	char rate;  //optional. grade from A to F based on vehicle condition
 	unsigned int idCar; //same as user ID
+	vector<string> rota;
 	
 public:
 	Vehicle(unsigned int id, unsigned int noSeats, string brand, unsigned int year,char rate);
