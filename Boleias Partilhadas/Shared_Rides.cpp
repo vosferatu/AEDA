@@ -8,7 +8,43 @@ using namespace std;
 
 vector<User*> SharedRides::users(0);
 vector<Vehicle>SharedRides::cars(0);
+vector<string>SharedRides::cities(0);
+const string SharedRides::citiesfile = "cities.txt";
+unsigned int  SharedRides::numbercities = 0;
 
+void SharedRides::load()
+{
+	loadCities();
+	//loadUsers();
+	//loadAnuncios();
+	//loadBoleias();
+}
+
+void SharedRides::loadCities() {
+
+	fstream file;
+
+	string info;					//string que ira conter a informacao de cada linha do ficheiro
+	string strnumber;					//string que ira remover o numero no inicio do ficheiro
+	
+	
+	file.open(citiesfile);
+	
+	if (!file.is_open())
+	{
+		//throw FileException<string>("Erro ao abrir o ficheiro membros");
+	}
+
+	getline(file, strnumber);
+	numbercities = stoi(strnumber);
+
+	while (getline(file, info))
+	{
+		cities.push_back(info);
+	}
+
+	
+}
 
 
 void SharedRides::CreateRegis()
@@ -35,7 +71,38 @@ void SharedRides::CreateRegis()
 		password2 = readPassword("Please re-enter password", true);
 	}
 
-	RegisteredUser* RU = new RegisteredUser(username, password1);
+	//gets city
+
+	bool citybelong = false;
+
+	
+	while (!citybelong) {
+		string city;
+
+		
+		
+
+		cout << "Please specify your home city." << endl << "It must belong to one of these: ";
+
+		for (size_t i = 0; i < cities.size(); i++)
+		{
+			if (i < cities.size()-1)
+			cout << cities[i] << ", ";
+			else cout << cities[i] << ".\n";
+		}
+
+		
+		getline(cin, city); 
+		cin.clear();
+		cin.ignore(100, '\n');
+				
+		for (size_t i = 0; i < cities.size(); i++)
+		{
+			if (city == cities[i])
+				citybelong = true;
+		}
+	}
+
 
 	// gets vehicle
 	bool vehiclebool = false; 
@@ -55,9 +122,11 @@ void SharedRides::CreateRegis()
 			unsigned int seats = get_input <unsigned int>("Please specify the number of seats of your car.");
 			char rate = get_input <char>("In a scale [F(worst) - A (best)], please specify your evaluation of your car conditions.");
 
-			Vehicle v1((*RU).getid(), seats, brand, year, rate);
+			Vehicle v1(seats, brand, year, rate);
 
-			(*RU).setVehicle(&v1);
+			RegisteredUser* RU = new RegisteredUser(username, password1,v1);
+			
+			(*RU).getVehicle().setId((*RU).getid());
 
 			users.push_back(RU);
 			cars.push_back((*RU).getVehicle());
@@ -66,7 +135,9 @@ void SharedRides::CreateRegis()
 
 		else if (addvehicle == "n") {
 			Vehicle nocar;
-			(*RU).setVehicle(&nocar);
+			
+			RegisteredUser* RU = new RegisteredUser(username, password1, nocar);
+
 			users.push_back(RU);
 			vehiclebool = true;
 		}
@@ -85,18 +156,18 @@ void SharedRides::CreateRegis()
 
 
 
-//void SharedRides::saveUsers() const {
-//
-//	ofstream myfile;
-//	myfile.open("users.txt");  // in the users.txt file
-//	 
-//	myfile << users.size();
-//
-//	for (size_t i = 0; i < users.size(); i++)
-//	{
-//		myfile << users[i];
-//	}
-//
-//	myfile.close();
-//
-//}
+void SharedRides::saveUsers() const {
+
+	ofstream myfile;
+	myfile.open("users.txt");  // in the users.txt file
+	 
+	myfile << users.size();
+
+	for (size_t i = 0; i < users.size(); i++)
+	{
+		myfile << users[i];
+	}
+
+	myfile.close();
+
+}

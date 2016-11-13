@@ -17,7 +17,7 @@ class Vehicle {
 	bool active;
 	
 public:
-	Vehicle(unsigned int id, unsigned int noSeats, string brand, unsigned int year,char rate);
+	Vehicle(unsigned int noSeats, string brand, unsigned int year,char rate);
 	Vehicle();
 	void setId(unsigned int id);
 

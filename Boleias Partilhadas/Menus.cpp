@@ -16,9 +16,11 @@ void main_menu() {
 	case 1:
 		//login();
 		break;
-	case 2:
+	case 2: {
+		SharedRides::loadCities(); // for now
 		SharedRides::CreateRegis();
-		break;
+		break; }
+		
 	}
 }
 

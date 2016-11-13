@@ -2,9 +2,8 @@
 
 string readLine()
 {
-	cin.clear();
-	cin.ignore(1000, '\n');
 	string linha;
+	cout << "> ";
 	getline(cin, linha);
 	return linha;
 }
@@ -19,7 +18,7 @@ string readPassword(const char *prompt, bool show_asterisk)
 
 	cout << prompt << endl;
 
-	while ((ch = getch()) != RETURN)
+	while ((ch = _getch()) != RETURN)
 	{
 		if (ch == BACKSPACE)
 		{
@@ -32,7 +31,7 @@ string readPassword(const char *prompt, bool show_asterisk)
 		}
 		else if (ch == 0 || ch == 224) // handle escape sequences
 		{
-			getch(); // ignore non printable chars
+			_getch(); // ignore non printable chars
 			continue;
 		}
 		else
@@ -44,4 +43,20 @@ string readPassword(const char *prompt, bool show_asterisk)
 	}
 	cout << endl;
 	return password;
+}
+
+void getEnter() {
+
+	int ENTER = 13;
+	//FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
+
+	char ch = _getch();
+
+	while (ch != ENTER)
+	{
+		ch = _getch();
+	}
+
+	//PressKey();
+	//std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 }
