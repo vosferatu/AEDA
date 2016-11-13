@@ -3,6 +3,7 @@
 #include "Menus.h"
 #include "User.h"
 #include "Vehicle.h"
+#include "Shared_Rides.h"
 
 #include <iostream>
 
@@ -12,6 +13,9 @@ int main() {
 	
 	cout << endl << "Welcome to Shared Rides, please put your seatbelts on and enjoy your travel." << endl;
 
-	main_menu();
+	SharedRides Boleias;
+	Boleias.main_menu();
+
+	return 0;
 
 }

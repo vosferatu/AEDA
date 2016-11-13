@@ -18,11 +18,13 @@ class User{
 	float account;
 
 public:
+	User() {};
 	User(string username);
 
 	unsigned int getid() const;
 	string getusername() const;
 	float getAccount() const;
+	virtual void menu();
 };
 
 class RegisteredUser : public User {
@@ -50,6 +52,8 @@ public:
 	
 	vector<int> getBuddies() const;
 
+	virtual void menu();
+
 	friend ostream& operator<<(ostream& os, const RegisteredUser* RU); // for now, only for writing in file of users purpose
 
 };
@@ -60,6 +64,7 @@ class GuestUser : public User {
 
 public:
 	GuestUser(string username);
+	virtual void menu();
 };
 
 

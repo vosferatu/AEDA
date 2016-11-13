@@ -79,6 +79,61 @@ void SharedRides::CreateRegis()
 	}
 }
 
+void SharedRides::main_menu(){
+	int choice = get_input <int>(
+		"[0] Enter as guest" "\n"
+		"[1] Login" "\n"
+		"[2] Register" "\n"
+		"[3] Manage App" "\n"
+		"[4] Exit");
+
+
+
+	switch (choice) {
+	case 0:
+		//criar um menu de login sem password para guest
+		currentUser->menu();
+		break;
+	case 1:
+		//login(); //login, se for aceite, muda o currentuser
+		currentUser->menu(); //chama o menu de user(Seja ele carro, sem carro, guest)
+		break;
+	case 2:
+		CreateRegis();
+		main_menu();
+		break;
+	case 3:
+		manage_menu();
+		break;
+	case 4:
+		return;
+	default:
+		break;
+	}
+}
+
+void SharedRides::manage_menu(){
+	//por aqui função que pede login com username admin e password admin
+	int choice = get_input <int>(
+		"[0] App Trips" "\n"   //nestes 3 podemos usar os algoritmos de pesquisa para ver um x 
+		"[1] App Users" "\n"	//algoritmos de ordenação para mostrar
+		"[2] App Vehicles" "\n"
+		"[3] End of Month" "\n"
+		"[4] Remove user" "\n"
+		"[3] Exit");
+
+
+
+	switch (choice) {
+	case 1:
+		//login();
+		break;
+	case 2:
+		//SharedRides::CreateRegis();
+		break;
+	}
+}
+
 
 
 

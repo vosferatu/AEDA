@@ -15,6 +15,7 @@ class takenTrip { //usada para mostrar e gravar viagens dos owners
 	Time endTime;
 	Time startTime;
 	Date day;
+	unsigned int tripCode;
 
 public:
 

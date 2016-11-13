@@ -18,6 +18,15 @@ class Vehicle {
 public:
 	Vehicle(unsigned int id, unsigned int noSeats, string brand, unsigned int year,char rate);
 	Vehicle();
+
+	unsigned int getnumberSeats() const;
+	string getBrand() const;
+	unsigned int getYear() const;
+	char getRate() const;
+	unsigned int getCarID() const;
+	vector<string> getRota() const;
+
+
 	void setId(unsigned int id);
 
 	Vehicle& operator=(Vehicle car);
