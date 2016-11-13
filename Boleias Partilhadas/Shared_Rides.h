@@ -23,6 +23,7 @@ public:
 	SharedRides() {};
 	void main_menu();
 	void manage_menu();
+	void user_menu();
 
 	~SharedRides(){
 		for (unsigned int i = 0; i < users.size(); ++i)

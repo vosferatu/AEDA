@@ -92,11 +92,11 @@ void SharedRides::main_menu(){
 	switch (choice) {
 	case 0:
 		//criar um menu de login sem password para guest
-		currentUser->menu();
+		user_menu();//chama o menu de user (la dentro escolhe menu de guest)
 		break;
 	case 1:
 		//login(); //login, se for aceite, muda o currentuser
-		currentUser->menu(); //chama o menu de user(Seja ele carro, sem carro, guest)
+		user_menu(); //chama o menu de user(Seja ele carro, sem carro)
 		break;
 	case 2:
 		CreateRegis();
@@ -131,6 +131,75 @@ void SharedRides::manage_menu(){
 	case 2:
 		//SharedRides::CreateRegis();
 		break;
+	}
+}
+
+void SharedRides::user_menu(){
+	if (dynamic_cast<RegisteredUser*>(currentUser) != NULL) {
+
+		if (vehicle.getnumberSeats() != 0) {
+			int choice = get_input <int>(
+				"[0] My Trips" "\n"
+				"[1] Vehicle" "\n"  //add/remove/edit vehicle inside
+				"[2] New Trip" "\n"     // add/start trip (start begins an added trip) inside
+				"[3] Buddies" "\n"   //add/remove/see(profile/trips) buddies inside
+				"[4] Charge wallet" "\n"
+				"[5] Change password" "\n"
+				"[6] Log Off" "\n"
+				"[7] Delete Profile");
+
+
+
+			switch (choice) {
+			case 1:
+				//login();
+				break;
+			case 2:
+				//SharedRides::CreateRegis();
+				break;
+			}
+		}
+		else {
+			int choice = get_input <int>(
+				"[0] My Trips" "\n"
+				"[1] New Trip" "\n"     // look for a trip
+				"[2] Buddies" "\n"   //add/remove/see(profile/trips) buddies inside
+				"[3] Charge wallet" "\n"
+				"[4] Log Off" "\n"
+				"[5] Change password" "\n"
+				"[6] Delete Profile");
+
+
+
+			switch (choice) {
+			case 1:
+				//main_menu();
+				break;
+			case 2:
+				//SharedRides::CreateRegis();
+				break;
+			}
+		}
+
+	}
+	else {
+
+		int choice = get_input <int>(
+			"[0] New Trip" "\n"     // look for a trip
+			"[1] Charge wallet" "\n"
+			"[3] Delete Profile");
+
+
+
+		switch (choice) {
+		case 1:
+			//login();
+			break;
+		case 2:
+			//SharedRides::CreateRegis();
+			break;
+		}
+
 	}
 }
 
