@@ -141,7 +141,7 @@ void SharedRides::user_menu(){
 	if (dynamic_cast<RegisteredUser*>(currentUser) != NULL) {//isto da erro porque nao temos uma
 		//função virtual em user, mas vamos ter, por isso deixa assim
 
-		if (currentUser != 0) {
+		if (currentUser.vehicle.getnumberSeats() != 0) {
 			int choice = get_input <int>(
 				"[0] My Trips" "\n"
 				"[1] Vehicle" "\n"  //add/remove/edit vehicle inside
