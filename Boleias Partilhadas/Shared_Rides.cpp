@@ -8,6 +8,9 @@ using namespace std;
 
 vector<User*> SharedRides::users(0);
 vector<Vehicle>SharedRides::cars(0);
+vector<takenTrip>SharedRides::tripsPrinter(0);
+vector<waitingTrip>SharedRides::tripOffers(0);
+vector<Path>SharedRides::caminhos(0);
 
 
 

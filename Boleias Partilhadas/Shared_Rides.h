@@ -20,7 +20,7 @@ class SharedRides
 public:
 	static void CreateRegis();
 	//void saveUsers() const;
-	SharedRides() {};
+	SharedRides() {}; //podemos fazer os loads todos no construtor
 	void main_menu();
 	void manage_menu();
 	void user_menu();
