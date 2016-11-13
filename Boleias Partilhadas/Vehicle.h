@@ -5,18 +5,23 @@
 #include <string>
 #include <vector>
 
+using namespace std;
+
 class Vehicle {
-	const int numberSeats = 0;
-	int avaiableSeats;
+	unsigned int numberSeats;
 	string brand; //vehicle type, only for showing purposes 
 	unsigned int year; //user might not choose this vehicle for this
 	char rate;  //optional. grade from A to F based on vehicle condition
 	vector<string> rota;
-	const unsigned int id;
+	unsigned int idCar; 
 	bool active;
-
+	
 public:
-	Vehicle(int noSeats, string brand, unsigned int year);
+	Vehicle(unsigned int id, unsigned int noSeats, string brand, unsigned int year,char rate);
+	Vehicle();
+	void setId(unsigned int id);
+
+	Vehicle& operator=(Vehicle car);
 
 };
 

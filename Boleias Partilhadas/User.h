@@ -16,7 +16,7 @@ class User{
 	static unsigned int id;
 	string username;
 	string homeCity;
-	vector<takenTrip> Trips; //user may want to see his trips
+	//vector<takenTrip> Trips; //user may want to see his trips
 	float account;
 
 public:
@@ -26,15 +26,17 @@ public:
 	string getusername() const;
 	unsigned int getnumTrips() const;
 	string getCity() const;
-	vector<Trip> getTrips() const;
+	//vector<Trip> getTrips() const;
 	float getAccount() const;
 };
 
 class RegisteredUser : public User {
+	
 	vector <User*> friends;
 	float maintainenceTAX;
 	string password;
-	unsigned int vehicleID;
+	Vehicle vehicle;
+
 
 public:
 
@@ -42,7 +44,10 @@ public:
 
 	string getpassword() const;
 	float getmaintainenceTAX() const;
-	unsigned int getVehicle() const;
+	
+	void setVehicle(Vehicle* car);
+	Vehicle getVehicle() const;
+	
 	vector<User*> getBuddies() const;
 
 	friend ostream& operator<<(ostream& os, const RegisteredUser* RU); // for now, only for writing in file of users purpose

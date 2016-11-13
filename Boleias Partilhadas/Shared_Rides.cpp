@@ -7,8 +7,7 @@
 using namespace std;
 
 vector<User*> SharedRides::users(0);
-
-
+vector<Vehicle>SharedRides::cars(0);
 
 
 
@@ -23,46 +22,67 @@ void SharedRides::CreateRegis()
 		username = get_input <string>("Please enter a username.");
 		cout << "Username: \"" << username << "\"\n";
 	}
-	
-	// gets password
-		string password1 = readPassword("Please enter password",true);
-		string password2 = readPassword("Please re-enter password", true);
-	
 
+	// gets password
+	string password1 = readPassword("Please enter password", true);
+	string password2 = readPassword("Please re-enter password", true);
 
 	while (password1 != password2) {
 		cout << "Error! Passwords do not match." "\n\n";
 		cin.clear();
 		cin.ignore(10000, '\n');
 		password1 = readPassword("Please enter password", true);
-		cout << "|" << password1 << "|" << endl;
 		password2 = readPassword("Please re-enter password", true);
-		cout << "|" << password2 << "|" << endl;
-
-	// gets vehicle
-
-
-	//	if (get_input <string>("Do you want to add a vehicle?") == "y") 
-	//	{
-			//Vehicle v1;
-			//v1.settype() = get_input <string>("Please specify its brand and model.");
-			//v1.setyear() = get_input <unsigned int> ("Please specify its year.");
-			//v1.setavaibleseats() = get_input <unsigned int>("Please specify the number of seats of your car.");
-		
-		//}
-
-
-
 	}
 
-	// saving the user
-	
-	
-	RegisteredUser* RU = new RegisteredUser(username,password1);
+	RegisteredUser* RU = new RegisteredUser(username, password1);
 
-	users.push_back(RU); // in a vector 
-	
+	// gets vehicle
+	bool vehiclebool = false; 
+	string addvehicle;
+
+
+	while (!vehiclebool)
+	{
+		addvehicle = get_input <string>("Do you want to add a vehicle?");
+				
+		if (addvehicle == "y")
+		{
+			cout << "Please specify its brand and model." << endl;
+			string brand = readLine();
+			
+			unsigned int year = get_input <unsigned int>("Please specify its year.");
+			unsigned int seats = get_input <unsigned int>("Please specify the number of seats of your car.");
+			char rate = get_input <char>("In a scale [F(worst) - A (best)], please specify your evaluation of your car conditions.");
+
+			Vehicle v1((*RU).getid(), seats, brand, year, rate);
+
+			(*RU).setVehicle(&v1);
+
+			users.push_back(RU);
+			cars.push_back((*RU).getVehicle());
+			vehiclebool = true;
+		}
+
+		else if (addvehicle == "n") {
+			Vehicle nocar;
+			(*RU).setVehicle(&nocar);
+			users.push_back(RU);
+			vehiclebool = true;
+		}
+		else
+		{
+			cout << "Error! Please enter y or n." << endl;
+			vehiclebool = false;
+		}
+
+	}
 }
+
+
+
+
+
 
 
 //void SharedRides::saveUsers() const {
