@@ -4,7 +4,7 @@ using namespace std;
 
 
 
-Vehicle::Vehicle(unsigned int id, unsigned int noSeats, string brand, unsigned int year, char rate) : numberSeats(noSeats){
+Vehicle::Vehicle(unsigned int id, unsigned int noSeats, string brand, unsigned int year, char rate){
 	this->brand = brand;
 	this->numberSeats = noSeats;
 	this->year = year;
