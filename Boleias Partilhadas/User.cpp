@@ -1,4 +1,5 @@
 #include "User.h"
+#include "Helper.h"
 #include <string>
 #include <fstream>
 
@@ -21,21 +22,10 @@ string User::getusername() const {
 	return username;
 }
 
-//vector<Trip> User::getTrips() const {
-//	return Trips;
-//}
+
 
 unsigned int User::getid() const {
 	return id; 
-}
-
-
-//unsigned int User::getnumTrips() const{
-////	return Trips.size();
-//}
-
-string User::getCity() const{
-	return homeCity;
 }
 
 float User::getAccount() const{
@@ -57,13 +47,26 @@ float RegisteredUser::getmaintainenceTAX() const{
 	return maintainenceTAX;
 }
 
+vector<int> RegisteredUser::getTrips() const {
+	return Trips;
+}
+
+unsigned int RegisteredUser::getnumTrips() const {
+	return Trips.size();
+}
+
+string RegisteredUser::getCity() const {
+	return homeCity;
+}
+
 //unsigned int RegisteredUser::getVehicle() const {
 //	return vehicleID;
 //}
 
-vector<User*> RegisteredUser::getBuddies() const{
+vector<int> RegisteredUser::getBuddies() const{
 	return friends;
 }
+
 
 ostream& operator<<(ostream& os, const RegisteredUser* RU)
 {
@@ -89,4 +92,6 @@ Vehicle RegisteredUser::getVehicle() const {
 
 GuestUser::GuestUser(string username) : User(username) {
 }
+
+
 

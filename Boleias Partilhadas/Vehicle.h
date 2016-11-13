@@ -12,13 +12,21 @@ class Vehicle {
 	string brand; //vehicle type, only for showing purposes 
 	unsigned int year; //user might not choose this vehicle for this
 	char rate;  //optional. grade from A to F based on vehicle condition
+	unsigned int idCar; //same as user ID
 	vector<string> rota;
-	unsigned int idCar; 
-	bool active;
 	
 public:
 	Vehicle(unsigned int noSeats, string brand, unsigned int year,char rate);
 	Vehicle();
+
+	unsigned int getnumberSeats() const;
+	string getBrand() const;
+	unsigned int getYear() const;
+	char getRate() const;
+	unsigned int getCarID() const;
+	vector<string> getRota() const;
+
+
 	void setId(unsigned int id);
 
 	Vehicle& operator=(Vehicle car);
