@@ -9,7 +9,7 @@
 
 
 class takenTrip { //usada para mostrar e gravar viagens dos owners
-	User* owner;   //usada para mostrar e gravar viagens de cada user (talvez)
+//	User* owner;   //usada para mostrar e gravar viagens de cada user (talvez)
 	string startPont;
 	string endPoint;
 	Time endTime;
@@ -34,7 +34,7 @@ class Stretch {
 };
 
 class waitingTrip { 
-	User* owner;
+	//User* owner;
 	vector<Stretch> Viagem;
 	bool full;
 

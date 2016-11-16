@@ -16,7 +16,6 @@ class SharedRides
 	static vector<waitingTrip> tripOffers;
 	User* currentUser;  //se não for pointer, slicing problem
 	//static vector<takenTrip> tripsPrinter;
-	static vector<Vehicle> cars;
 	//static vector<waitingTrip> tripsWaiting;
 	static vector<string>cities;
 
