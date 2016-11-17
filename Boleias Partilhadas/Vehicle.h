@@ -16,7 +16,7 @@ class Vehicle {
 	vector<string> rota;
 	
 public:
-	Vehicle(unsigned int id, unsigned int noSeats, string brand, unsigned int year,char rate);
+	Vehicle(unsigned int noSeats, string brand, unsigned int year,char rate);
 	Vehicle();
 
 	unsigned int getnumberSeats() const;

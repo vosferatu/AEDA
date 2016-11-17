@@ -15,6 +15,13 @@ class SharedRides
 	static vector<Path> caminhos;
 	static vector<waitingTrip> tripOffers;
 	User* currentUser;  //se não for pointer, slicing problem
+	//static vector<takenTrip> tripsPrinter;
+	//static vector<waitingTrip> tripsWaiting;
+	static vector<string>cities;
+
+	static const string citiesfile;
+
+	static unsigned int numbercities;
 
 
 public:
@@ -24,6 +31,9 @@ public:
 	void main_menu();
 	void manage_menu();
 	void user_menu();
+	void saveUsers() const;
+	void load();
+	static void loadCities();
 
 	~SharedRides(){
 		for (unsigned int i = 0; i < users.size(); ++i)

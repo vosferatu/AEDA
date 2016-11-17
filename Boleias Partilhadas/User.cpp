@@ -34,7 +34,7 @@ float User::getAccount() const{
 
 /////////////////////////////////////////////////// REGISTERED USER /////////////////////////////////////////////////////
 
-RegisteredUser::RegisteredUser(string username, string password) : User(username){
+RegisteredUser::RegisteredUser(string username, string password, Vehicle car) : User(username), vehicle(car){
 	this->password = password;
 }
 

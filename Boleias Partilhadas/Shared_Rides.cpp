@@ -8,15 +8,47 @@ using namespace std;
 
 vector<User*> SharedRides::users(0);
 vector<Vehicle>SharedRides::cars(0);
-vector<takenTrip>SharedRides::tripsPrinter(0);
-vector<waitingTrip>SharedRides::tripOffers(0);
-vector<Path>SharedRides::caminhos(0);
+vector<string>SharedRides::cities(0);
+const string SharedRides::citiesfile = "cities.txt";
+unsigned int  SharedRides::numbercities = 0;
 
+void SharedRides::load()
+{
+	loadCities();
+	//loadUsers();
+	//loadAnuncios();
+	//loadBoleias();
+}
 
+void SharedRides::loadCities() {
+
+	fstream file;
+
+	string info;					//string que ira conter a informacao de cada linha do ficheiro
+	string strnumber;					//string que ira remover o numero no inicio do ficheiro
+	
+	
+	file.open(citiesfile);
+	
+	if (!file.is_open())
+	{
+		//throw FileException<string>("Erro ao abrir o ficheiro membros");
+	}
+
+	getline(file, strnumber);
+	numbercities = stoi(strnumber);
+
+	while (getline(file, info))
+	{
+		cities.push_back(info);
+	}
+
+	
+}
 
 void SharedRides::CreateRegis()
 {
-
+	
 	// gets username
 	string username = get_input <string>("Please enter a username.");
 	cout << "Username: " << username << "\n";
@@ -38,7 +70,38 @@ void SharedRides::CreateRegis()
 		password2 = readPassword("Please re-enter password", true);
 	}
 
-	RegisteredUser* RU = new RegisteredUser(username, password1);
+	//gets city
+
+	bool citybelong = false;
+
+	
+	while (!citybelong) {
+		string city;
+
+		
+		
+
+		cout << "Please specify your home city." << endl << "It must belong to one of these: ";
+
+		for (size_t i = 0; i < cities.size(); i++)
+		{
+			if (i < cities.size()-1)
+			cout << cities[i] << ", ";
+			else cout << cities[i] << ".\n";
+		}
+
+		
+		getline(cin, city); 
+		cin.clear();
+		cin.ignore(1000, '\n');
+				
+		for (size_t i = 0; i < cities.size(); i++)
+		{
+			if (city == cities[i])
+				citybelong = true;
+		}
+	}
+
 
 	// gets vehicle
 	bool vehiclebool = false; 
@@ -58,9 +121,11 @@ void SharedRides::CreateRegis()
 			unsigned int seats = get_input <unsigned int>("Please specify the number of seats of your car.");
 			char rate = get_input <char>("In a scale [F(worst) - A (best)], please specify your evaluation of your car conditions.");
 
-			Vehicle v1((*RU).getid(), seats, brand, year, rate);
+			Vehicle v1(seats, brand, year, rate);
 
-			(*RU).setVehicle(&v1);
+			RegisteredUser* RU = new RegisteredUser(username, password1,v1);
+			
+			(*RU).getVehicle().setId((*RU).getid());
 
 			users.push_back(RU);
 			cars.push_back((*RU).getVehicle());
@@ -69,7 +134,9 @@ void SharedRides::CreateRegis()
 
 		else if (addvehicle == "n") {
 			Vehicle nocar;
-			(*RU).setVehicle(&nocar);
+			
+			RegisteredUser* RU = new RegisteredUser(username, password1, nocar);
+
 			users.push_back(RU);
 			vehiclebool = true;
 		}
@@ -83,6 +150,9 @@ void SharedRides::CreateRegis()
 }
 
 void SharedRides::main_menu(){
+
+	load();
+
 	int choice = get_input <int>(
 		"[0] Enter as guest" "\n"
 		"[1] Login" "\n"
@@ -95,18 +165,18 @@ void SharedRides::main_menu(){
 	switch (choice) {
 	case 0:
 		//criar um menu de login sem password para guest
-		user_menu();//chama o menu de user (la dentro escolhe menu de guest)
+		//user_menu();//chama o menu de user (la dentro escolhe menu de guest)
 		break;
 	case 1:
 		//login(); //login, se for aceite, muda o currentuser
-		user_menu(); //chama o menu de user(Seja ele carro, sem carro)
+		//user_menu(); //chama o menu de user(Seja ele carro, sem carro)
 		break;
 	case 2:
 		CreateRegis();
-		main_menu();
+		//main_menu();
 		break;
 	case 3:
-		manage_menu();
+		//manage_menu();
 		break;
 	case 4:
 		return;
@@ -115,116 +185,113 @@ void SharedRides::main_menu(){
 	}
 }
 
-void SharedRides::manage_menu(){
-	//por aqui função que pede login com username admin e password admin
-	int choice = get_input <int>(
-		"[0] App Trips" "\n"   //nestes 3 podemos usar os algoritmos de pesquisa para ver um x 
-		"[1] App Users" "\n"	//algoritmos de ordenação para mostrar
-		"[2] App Vehicles" "\n"
-		"[3] End of Month" "\n"
-		"[4] Remove user" "\n"
-		"[3] Exit");
-
-
-
-	switch (choice) {
-	case 1:
-		//login();
-		break;
-	case 2:
-		//SharedRides::CreateRegis();
-		break;
-	}
-}
-
-void SharedRides::user_menu(){
-	if (dynamic_cast<RegisteredUser*>(currentUser) != NULL) {//isto da erro porque nao temos uma
-		//função virtual em user, mas vamos ter, por isso deixa assim
-
-		if (currentUser.vehicle.getnumberSeats() != 0) {
-			int choice = get_input <int>(
-				"[0] My Trips" "\n"
-				"[1] Vehicle" "\n"  //add/remove/edit vehicle inside
-				"[2] New Trip" "\n"     // add/start trip (start begins an added trip) inside
-				"[3] Buddies" "\n"   //add/remove/see(profile/trips) buddies inside
-				"[4] Charge wallet" "\n"
-				"[5] Change password" "\n"
-				"[6] Log Off" "\n"
-				"[7] Delete Profile");
-
-
-
-			switch (choice) {
-			case 1:
-				//login();
-				break;
-			case 2:
-				//SharedRides::CreateRegis();
-				break;
-			}
-		}
-		else {
-			int choice = get_input <int>(
-				"[0] My Trips" "\n"
-				"[1] New Trip" "\n"     // look for a trip
-				"[2] Buddies" "\n"   //add/remove/see(profile/trips) buddies inside
-				"[3] Charge wallet" "\n"
-				"[4] Log Off" "\n"
-				"[5] Change password" "\n"
-				"[6] Delete Profile");
-
-
-
-			switch (choice) {
-			case 1:
-				//main_menu();
-				break;
-			case 2:
-				//SharedRides::CreateRegis();
-				break;
-			}
-		}
-
-	}
-	else {
-
-		int choice = get_input <int>(
-			"[0] New Trip" "\n"     // look for a trip
-			"[1] Charge wallet" "\n"
-			"[3] Delete Profile");
-
-
-
-		switch (choice) {
-		case 1:
-			//login();
-			break;
-		case 2:
-			//SharedRides::CreateRegis();
-			break;
-		}
-
-	}
-}
-
-
-
-
-
-
-
-//void SharedRides::saveUsers() const {
+//void SharedRides::manage_menu(){
+//	//por aqui função que pede login com username admin e password admin
+//	int choice = get_input <int>(
+//		"[0] App Trips" "\n"   //nestes 3 podemos usar os algoritmos de pesquisa para ver um x 
+//		"[1] App Users" "\n"	//algoritmos de ordenação para mostrar
+//		"[2] App Vehicles" "\n"
+//		"[3] End of Month" "\n"
+//		"[4] Remove user" "\n"
+//		"[3] Exit");
 //
-//	ofstream myfile;
-//	myfile.open("users.txt");  // in the users.txt file
-//	 
-//	myfile << users.size();
 //
-//	for (size_t i = 0; i < users.size(); i++)
-//	{
-//		myfile << users[i];
+//
+//	switch (choice) {
+//	case 1:
+//		//login();
+//		break;
+//	case 2:
+//		//SharedRides::CreateRegis();
+//		break;
 //	}
-//
-//	myfile.close();
-//
 //}
+
+//void SharedRides::user_menu(){
+//	//if (dynamic_cast<RegisteredUser*>(currentUser) != NULL) {//isto da erro porque nao temos uma
+//		//função virtual em user, mas vamos ter, por isso deixa assim
+//
+//		//if (currentUser.vehicle.getnumberSeats() != 0) {
+//			int choice = get_input <int>(
+//				"[0] My Trips" "\n"
+//				"[1] Vehicle" "\n"  //add/remove/edit vehicle inside
+//				"[2] New Trip" "\n"     // add/start trip (start begins an added trip) inside
+//				"[3] Buddies" "\n"   //add/remove/see(profile/trips) buddies inside
+//				"[4] Charge wallet" "\n"
+//				"[5] Change password" "\n"
+//				"[6] Log Off" "\n"
+//				"[7] Delete Profile");
+//
+//
+//
+//			switch (choice) {
+//			case 1:
+//				//login();
+//				break;
+//			case 2:
+//				//SharedRides::CreateRegis();
+//				break;
+//			}
+//		}
+//		else {
+//			int choice = get_input <int>(
+//				"[0] My Trips" "\n"
+//				"[1] New Trip" "\n"     // look for a trip
+//				"[2] Buddies" "\n"   //add/remove/see(profile/trips) buddies inside
+//				"[3] Charge wallet" "\n"
+//				"[4] Log Off" "\n"
+//				"[5] Change password" "\n"
+//				"[6] Delete Profile");
+//
+//
+//
+//			switch (choice) {
+//			case 1:
+//				//main_menu();
+//				break;
+//			case 2:
+//				//SharedRides::CreateRegis();
+//				break;
+//			}
+//		}
+//
+//	}
+//	else {
+//
+//		int choice = get_input <int>(
+//			"[0] New Trip" "\n"     // look for a trip
+//			"[1] Charge wallet" "\n"
+//			"[3] Delete Profile");
+//
+//
+//
+//		switch (choice) {
+//		case 1:
+//			//login();
+//			break;
+//		case 2:
+//			//SharedRides::CreateRegis();
+//			break;
+//		}
+//
+//	}
+//}
+
+
+
+
+void SharedRides::saveUsers() const {
+
+	ofstream myfile;
+	myfile.open("users.txt");  // in the users.txt file
+	 
+	myfile << users.size();
+
+	for (size_t i = 0; i < users.size(); i++)
+	{
+		myfile << users[i];
+	}
+
+	myfile.close();
+
+}

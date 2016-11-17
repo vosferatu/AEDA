@@ -39,4 +39,7 @@ string readLine();
 
 string readPassword(const char *prompt, bool show_asterisk);
 
+void getEnter();
+// espera que o utilizador prima ENTER
+
 #endif /* HELPER_H_ */
