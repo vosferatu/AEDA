@@ -33,7 +33,7 @@ class RegisteredUser : public User {
 	
 	vector<int> Trips; //user may want to see trips his been in (tripID's)
 	string homeCity;
-	vector<int> friends; //friends ID
+	vector<int> favorites; //friends ID
 	float maintainenceTAX;
 	string password;
 	Vehicle vehicle;

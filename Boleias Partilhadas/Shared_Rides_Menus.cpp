@@ -83,7 +83,7 @@ void SharedRides::user_menu(){
 		
 			int choice = get_input <int>(
 				"[0] My Trips" "\n"
-				"[1] Vehicle" "\n"  //add/remove/edit vehicle inside
+				"[1] Vehicle" "\n"  //remove/edit vehicle inside
 				"[2] New Trip" "\n"     // add/start trip (start begins an added trip) inside
 				"[3] Buddies" "\n"   //add/remove/see(profile/trips) buddies inside
 				"[4] Charge wallet" "\n"
@@ -105,7 +105,7 @@ void SharedRides::user_menu(){
 		else { //currentUSER does not have a car
 			int choice = get_input <int>(
 				"[0] My Trips" "\n"
-				"[1] Add Vehicle" "\n"  //add/remove/edit vehicle inside
+				"[1] Add Vehicle" "\n"  //add vehicle inside
 				"[2] New Trip" "\n"     // add/start trip (start begins an added trip) inside
 				"[3] Buddies" "\n"   //add/remove/see(profile/trips) buddies inside
 				"[4] Charge wallet" "\n"
@@ -131,7 +131,7 @@ void SharedRides::user_menu(){
 		int choice = get_input <int>(
 			"[0] New Trip" "\n"     // look for a trip
 			"[1] Charge wallet" "\n"
-			"[3] Delete Profile");
+			"[2] Exit App");
 
 
 

@@ -10,10 +10,10 @@ using namespace std;
 class SharedRides
 {
 	static vector<User*> users;
-	static vector<takenTrip> tripsPrinter;
-	static vector<Vehicle> cars;//used to list cars in manage app
-	static vector<Path> caminhos;//saved in file
-	static vector<waitingTrip> tripOffers;
+	static vector<takenTrip*> tripsPrinter;
+	static vector<Vehicle*> cars;//used to list cars in manage app
+	static vector<Path*> caminhos;//saved in file
+	static vector<waitingTrip*> tripOffers;
 	User* currentUser = NULL;  //se não for pointer, slicing problem
 	//static vector<takenTrip> tripsPrinter;
 	//static vector<waitingTrip> tripsWaiting;
