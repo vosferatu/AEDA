@@ -23,7 +23,6 @@ string User::getusername() const {
 }
 
 
-
 unsigned int User::getid() const {
 	return id; 
 }
@@ -42,6 +41,8 @@ string RegisteredUser::getpassword() const
 {
 	return password;
 }
+
+
 
 float RegisteredUser::getmaintainenceTAX() const{
 	return maintainenceTAX;
@@ -68,9 +69,8 @@ vector<int> RegisteredUser::getBuddies() const{
 }
 
 
-ostream& operator<<(ostream& os, const RegisteredUser* RU)
-{
-	os << RU->getid() << endl << RU->getusername() << endl << RU->getpassword() << endl;
+ostream& operator<<(ostream& os, const RegisteredUser* RU) {
+	os << RU->getid() << endl << RU->getusername() << endl << RU->getpassword() << endl << RU->getCity() << endl;
 	return os;
 }
 
@@ -81,6 +81,7 @@ void RegisteredUser::setVehicle(Vehicle* car)  {
 Vehicle RegisteredUser::getVehicle() const {
 	return this->vehicle;
 }
+
 
 
 

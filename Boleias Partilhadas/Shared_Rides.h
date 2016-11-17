@@ -28,12 +28,15 @@ public:
 	static void CreateRegis();
 	//void saveUsers() const;
 	SharedRides() {}; //podemos fazer os loads todos no construtor
+	
 	void main_menu();
 	void manage_menu();
 	void user_menu();
 	void saveUsers() const;
 	void load();
 	static void loadCities();
+
+	User* login(const string &username, const string &password);
 
 	~SharedRides(){
 		for (unsigned int i = 0; i < users.size(); ++i)
@@ -45,6 +48,31 @@ public:
 	
 };
 
+// tratamento de exceções
+
+
+
+template<class T>
+class FileException
+{
+public:
+	T info;
+	FileException(T info)
+	{
+		this->info = info;
+	}
+};
+
+template<class T>
+class LoginException
+{
+public:
+	T info;
+	LoginException(T info)
+	{
+		this->info = info;
+	}
+};
 
 
 #endif
