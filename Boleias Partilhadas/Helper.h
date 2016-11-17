@@ -5,6 +5,7 @@
 #include <limits> // for std::numeric_limits
 #include <string>
 #include <iostream>
+#include <windows.h>
 
 #include <conio.h>
 
@@ -41,5 +42,8 @@ string readPassword(const char *prompt, bool show_asterisk);
 
 void getEnter();
 // espera que o utilizador prima ENTER
+
+void ClearScreen();
+
 
 #endif /* HELPER_H_ */

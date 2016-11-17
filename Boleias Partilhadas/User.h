@@ -54,7 +54,7 @@ public:
 	
 	vector<int> getBuddies() const;
 
-	friend ostream& operator<<(ostream& os, const RegisteredUser* RU); // for now, only for writing in file of users purpose
+	friend ofstream& operator<<(ofstream& os, const RegisteredUser* RU); // for now, only for writing in file of users purpose
 
 };
 

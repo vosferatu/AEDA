@@ -4,6 +4,7 @@
 
 #include <string>
 #include <vector>
+#include <fstream>
 
 using namespace std;
 
@@ -30,6 +31,9 @@ public:
 	void setId(unsigned int id);
 
 	Vehicle& operator=(Vehicle car);
+
+	friend ofstream& operator<<(ofstream& os, const Vehicle* car); // for now, only for writing in file of users purpose
+
 
 };
 

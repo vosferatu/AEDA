@@ -1,13 +1,10 @@
 #include "Shared_Rides.h"
-#include "User.h"
-#include "Helper.h"
-#include <iostream>
-#include <fstream>
+
 
 using namespace std;
 
 vector<User*> SharedRides::users(0);
-vector<Vehicle>SharedRides::cars(0);
+vector<Vehicle*>SharedRides::cars(0);
 vector<string>SharedRides::cities(0);
 
 const string SharedRides::citiesfile = "cities.txt";
@@ -172,6 +169,22 @@ void SharedRides::saveUsers() const {
 	for (size_t i = 0; i < users.size(); i++)
 	{
 		myfile << users[i];
+	}
+
+	myfile.close();
+
+}
+
+void SharedRides::saveVehicles() const {
+
+	ofstream myfile;
+	myfile.open("vehicles.txt");  // in the users.txt file
+
+	myfile << cars.size();
+
+	for (size_t i = 0; i < cars.size(); i++)
+	{
+		myfile << cars[i];
 	}
 
 	myfile.close();

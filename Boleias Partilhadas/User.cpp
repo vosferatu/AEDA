@@ -69,7 +69,7 @@ vector<int> RegisteredUser::getBuddies() const{
 }
 
 
-ostream& operator<<(ostream& os, const RegisteredUser* RU) {
+ofstream& operator<<(ofstream& os, const RegisteredUser* RU) {
 	os << RU->getid() << endl << RU->getusername() << endl << RU->getpassword() << endl << RU->getCity() << endl;
 	return os;
 }
