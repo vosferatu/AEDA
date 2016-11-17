@@ -12,12 +12,10 @@ class SharedRides
 	static vector<User*> users;
 	static vector<takenTrip> tripsPrinter;
 	static vector<Vehicle> cars;//used to list cars in manage app
-	static vector<Path> caminhos;
+	static vector<Path> caminhos;//saved in file
 	static vector<waitingTrip> tripOffers;
 	User* currentUser;  //se não for pointer, slicing problem
-	//static vector<takenTrip> tripsPrinter;
-	//static vector<waitingTrip> tripsWaiting;
-	static vector<string>cities;
+	static vector<string>cities; //saved in file
 
 	static const string citiesfile;
 

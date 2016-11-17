@@ -5,11 +5,10 @@
 #include "User.h"
 #include "DateTime.h"
 #include "Vehicle.h"
-#include "Grafo.h"
 
 
 class takenTrip { //usada para mostrar e gravar viagens dos owners
-//	User* owner;   //usada para mostrar e gravar viagens de cada user (talvez)
+	RegisteredUser* owner;   //usada para mostrar e gravar viagens de cada user (talvez)
 	string startPont;
 	string endPoint;
 	Time endTime;
@@ -25,18 +24,20 @@ class Path {
 	Time timeSpent;
 	string first;
 	string second;
-	float preco;
 };
 
 class Stretch {
-	Path caminho;
+	string stop;
 	vector<int> usersID;
+	Time toNext;
 };
 
 class waitingTrip { 
-	//User* owner;
+	RegisteredUser* owner;
 	vector<Stretch> Viagem;
 	bool full;
+	float pricePerMinute;
+	int maxSeats;
 
 public:
 
