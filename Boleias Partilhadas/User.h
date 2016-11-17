@@ -25,7 +25,7 @@ public:
 	string getusername() const;
 	float getAccount() const;
 	virtual string getpassword() const = 0;
-	virtual Vehicle getVehicle() const=0;
+	virtual Vehicle* getVehicle() const = 0;
 
 };
 
@@ -36,7 +36,7 @@ class RegisteredUser : public User {
 	vector<int> favorites; //friends ID
 	float maintainenceTAX;
 	string password;
-	Vehicle vehicle;
+	Vehicle* vehicle;
 
 
 public:
@@ -50,9 +50,9 @@ public:
 	vector<int> getTrips() const;
 	
 	void setVehicle(Vehicle* car);
-	Vehicle getVehicle() const;
+	Vehicle* getVehicle() const;
 	
-	vector<int> getBuddies() const;
+	vector<int> getFavs() const;
 
 	friend ostream& operator<<(ostream& os, const RegisteredUser* RU); // for now, only for writing in file of users purpose
 

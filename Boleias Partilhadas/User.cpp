@@ -60,12 +60,12 @@ string RegisteredUser::getCity() const {
 	return homeCity;
 }
 
-//unsigned int RegisteredUser::getVehicle() const {
-//	return vehicleID;
-//}
+Vehicle* RegisteredUser::getVehicle() const {
+	return vehicle;
+}
 
-vector<int> RegisteredUser::getBuddies() const{
-	return friends;
+vector<int> RegisteredUser::getFavs() const{
+	return favorites;
 }
 
 
