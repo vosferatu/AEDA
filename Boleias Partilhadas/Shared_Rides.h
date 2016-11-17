@@ -14,7 +14,7 @@ class SharedRides
 	static vector<Vehicle> cars;//used to list cars in manage app
 	static vector<Path> caminhos;
 	static vector<waitingTrip> tripOffers;
-	User* currentUser;  //se não for pointer, slicing problem
+	User* currentUser = NULL;  //se não for pointer, slicing problem
 	//static vector<takenTrip> tripsPrinter;
 	//static vector<waitingTrip> tripsWaiting;
 	static vector<string>cities;
@@ -25,18 +25,31 @@ class SharedRides
 
 
 public:
-	static void CreateRegis();
-	//void saveUsers() const;
-	SharedRides() {}; //podemos fazer os loads todos no construtor
 	
+	
+	//void saveUsers() const;
+	
+	SharedRides() {}; //podemos fazer os loads todos no construtor
+	 
+	void run();
+
+
+	// MENUS
 	void main_menu();
 	void manage_menu();
 	void user_menu();
+
+	// SAVE
 	void saveUsers() const;
+
+	// LOAD
 	void load();
 	static void loadCities();
 
+
+	//LOGIN & REGISTRATION
 	User* login(const string &username, const string &password);
+	static void CreateRegis();
 
 	~SharedRides(){
 		for (unsigned int i = 0; i < users.size(); ++i)

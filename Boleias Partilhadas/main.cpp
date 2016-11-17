@@ -14,7 +14,7 @@ int main() {
 	cout << endl << "Welcome to Shared Rides, please put your seatbelts on and enjoy your travel." << endl;
 
 	SharedRides Boleias;
-	Boleias.main_menu();
+	Boleias.run();
 
 	
 

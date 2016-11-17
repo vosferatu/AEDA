@@ -24,6 +24,9 @@ public:
 	unsigned int getid() const;
 	string getusername() const;
 	float getAccount() const;
+	virtual string getpassword() const = 0;
+	virtual Vehicle getVehicle() const=0;
+
 };
 
 class RegisteredUser : public User {

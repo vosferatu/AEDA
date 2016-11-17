@@ -152,27 +152,15 @@ void SharedRides::CreateRegis()
 }
 
 User* SharedRides::login(const string &username, const string &password) {
-
-
-
-	for (size_t i = 0; i < users.size(); ++i)
-	{
-		if (dynamic_cast<RegisteredUser*>(users[i]) != NULL) {
-			if (users[i]->getusername == username)
-			{
-
-				if (users[i]->g == password)
-				{
-					return membros[i];
-				}
-				throw LoginException<string>("Password errada.");
+	for (size_t i = 0; i < users.size(); ++i) {
+			if (users[i]->getusername == username){
+				if (users[i]->getpassword() == password)
+					return users[i];
+				else throw LoginException<string>("Password errada.");
 			}
-		}
-
-		throw LoginException<string>("Username inexistente.");
+			else throw LoginException<string>("Username inexistente.");
 	}
 }
-
 
 void SharedRides::saveUsers() const {
 
@@ -188,4 +176,15 @@ void SharedRides::saveUsers() const {
 
 	myfile.close();
 
+}
+
+void SharedRides::run() {
+	
+	try {
+		load();
+		main_menu();
+	}
+	catch (FileException<string> err){
+		cout << "Erro: " << err.info << endl;
+	}
 }
