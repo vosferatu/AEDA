@@ -24,6 +24,9 @@ public:
 	unsigned int getid() const;
 	string getusername() const;
 	float getAccount() const;
+	virtual string getpassword() const = 0;
+	virtual Vehicle getVehicle() const=0;
+
 };
 
 class RegisteredUser : public User {
@@ -51,7 +54,7 @@ public:
 	
 	vector<int> getBuddies() const;
 
-	friend ostream& operator<<(ostream& os, const RegisteredUser* RU); // for now, only for writing in file of users purpose
+	friend ofstream& operator<<(ofstream& os, const RegisteredUser* RU); // for now, only for writing in file of users purpose
 
 };
 
