@@ -40,12 +40,16 @@ unsigned int Vehicle::getCarID() const{
 	return idCar;
 }
 
-vector<string> Vehicle::getRota() const{
-	return rota;
+vector<string> Vehicle::getRoute() const{
+	return route;
 }
 
 void Vehicle::setId(unsigned int id)  {
 	this->idCar = id;
+}
+
+void Vehicle::setRoute(vector<string> route) {
+	this->route = route;
 }
 
 Vehicle& Vehicle::operator=(Vehicle car){
@@ -53,7 +57,7 @@ Vehicle& Vehicle::operator=(Vehicle car){
 	this->idCar = car.idCar;
 	this->numberSeats = car.numberSeats;
 	this->rate = car.rate;
-	this->rota = car.rota;
+	this->route = car.route;
 	this->year = car.year;
 	
 	return *this;

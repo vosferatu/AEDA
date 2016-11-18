@@ -41,7 +41,6 @@ string readPassword(const char *prompt, bool show_asterisk)
 				cout << '*';
 		}
 	}
-	cout << endl;
 	return password;
 }
 

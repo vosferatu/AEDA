@@ -3,6 +3,7 @@
 #include "Helper.h"
 #include <iostream>
 #include <fstream>
+#include <sstream>
 
 using namespace std;
 
@@ -48,18 +49,19 @@ void SharedRides::loadCities() {
 
 void SharedRides::CreateRegis()
 {
-	
+
 	// gets username
 	string username = get_input <string>("Please enter a username.");
 	cout << "Username: " << username << "\n";
 
-	while (get_input <string>("Confirm? [y|n]") != "y") {
+	/*while (get_input <string>("Confirm? [y|n]") != "y") {
 		username = get_input <string>("Please enter a username.");
-		cout << "Username: \"" << username << "\"\n";
-	}
+		cout << "Username: " << username << "\n";
+	}*/
 
 	// gets password
 	string password1 = readPassword("Please enter password", true);
+	cout << endl;
 	string password2 = readPassword("Please re-enter password", true);
 
 	while (password1 != password2) {
@@ -67,34 +69,32 @@ void SharedRides::CreateRegis()
 		cin.clear();
 		cin.ignore(10000, '\n');
 		password1 = readPassword("Please enter password", true);
+		cout << endl;
 		password2 = readPassword("Please re-enter password", true);
+
 	}
 
 	//gets city
-
+	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 	bool citybelong = false;
 
-	
 	while (!citybelong) {
 		string city;
 
-		
-		
+		cout << endl;
+
 
 		cout << "Please specify your home city." << endl << "It must belong to one of these: ";
 
 		for (size_t i = 0; i < cities.size(); i++)
 		{
-			if (i < cities.size()-1)
-			cout << cities[i] << ", ";
+			if (i < cities.size() - 1)
+				cout << cities[i] << ", ";
 			else cout << cities[i] << ".\n";
 		}
 
-		
-		getline(cin, city); 
-		cin.clear();
-		cin.ignore(1000, '\n');
-				
+		city = readLine();
+
 		for (size_t i = 0; i < cities.size(); i++)
 		{
 			if (city == cities[i])
@@ -104,28 +104,75 @@ void SharedRides::CreateRegis()
 
 
 	// gets vehicle
-	bool vehiclebool = false; 
+	bool vehiclebool = false;
 	string addvehicle;
 
 
 	while (!vehiclebool)
 	{
 		addvehicle = get_input <string>("Do you want to add a vehicle?");
-				
-		if (addvehicle == "y")
-		{
+
+		if (addvehicle == "y") {
+			cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 			cout << "Please specify its brand and model." << endl;
 			string brand = readLine();
-			
+
 			unsigned int year = get_input <unsigned int>("Please specify its year.");
 			unsigned int seats = get_input <unsigned int>("Please specify the number of seats of your car.");
 			char rate = get_input <char>("In a scale [F(worst) - A (best)], please specify your evaluation of your car conditions.");
 
 			Vehicle v1(seats, brand, year, rate);
 
-			RegisteredUser* RU = new RegisteredUser(username, password1,v1);
-			
+			RegisteredUser* RU = new RegisteredUser(username, password1, v1);
+
 			(*RU).getVehicle().setId((*RU).getid());
+			
+				
+		
+			// adds route 
+			bool routebool = false;
+			string cityroute;
+			string addroute;
+			vector<string> rout(0);
+
+			while (!routebool) {
+				addroute = get_input <string>("Do you want do add a common route you do?");
+				cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+				
+				if (addroute == "y") {
+
+					cout << "Please specify the cities of your route, separared by slash";
+					cout << endl << "Example: Porto-Lisboa-Vila Real" << endl;
+					cout << "It must belong to one of these : ";
+
+					for (size_t i = 0; i < cities.size(); i++) {
+						if (i < cities.size() - 1)
+							cout << cities[i] << ", ";
+						else cout << cities[i] << ".\n";
+					}
+
+					cityroute = readLine();
+					stringstream ss(cityroute);
+
+					while (ss.good()){
+						string substr;
+						getline(ss, substr, '-');
+						rout.push_back(substr);
+					}
+
+					routebool = true;
+					break; // -----> em vez de break, ir pa menu principal p fazer login
+				}
+				else if (addroute == "n") {
+					routebool = true;
+					break; // -----> em vez de break, ir pa menu principal p fazer login
+				}
+				else
+					cout << "\nPlease insert \"y\" or \"n.\" \n";
+					routebool = false;
+			}
+
+			(*RU).getVehicle().setRoute(rout);
 
 			users.push_back(RU);
 			cars.push_back((*RU).getVehicle());
@@ -134,7 +181,7 @@ void SharedRides::CreateRegis()
 
 		else if (addvehicle == "n") {
 			Vehicle nocar;
-			
+
 			RegisteredUser* RU = new RegisteredUser(username, password1, nocar);
 
 			users.push_back(RU);
@@ -147,7 +194,14 @@ void SharedRides::CreateRegis()
 		}
 
 	}
+
+	// gets route
+
+	
 }
+
+
+
 
 void SharedRides::main_menu(){
 
@@ -173,7 +227,7 @@ void SharedRides::main_menu(){
 		break;
 	case 2:
 		CreateRegis();
-		//main_menu();
+		main_menu();
 		break;
 	case 3:
 		//manage_menu();

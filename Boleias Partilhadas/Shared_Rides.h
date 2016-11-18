@@ -35,6 +35,8 @@ public:
 	void load();
 	static void loadCities();
 
+
+
 	~SharedRides(){
 		for (unsigned int i = 0; i < users.size(); ++i)
 		{
