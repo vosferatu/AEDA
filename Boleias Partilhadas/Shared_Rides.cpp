@@ -3,7 +3,7 @@
 using namespace std;
 
 vector<User*> SharedRides::users(0);
-vector<Vehicle*>SharedRides::cars(0);
+vector<Vehicle>SharedRides::cars(0);
 vector<string>SharedRides::cities(0);
 
 const string SharedRides::citiesfile = "cities.txt";
@@ -51,11 +51,6 @@ void SharedRides::CreateRegis()
 	string username = get_input <string>("Please enter a username.");
 	cout << "Username: " << username << "\n";
 
-	/*while (get_input <string>("Confirm? [y|n]") != "y") {
-		username = get_input <string>("Please enter a username.");
-		cout << "Username: " << username << "\n";
-	}*/
-
 	// gets password
 	string password1 = readPassword("Please enter password", true);
 	cout << endl;
@@ -72,7 +67,7 @@ void SharedRides::CreateRegis()
 	}
 
 	//gets city
-	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	cin.ignore(numeric_limits<streamsize>::max(), '\n');
 	bool citybelong = false;
 
 	while (!citybelong) {
@@ -107,10 +102,10 @@ void SharedRides::CreateRegis()
 
 	while (!vehiclebool)
 	{
-		addvehicle = get_input <string>("Do you want to add a vehicle?");
+		addvehicle = get_input <string>("Do you want to add a vehicle? [y|n]");
 
 		if (addvehicle == "y") {
-			cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			cin.ignore(numeric_limits <streamsize>::max(), '\n');
 			cout << "Please specify its brand and model." << endl;
 			string brand = readLine();
 
@@ -133,8 +128,9 @@ void SharedRides::CreateRegis()
 			vector<string> rout(0);
 
 			while (!routebool) {
-				addroute = get_input <string>("Do you want do add a common route you do?");
-				cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+				addroute = get_input <string>("Do you want do add a common route you do? [y|n]");
+				
+				cin.ignore(numeric_limits <streamsize>::max(), '\n');
 				
 				if (addroute == "y") {
 
@@ -199,7 +195,7 @@ void SharedRides::CreateRegis()
 
 User* SharedRides::login(const string &username, const string &password) {
 	for (size_t i = 0; i < users.size(); ++i) {
-			if (users[i]->getusername == username){
+			if (users[i]->getusername() == username){
 				if (users[i]->getpassword() == password)
 					return users[i];
 				else throw LoginException<string>("Password errada.");
@@ -250,3 +246,4 @@ void SharedRides::run() {
 		cout << "Erro: " << err.info << endl;
 	}
 }
+

@@ -63,11 +63,11 @@ Vehicle& Vehicle::operator=(Vehicle car){
 	return *this;
 }
 
-ofstream& operator<< (ofstream& os, const Vehicle* car) {
-	os << car->getCarID() << endl << car->getBrand() << endl << car->getYear() << endl <<car->getRate() << endl;
+ofstream& operator<< (ofstream& os, const Vehicle car) {
+	os << car.getCarID() << endl << car.getBrand() << endl << car.getYear() << endl <<car.getRate() << endl;
 
-	for (size_t i = 0; i < car->getRota().size(); i++){
-		os << car->getRota()[i] << endl;
+	for (size_t i = 0; i < car.getRoute().size(); i++){
+		os << car.getRoute()[i] << endl;
 	}
 
 	return os;

@@ -60,9 +60,9 @@ string RegisteredUser::getCity() const {
 	return homeCity;
 }
 
-//unsigned int RegisteredUser::getVehicle() const {
-//	return vehicleID;
-//}
+Vehicle RegisteredUser::getVehicle() const {
+	return this->vehicle;
+}
 
 vector<int> RegisteredUser::getBuddies() const{
 	return friends;
@@ -77,13 +77,6 @@ ofstream& operator<<(ofstream& os, const RegisteredUser* RU) {
 void RegisteredUser::setVehicle(Vehicle* car)  {
 	this->vehicle = (*car);
 }
-
-Vehicle RegisteredUser::getVehicle() const {
-	return this->vehicle;
-}
-
-
-
 
 
 

@@ -1,3 +1,4 @@
+
 #pragma once
 #ifndef HELPER_H_
 #define HELPER_H_
@@ -8,6 +9,8 @@
 #include <windows.h>
 
 #include <conio.h>
+
+#undef max // because of numeric_limits
 
 
 using namespace std;

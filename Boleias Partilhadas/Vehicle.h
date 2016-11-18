@@ -6,6 +6,8 @@
 #include <vector>
 #include <fstream>
 
+#undef max // because of numeric_limits
+
 using namespace std;
 
 class Vehicle {
@@ -34,7 +36,7 @@ public:
 
 	Vehicle& operator=(Vehicle car);
 
-	friend ofstream& operator<<(ofstream& os, const Vehicle* car); // for now, only for writing in file of users purpose
+	friend ofstream& operator<<(ofstream& os, const Vehicle car); // for now, only for writing in file of users purpose
 
 
 };
