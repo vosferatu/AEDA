@@ -3,7 +3,7 @@
 using namespace std;
 
 vector<User*> SharedRides::users(0);
-vector<Vehicle>SharedRides::cars(0);
+vector<Vehicle*>SharedRides::cars(0);
 vector<string>SharedRides::cities(0);
 
 const string SharedRides::citiesfile = "cities.txt";
@@ -117,7 +117,7 @@ void SharedRides::CreateRegis()
 
 			RegisteredUser* RU = new RegisteredUser(username, password1, v1);
 
-			(*RU).getVehicle().setId((*RU).getid());
+			RU->getVehicle()->setId(RU->getid());
 			
 				
 		
@@ -165,7 +165,7 @@ void SharedRides::CreateRegis()
 					routebool = false;
 			}
 
-			(*RU).getVehicle().setRoute(rout);
+			RU->getVehicle()->setRoute(rout);
 
 			users.push_back(RU);
 			cars.push_back((*RU).getVehicle());
@@ -191,6 +191,29 @@ void SharedRides::CreateRegis()
 	// gets route
 
 	
+}
+
+void SharedRides::showTrips(){
+	if (dynamic_cast<RegisteredUser*>(currentUser) == NULL) {
+		cout << endl << "Not available!" << endl;
+		return;
+	}
+
+	if (currentUser->getnumTrips() == 0) {
+		cout << endl << "You have no trips in your history!" << endl;
+	}
+
+	vector<int> vec = currentUser->getTrips();
+	cout << "\tYour Trip History:" << endl << endl;
+	for (size_t i = 0; i < vec.size(); i++){
+		for (size_t j = 0; j < tripsPrinter.size(); j++) {
+			if (tripsPrinter[j].getTripCode() == vec[i]) {
+				cout << "Trip number " << i+1 << endl;
+				cout << tripsPrinter[j] << endl;
+				break;
+			}
+		}
+	}
 }
 
 User* SharedRides::login(const string &username, const string &password) {

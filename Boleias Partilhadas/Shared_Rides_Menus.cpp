@@ -95,7 +95,7 @@ void SharedRides::user_menu(){
 
 			switch (choice) {
 			case 1:
-				//login();
+				showTrips();
 				break;
 			case 2:
 				//SharedRides::CreateRegis();

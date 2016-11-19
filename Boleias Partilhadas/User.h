@@ -26,6 +26,12 @@ public:
 	float getAccount() const;
 	virtual string getpassword() const = 0;
 	virtual Vehicle* getVehicle() const = 0;
+	virtual void chargeAccount(float addition);
+	virtual float getmaintainenceTAX() const = 0;
+	virtual unsigned int getnumTrips() const = 0;
+	virtual string getCity() const = 0;
+	virtual vector<int> getTrips() const = 0;
+	virtual vector<int> getFavs() const = 0;
 
 };
 
@@ -48,11 +54,10 @@ public:
 	unsigned int getnumTrips() const;
 	string getCity() const;
 	vector<int> getTrips() const;
+	vector<int> getFavs() const;
 	
 	void setVehicle(Vehicle* car);
 	Vehicle* getVehicle() const;
-	
-	vector<int> getFavs() const;
 
 	friend ofstream& operator<<(ofstream& os, const RegisteredUser* RU); // for now, only for writing in file of users purpose
 

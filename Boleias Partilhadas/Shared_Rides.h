@@ -27,9 +27,7 @@ class SharedRides
 	User* currentUser = NULL;  //se não for pointer, slicing problem
 
 	static vector<string>cities;
-
 	static const string citiesfile;
-
 	static unsigned int numbercities;
 
 
@@ -67,6 +65,9 @@ public:
 			delete users[i];
 		}
 	}
+
+	//MENUS Functions
+	void showTrips();
 
 	
 };

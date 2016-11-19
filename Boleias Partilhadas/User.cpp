@@ -31,6 +31,10 @@ float User::getAccount() const{
 	return account;
 }
 
+void User::chargeAccount(float addition){
+	account = account + addition;
+}
+
 /////////////////////////////////////////////////// REGISTERED USER /////////////////////////////////////////////////////
 
 RegisteredUser::RegisteredUser(string username, string password, Vehicle car) : User(username), vehicle(car){
@@ -48,7 +52,7 @@ float RegisteredUser::getmaintainenceTAX() const{
 	return maintainenceTAX;
 }
 
-vector<int> RegisteredUser::getTrips() const {
+vector<takenTrip*> RegisteredUser::getTrips() const {
 	return Trips;
 }
 
@@ -68,14 +72,13 @@ vector<int> RegisteredUser::getFavs() const{
 	return favorites;
 }
 
-
 ofstream& operator<<(ofstream& os, const RegisteredUser* RU) {
 	os << RU->getid() << endl << RU->getusername() << endl << RU->getpassword() << endl << RU->getCity() << endl;
 	return os;
 }
 
 void RegisteredUser::setVehicle(Vehicle* car)  {
-	this->vehicle = (*car);
+	this->vehicle = car;
 }
 
 

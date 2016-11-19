@@ -9,15 +9,19 @@
 
 
 class takenTrip { //usada para mostrar e gravar viagens dos owners
-	RegisteredUser* owner;   //usada para mostrar e gravar viagens de cada user (talvez)
-	string startPont;
+	string owner;   //usada para mostrar e gravar viagens de cada user (talvez)
+	string startPoint;
 	string endPoint;
 	Time endTime;
 	Time startTime;
 	Date day;
-	unsigned int tripCode;
+	static unsigned int tripCode;
 
 public:
+	takenTrip(string owns, string start, string finish, Time end);
+	unsigned int getTripCode();
+
+	friend ostream& operator<<(ostream& out, const takenTrip& trip);
 
 };
 
@@ -34,7 +38,7 @@ class Stretch {
 };
 
 class waitingTrip { 
-	RegisteredUser* owner;
+	User* owner;
 	vector<Stretch> Viagem;
 	bool full;
 	float pricePerMinute;
