@@ -1,5 +1,4 @@
 #pragma once
-
 #ifndef USER_H_
 #define USER_H_
 
@@ -9,6 +8,7 @@
 #include "DateTime.h"
 #include "Trip.h"
 
+#undef max // because of numeric_limits
 using namespace std;
 
 class User{
@@ -54,7 +54,7 @@ public:
 	
 	vector<int> getFavs() const;
 
-	friend ostream& operator<<(ostream& os, const RegisteredUser* RU); // for now, only for writing in file of users purpose
+	friend ofstream& operator<<(ofstream& os, const RegisteredUser* RU); // for now, only for writing in file of users purpose
 
 };
 

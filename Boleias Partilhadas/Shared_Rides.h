@@ -3,7 +3,17 @@
 #define SHARED_RIDES_H_
 
 #include "User.h"
+#include "Helper.h"
+#include "Vehicle.h"
+
+#include <iostream>
+#include <fstream>
 #include <vector>
+#include <limits>
+#include <sstream>
+#include <iostream>
+
+#undef max // because of numeric_limits
 
 using namespace std;
 
@@ -40,6 +50,7 @@ public:
 
 	// SAVE
 	void saveUsers() const;
+	void saveVehicles() const;
 
 	// LOAD
 	void load();

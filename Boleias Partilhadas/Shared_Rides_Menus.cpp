@@ -61,7 +61,7 @@ void SharedRides::manage_menu(){
 		"[2] App Vehicles" "\n"
 		"[3] End of Month" "\n"
 		"[4] Remove user" "\n"
-		"[3] Exit");
+		"[3] Log Off");
 
 
 

@@ -69,7 +69,7 @@ vector<int> RegisteredUser::getFavs() const{
 }
 
 
-ostream& operator<<(ostream& os, const RegisteredUser* RU) {
+ofstream& operator<<(ofstream& os, const RegisteredUser* RU) {
 	os << RU->getid() << endl << RU->getusername() << endl << RU->getpassword() << endl << RU->getCity() << endl;
 	return os;
 }
@@ -77,13 +77,6 @@ ostream& operator<<(ostream& os, const RegisteredUser* RU) {
 void RegisteredUser::setVehicle(Vehicle* car)  {
 	this->vehicle = (*car);
 }
-
-Vehicle RegisteredUser::getVehicle() const {
-	return this->vehicle;
-}
-
-
-
 
 
 

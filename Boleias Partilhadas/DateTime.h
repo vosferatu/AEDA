@@ -1,4 +1,5 @@
 #pragma once
+#undef max // because of numeric_limits
 
 #ifndef TRIPDATETIME_H_
 #define TRIPDATETIME_H_

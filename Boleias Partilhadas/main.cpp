@@ -16,7 +16,7 @@ int main() {
 	SharedRides Boleias;
 	Boleias.run();
 
-	
+
 
 	return 0;
 

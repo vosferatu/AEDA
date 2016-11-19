@@ -1,3 +1,4 @@
+
 #pragma once
 #ifndef HELPER_H_
 #define HELPER_H_
@@ -5,8 +6,11 @@
 #include <limits> // for std::numeric_limits
 #include <string>
 #include <iostream>
+#include <windows.h>
 
 #include <conio.h>
+
+#undef max // because of numeric_limits
 
 
 using namespace std;
@@ -41,5 +45,8 @@ string readPassword(const char *prompt, bool show_asterisk);
 
 void getEnter();
 // espera que o utilizador prima ENTER
+
+void ClearScreen();
+
 
 #endif /* HELPER_H_ */

@@ -1,3 +1,4 @@
+// because of numeric_limits
 #pragma once
 #ifndef TRIP_H_
 #define TRIP_H_
