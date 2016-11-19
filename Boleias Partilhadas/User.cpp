@@ -46,13 +46,11 @@ string RegisteredUser::getpassword() const
 	return password;
 }
 
-
-
 float RegisteredUser::getmaintainenceTAX() const{
 	return maintainenceTAX;
 }
 
-vector<takenTrip*> RegisteredUser::getTrips() const {
+vector<int> RegisteredUser::getTrips() const {
 	return Trips;
 }
 
@@ -68,8 +66,22 @@ Vehicle* RegisteredUser::getVehicle() const {
 	return vehicle;
 }
 
-void RegisteredUser::editVehicle(){
+void RegisteredUser::setHome(string city){
+	this->homeCity = city;
+}
 
+void RegisteredUser::setPassword(string password){
+	this->password = password;
+}
+
+void RegisteredUser::showProfile(){
+	cout << "\n\tProfile of " << this->getusername() << ":" << endl;
+	cout << "Home City: " << this->getCity() << endl;
+	cout << "Number of Trips: " << this->getnumTrips() << endl;
+	cout << "Number of Buddies: " << this->getFavs().size() << endl;
+	if (this->getVehicle()->getYear() == 0)
+		cout << "Car: No." << endl;
+	else cout << "Car: Yes." << endl;
 }
 
 vector<int> RegisteredUser::getFavs() const{

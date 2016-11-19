@@ -32,6 +32,9 @@ public:
 	virtual string getCity() const = 0;
 	virtual vector<int> getTrips() const = 0;
 	virtual vector<int> getFavs() const = 0;
+	virtual void setPassword(string password) = 0;
+	virtual void setHome(string city) = 0;
+	virtual void showProfile() = 0;
 
 };
 
@@ -58,6 +61,10 @@ public:
 	
 	void setVehicle(Vehicle* car);
 	Vehicle* getVehicle() const;
+	void setHome(string city);
+	void setPassword(string password);
+
+	void showProfile();
 
 	friend ofstream& operator<<(ofstream& os, const RegisteredUser* RU); // for now, only for writing in file of users purpose
 

@@ -187,7 +187,7 @@ void SharedRides::CreateRegis()
 		}
 
 	}
-	
+	cout << endl << "Now you have to Login to confirm your account.\n";
 }
 
 void SharedRides::showTrips(){
@@ -227,6 +227,11 @@ void SharedRides::userWithVehicleMenu() {
 		break;
 	case 2:
 		removeVehicle();
+		break;
+	default:
+		cout << "Please, input an integer suitable to the options shown." << endl;
+		cin.ignore(numeric_limits <streamsize>::max(), '\n');
+		userWithVehicleMenu();
 		break;
 	}
 }
@@ -283,7 +288,7 @@ void SharedRides::editVehicle(){
 
 	}		
 		break;
-	case 2:
+	case 2: {
 		string cityroute;
 		vector<string> rout(0);
 		cout << "Please specify the cities of your route, separared by slash";
@@ -310,6 +315,12 @@ void SharedRides::editVehicle(){
 				break;
 			}
 		}
+	}
+		break;
+	default:
+		cout << "Please, input an integer suitable to the options shown." << endl;
+		cin.ignore(numeric_limits <streamsize>::max(), '\n');
+		editVehicle();
 		break;
 	}
 }
@@ -380,6 +391,116 @@ void SharedRides::addVehicle() {
 	currentUser->getVehicle()->setRoute(rout);
 
 	cars.push_back(currentUser->getVehicle());
+}
+
+void SharedRides::creditAccount(){
+	cout << endl << "Your current balance: " << currentUser->getAccount() << "$" << endl;
+	cout << "(Input 0 if you selected the wrong menu)" << endl;
+	float novo = 0.0;
+	while (true) {
+		novo = get_input <float>("How much do you want to credit your acount?(X.Y)");
+		if (novo < 0) {
+			cout << "Cannot charge negative values" << endl;
+			continue;
+		}
+		if (novo == 0)
+			return;
+		currentUser->chargeAccount(novo);
+		break;
+	}
+	cout << endl << "Your new balance: " << currentUser->getAccount() << "$" << endl;
+}
+
+void SharedRides::changeProfile(){
+	currentUser->showProfile();
+	int choice = get_input <int>(
+		"[0] Edit my Password" "\n"
+		"[1] Edit my City" "\n");
+
+	switch (choice) {
+	case 1: {
+		string password1 = readPassword("Please enter password", true);
+		cout << endl;
+		string password2 = readPassword("Please re-enter password", true);
+
+		while (password1 != password2) {
+			cout << "Error! Passwords do not match." "\n\n";
+			cin.clear();
+			cin.ignore(10000, '\n');
+			password1 = readPassword("Please enter password", true);
+			cout << endl;
+			password2 = readPassword("Please re-enter password", true);
+
+		}
+		currentUser->setPassword(password1);
+		cout << "\nPassword edited.\n";
+	}
+		break;
+	case 2: {
+		bool citybelong = false;
+		string city;
+		while (!citybelong) {
+			cout << "\nPlease specify your home city." << endl << "It must belong to one of these: ";
+
+			for (size_t i = 0; i < cities.size(); i++){
+				if (i < cities.size() - 1)
+					cout << cities[i] << ", ";
+				else cout << cities[i] << ".\n";
+			}
+			city = readLine();
+			for (size_t i = 0; i < cities.size(); i++)
+			{
+				if (city == cities[i])
+					citybelong = true;
+			}
+		}
+		currentUser->setHome(city);
+		cout << "\nHome city edited: " << city << endl;
+	}
+		break;
+	default:
+		cout << "Please, input an integer suitable to the options shown." << endl;
+		cin.ignore(numeric_limits <streamsize>::max(), '\n');
+		changeProfile();
+		break;
+	}
+}
+
+void SharedRides::deleteAccount(){
+	string remaccount;
+
+	while (true) {
+		remaccount = get_input <string>("Do you want to remove your vehicle? [y|n]");
+		cin.ignore(numeric_limits <streamsize>::max(), '\n');
+
+		if (remaccount == "y") {
+			if (currentUser->getVehicle()->getYear() != 0) {
+				//delete of system!!!!!!!!!!!!
+				for (size_t i = 0; i < cars.size(); i++) {
+					if (cars[i]->getCarID() == currentUser->getid()) {
+						cars.erase(cars.begin() + i);
+						break;
+					}
+				}
+			}
+			//delete of system!!!!!!!!!!!!
+			size_t j;
+			for (j = 0; j < users.size(); j++) {
+				if (users[j]->getid() == currentUser->getid())
+					break;
+			}
+			currentUser = NULL;
+			cars.erase(cars.begin() + j);
+		}
+
+		if (remaccount == "n") {
+			cout << "Getting back..." << endl;
+			break;
+		}
+		else cout << "Error! Please enter y or n." << endl;
+	}
+
+	return;
 }
 
 User* SharedRides::login(const string &username, const string &password) {

@@ -85,7 +85,7 @@ void SharedRides::user_menu(){
 			int choice = get_input <int>(
 				"[0] My Trips" "\n"
 				"[1] Vehicle" "\n"  //remove/edit vehicle inside
-				"[2] New Trip" "\n"     // add/start trip (start begins an added trip) inside
+				"[2] New Trip" "\n"     // add/start/enter trip (start begins an added trip) inside
 				"[3] Buddies" "\n"   //add/remove/see(profile/trips) buddies inside
 				"[4] Charge wallet" "\n"
 				"[5] Change profile" "\n"
@@ -104,14 +104,18 @@ void SharedRides::user_menu(){
 			case 3:
 				break;
 			case 4:
+				creditAccount();
 				break;
 			case 5:
+				changeProfile();
 				break;
 			case 6:
 				currentUser = NULL; //logs off
 				return; //returns to main_menu
 				break;
 			case 7:
+				deleteAccount();
+				return;
 				break;
 			default:
 				cout << "Please, input an integer suitable to the options shown." << endl;
@@ -123,7 +127,7 @@ void SharedRides::user_menu(){
 			int choice = get_input <int>(
 				"[0] My Trips" "\n"
 				"[1] Add Vehicle" "\n"  //add vehicle inside
-				"[2] New Trip" "\n"     // add/start trip (start begins an added trip) inside
+				"[2] New Trip" "\n"     // enter trip (start begins an added trip) inside
 				"[3] Buddies" "\n"   //add/remove/see(profile/trips) buddies inside
 				"[4] Charge wallet" "\n"
 				"[5] Change profile" "\n"
@@ -144,14 +148,18 @@ void SharedRides::user_menu(){
 			case 3:
 				break;
 			case 4:
+				creditAccount();
 				break;
 			case 5:
+				changeProfile();
 				break;
 			case 6:
 				currentUser = NULL; //logs off
 				return; //returns to main_menu
 				break;
 			case 7:
+				deleteAccount();
+				return;
 				break;
 			default:
 				cout << "Please, input an integer suitable to the options shown." << endl;
@@ -172,10 +180,10 @@ void SharedRides::user_menu(){
 
 		switch (choice) {
 		case 0:
-			//login();
+			//missing
 			break;
 		case 1:
-			//SharedRides::CreateRegis();
+			creditAccount();
 			break;
 		case 2:
 			currentUser = NULL; //resets currentUser,

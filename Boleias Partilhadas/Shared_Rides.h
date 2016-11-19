@@ -72,6 +72,9 @@ public:
 	void editVehicle();
 	void removeVehicle();
 	void addVehicle();
+	void creditAccount();
+	void changeProfile();
+	void deleteAccount();
 
 	
 };
