@@ -434,5 +434,7 @@ void SharedRides::run() {
 	catch (FileException<string> err){
 		cout << "Erro: " << err.info << endl;
 	}
+	//save(); //para guardar nos ficheiros as alterações
+	return;
 }
 

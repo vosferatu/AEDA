@@ -9,14 +9,14 @@ void SharedRides::main_menu() {
 		"[0] Enter as guest" "\n"
 		"[1] Login" "\n"
 		"[2] Register" "\n"
-		"[4] Exit");
+		"[3] Exit");
 
 
 
 	switch (choice) {
 	case 0:
 		//criar um menu de login sem password para guest
-		//user_menu();//chama o menu de user (la dentro escolhe menu de guest)
+		//user_menu();//chama o menu de user (la dentro escolhe automaticamente menu de guest)
 		break;
 	case 1:
 	{
@@ -45,9 +45,13 @@ void SharedRides::main_menu() {
 		break;
 	case 3:
 		return;
+		break;
 	default:
+		cout << "Please, input an integer suitable to the options shown." << endl;
+		cin.ignore(numeric_limits <streamsize>::max(), '\n');
 		break;
 	}
+	main_menu(); //always called. after done functions or bad inputs here, until exit app
 }
 
 void SharedRides::manage_menu(){
@@ -104,10 +108,14 @@ void SharedRides::user_menu(){
 			case 5:
 				break;
 			case 6:
+				currentUser = NULL; //logs off
+				return; //returns to main_menu
 				break;
 			case 7:
 				break;
 			default:
+				cout << "Please, input an integer suitable to the options shown." << endl;
+				cin.ignore(numeric_limits <streamsize>::max(), '\n');
 				break;
 			}
 		}
@@ -140,10 +148,14 @@ void SharedRides::user_menu(){
 			case 5:
 				break;
 			case 6:
+				currentUser = NULL; //logs off
+				return; //returns to main_menu
 				break;
 			case 7:
 				break;
-			default :
+			default:
+				cout << "Please, input an integer suitable to the options shown." << endl;
+				cin.ignore(numeric_limits <streamsize>::max(), '\n');
 				break;
 			}
 		}
@@ -166,10 +178,15 @@ void SharedRides::user_menu(){
 			//SharedRides::CreateRegis();
 			break;
 		case 2:
+			currentUser = NULL; //resets currentUser,
+			return; //returns to main_menu
 			break;
 		default:
+			cout << "Please, input an integer suitable to the options shown." << endl;
+			cin.ignore(numeric_limits <streamsize>::max(), '\n');
 			break;
 		}
-
 	}
+	user_menu();//always called. after done functions or bad inputs here,
+				//until logoff/delete profile or exitApp in guest
 }
