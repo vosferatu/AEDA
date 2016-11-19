@@ -47,7 +47,7 @@ class RegisteredUser : public User {
 
 public:
 
-	RegisteredUser(string username, string password, Vehicle car);
+	RegisteredUser(string username, string password, Vehicle* car);
 
 	string getpassword() const;
 	float getmaintainenceTAX() const;

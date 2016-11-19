@@ -33,11 +33,16 @@ public:
 	//set functions
 	void setRoute(vector<string> route);
 	void setId(unsigned int id);
+	void setYear(unsigned int year);
+	void setSeats(unsigned int seats);
+	void setBrand(string brand);
+	void setRate(char rate);
+	void setVehicle(Vehicle* v1);
 
 	Vehicle& operator=(Vehicle car);
 
 	friend ofstream& operator<<(ofstream& os, const Vehicle car); // for now, only for writing in file of users purpose
-
+	friend ostream& operator<<(ostream& os, const Vehicle car);
 
 };
 

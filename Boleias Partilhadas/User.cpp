@@ -37,7 +37,7 @@ void User::chargeAccount(float addition){
 
 /////////////////////////////////////////////////// REGISTERED USER /////////////////////////////////////////////////////
 
-RegisteredUser::RegisteredUser(string username, string password, Vehicle car) : User(username), vehicle(car){
+RegisteredUser::RegisteredUser(string username, string password, Vehicle* car) : User(username), vehicle(car){
 	this->password = password;
 }
 
@@ -66,6 +66,10 @@ string RegisteredUser::getCity() const {
 
 Vehicle* RegisteredUser::getVehicle() const {
 	return vehicle;
+}
+
+void RegisteredUser::editVehicle(){
+
 }
 
 vector<int> RegisteredUser::getFavs() const{

@@ -173,7 +173,7 @@ void SharedRides::CreateRegis()
 		}
 
 		else if (addvehicle == "n") {
-			Vehicle nocar;
+			Vehicle* nocar;
 
 			RegisteredUser* RU = new RegisteredUser(username, password1, nocar);
 
@@ -187,9 +187,6 @@ void SharedRides::CreateRegis()
 		}
 
 	}
-
-	// gets route
-
 	
 }
 
@@ -214,6 +211,175 @@ void SharedRides::showTrips(){
 			}
 		}
 	}
+}
+
+void SharedRides::userWithVehicleMenu() {
+	cout << endl << "Your Vehicle:" << endl;
+	cout << currentUser->getVehicle << endl;
+
+	int choice = get_input <int>(
+		"[0] Edit my Vehicle" "\n"
+		"[1] Remove my Vehicle" "\n");
+
+	switch (choice) {
+	case 1:
+		editVehicle();
+		break;
+	case 2:
+		removeVehicle();
+		break;
+	}
+}
+
+void SharedRides::editVehicle(){
+	int choice = get_input <int>(
+		"[0] Change whole Vehicle" "\n"
+		"[1] Change Route" "\n");
+
+	switch (choice) {
+	case 1: {
+		cin.ignore(numeric_limits <streamsize>::max(), '\n');
+		cout << "Please specify its brand and model." << endl;
+		string brand = readLine();
+
+		unsigned int year = get_input <unsigned int>("Please specify its year.");
+		unsigned int seats = get_input <unsigned int>("Please specify the number of seats of your car.");
+		char rate = get_input <char>("In a scale [F(worst) - A (best)], please specify your evaluation of your car conditions.");
+
+		currentUser->getVehicle()->setRate(rate);
+		currentUser->getVehicle()->setYear(year);
+		currentUser->getVehicle()->setSeats(seats);
+		currentUser->getVehicle()->setBrand(brand);
+		currentUser->getVehicle()->setId(currentUser->getid());
+		// adds route 
+		string cityroute;
+		vector<string> rout(0);
+
+		cout << "Now, enter your new route." << endl;
+		cout << "Please specify the cities of your route, separared by slash";
+		cout << endl << "Example: Porto-Lisboa-Vila Real" << endl;
+		cout << "It must belong to one of these : ";
+		for (size_t i = 0; i < cities.size(); i++) {
+			if (i < cities.size() - 1)
+				cout << cities[i] << ", ";
+			else cout << cities[i] << ".\n";
+		}
+		cityroute = readLine();
+		stringstream ss(cityroute);
+
+		while (ss.good()) {
+			string substr;
+			getline(ss, substr, '-');
+			rout.push_back(substr);
+		}
+		currentUser->getVehicle()->setRoute(rout);
+
+		for (size_t i = 0; i < cars.size(); i++) {
+			if (cars[i]->getCarID() == currentUser->getid()) {
+				cars[i] = currentUser->getVehicle();
+				break;
+			}
+		}
+
+	}		
+		break;
+	case 2:
+		string cityroute;
+		vector<string> rout(0);
+		cout << "Please specify the cities of your route, separared by slash";
+		cout << endl << "Example: Porto-Lisboa-Vila Real" << endl;
+		cout << "It must belong to one of these : ";
+		for (size_t i = 0; i < cities.size(); i++) {
+			if (i < cities.size() - 1)
+				cout << cities[i] << ", ";
+			else cout << cities[i] << ".\n";
+		}
+		cityroute = readLine();
+		stringstream ss(cityroute);
+
+		while (ss.good()) {
+			string substr;
+			getline(ss, substr, '-');
+			rout.push_back(substr);
+		}
+		currentUser->getVehicle()->setRoute(rout);
+
+		for (size_t i = 0; i < cars.size(); i++) {
+			if (cars[i]->getCarID() == currentUser->getid()) {
+				cars[i] = currentUser->getVehicle();
+				break;
+			}
+		}
+		break;
+	}
+}
+
+void SharedRides::removeVehicle(){
+	string remvehicle;
+
+	while (true){
+		remvehicle = get_input <string>("Do you want to remove your vehicle? [y|n]");
+		cin.ignore(numeric_limits <streamsize>::max(), '\n');
+
+		if (remvehicle == "y") {
+			Vehicle* v1;
+			currentUser->getVehicle()->setVehicle(v1);
+			for (size_t i = 0; i < cars.size(); i++) {
+				if (cars[i]->getCarID() == currentUser->getid()) {
+					cars.erase(cars.begin()+i);
+					break;
+				}
+			}
+			break;
+		}
+
+		if (remvehicle == "n") {
+			cout << "Getting back..." << endl;
+			break;
+		}
+		else cout << "Error! Please enter y or n." << endl;
+	}
+
+	return;
+}
+
+void SharedRides::addVehicle() {
+	cout << "Please specify its brand and model." << endl;
+	string brand = readLine();
+
+	unsigned int year = get_input <unsigned int>("Please specify its year.");
+	unsigned int seats = get_input <unsigned int>("Please specify the number of seats of your car.");
+	char rate = get_input <char>("In a scale [F(worst) - A (best)], please specify your evaluation of your car conditions.");
+
+	currentUser->getVehicle()->setRate(rate);
+	currentUser->getVehicle()->setYear(year);
+	currentUser->getVehicle()->setSeats(seats);
+	currentUser->getVehicle()->setBrand(brand);
+	currentUser->getVehicle()->setId(currentUser->getid());
+	// adds route 
+	string cityroute;
+	vector<string> rout(0);
+
+	cout << "Now, enter your new route." << endl;
+	cout << "Please specify the cities of your route, separared by slash";
+	cout << endl << "Example: Porto-Lisboa-Vila Real" << endl;
+	cout << "It must belong to one of these : ";
+	for (size_t i = 0; i < cities.size(); i++) {
+		if (i < cities.size() - 1)
+			cout << cities[i] << ", ";
+		else cout << cities[i] << ".\n";
+	}
+	cityroute = readLine();
+	stringstream ss(cityroute);
+
+	while (ss.good()) {
+		string substr;
+		getline(ss, substr, '-');
+		rout.push_back(substr);
+	}
+	currentUser->getVehicle()->setRoute(rout);
+
+	cars.push_back(currentUser->getVehicle());
 }
 
 User* SharedRides::login(const string &username, const string &password) {

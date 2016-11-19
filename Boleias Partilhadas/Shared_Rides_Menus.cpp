@@ -5,9 +5,6 @@
 
 
 void SharedRides::main_menu() {
-
-	load();
-
 	int choice = get_input <int>(
 		"[0] Enter as guest" "\n"
 		"[1] Login" "\n"
@@ -61,7 +58,7 @@ void SharedRides::manage_menu(){
 		"[2] App Vehicles" "\n"
 		"[3] End of Month" "\n"
 		"[4] Remove user" "\n"
-		"[3] Log Off");
+		"[5] Log Off");
 
 
 
@@ -91,14 +88,26 @@ void SharedRides::user_menu(){
 				"[6] Log Off" "\n"
 				"[7] Delete Profile");
 
-
-
 			switch (choice) {
-			case 1:
+			case 0:
 				showTrips();
 				break;
+			case 1:
+				userWithVehicleMenu();
+				break;
 			case 2:
-				//SharedRides::CreateRegis();
+				break;
+			case 3:
+				break;
+			case 4:
+				break;
+			case 5:
+				break;
+			case 6:
+				break;
+			case 7:
+				break;
+			default:
 				break;
 			}
 		}
@@ -116,11 +125,25 @@ void SharedRides::user_menu(){
 
 
 			switch (choice) {
+			case 0:
+				showTrips();
+				break;
 			case 1:
-				//main_menu();
+				addVehicle();
 				break;
 			case 2:
-				//SharedRides::CreateRegis();
+				break;
+			case 3:
+				break;
+			case 4:
+				break;
+			case 5:
+				break;
+			case 6:
+				break;
+			case 7:
+				break;
+			default :
 				break;
 			}
 		}
@@ -136,11 +159,15 @@ void SharedRides::user_menu(){
 
 
 		switch (choice) {
-		case 1:
+		case 0:
 			//login();
 			break;
-		case 2:
+		case 1:
 			//SharedRides::CreateRegis();
+			break;
+		case 2:
+			break;
+		default:
 			break;
 		}
 

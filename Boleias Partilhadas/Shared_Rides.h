@@ -68,6 +68,10 @@ public:
 
 	//MENUS Functions
 	void showTrips();
+	void userWithVehicleMenu();
+	void editVehicle();
+	void removeVehicle();
+	void addVehicle();
 
 	
 };
