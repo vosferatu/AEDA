@@ -45,11 +45,11 @@ void SharedRides::main_menu() {
 		}
 		break;
 	}
-	case 2:
-		CreateRegis();		
+	case 2: {
+		CreateRegis();
 		ClearScreen();
 		main_menu();
-		break;
+		break; }
 	case 3:
 		return;
 		break;
@@ -58,7 +58,6 @@ void SharedRides::main_menu() {
 		cin.ignore(numeric_limits <streamsize>::max(), '\n');
 		break;
 	}
-	main_menu(); //always called. after done functions or bad inputs here, until exit app
 }
 
 void SharedRides::manage_menu(){

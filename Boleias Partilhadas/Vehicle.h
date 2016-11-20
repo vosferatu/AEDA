@@ -28,7 +28,7 @@ public:
 	string getBrand() const;
 	unsigned int getYear() const;
 	string getRate() const;
-	unsigned int getID() const;
+	unsigned int getCarID() const;
 	vector<string> getRoute() const;
 	
 	//set functions
@@ -37,7 +37,7 @@ public:
 	void setYear(unsigned int year);
 	void setSeats(unsigned int seats);
 	void setBrand(string brand);
-	void setRate(char rate);
+	void setRate(string rate);
 	void setVehicle(Vehicle* v1);
 
 	Vehicle& operator=(Vehicle car);

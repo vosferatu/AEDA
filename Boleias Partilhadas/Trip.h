@@ -19,6 +19,7 @@ class takenTrip { //usada para mostrar e gravar viagens dos owners
 
 public:
 	takenTrip(string owns, string start, string finish, Time end);
+	takenTrip(){}
 	unsigned int getTripCode() const;
 	string getName() const;
 
@@ -36,6 +37,7 @@ class Stretch {
 	Time toNext;
 public:
 	Stretch(string city, Time next);
+	Stretch() {}
 	string getCity() const;
 	vector<int> getusers() const;
 	Time getTime() const;
@@ -56,6 +58,7 @@ class waitingTrip {
 
 public:
 	waitingTrip(unsigned int owner, vector<Stretch> Viagem, int maxSeats, float price);
+	waitingTrip();
 	unsigned int getOwner() const;
 	vector<Stretch> getWay() const;
 	bool getFull() const;
@@ -77,6 +80,7 @@ class Path {
 	string second;
 public:
 	Path(string first, string second, Time timeSpent);
+	Path(){}
 	Time getTime() const;
 	string getFirst() const;
 	string getSecond() const;

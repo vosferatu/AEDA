@@ -36,6 +36,7 @@ public:
 	virtual void setPassword(string password) = 0;
 	virtual void setHome(string city) = 0;
 	virtual void showProfile() = 0;
+	virtual void save(ofstream& out) const = 0;
 
 };
 
@@ -45,12 +46,13 @@ class RegisteredUser : public User {
 	string homeCity;
 	vector<int> favorites; //friends ID
 	string password;
+	float maintainenceTAX;
 	Vehicle* vehicle;
 
 
 public:
 
-	RegisteredUser(string username, string password, Vehicle* car);
+	RegisteredUser(string username, string password, string city, Vehicle* car);
 
 	string getpassword() const;
 	unsigned int getnumTrips() const;
@@ -58,6 +60,9 @@ public:
 	vector<int> getTrips() const;
 	vector<int> getFavs() const;
 	
+
+	float getmaintainenceTAX() const;
+
 	void setVehicle(Vehicle* car);
 	Vehicle* getVehicle() const;
 	void setHome(string city);

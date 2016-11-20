@@ -4,6 +4,7 @@
 ////////////////////////TAKEN ///////////////////////////////////////////
 unsigned int takenTrip::tripCode = 1;
 
+
 takenTrip::takenTrip(string owns, string start, string finish, Time end){
 	owner = owns;
 	startPoint = start;
@@ -50,6 +51,14 @@ ostream & operator<<(ostream & out, const takenTrip & trip){
 }
 
 //////////////////////////////////WAITING/////////////////////
+
+waitingTrip::waitingTrip() {
+	this->ownerID = 0;
+	this->maxSeats = 0;
+	this->pricePerStop = 0;
+	this->full = false;
+
+}
 
 waitingTrip::waitingTrip(unsigned int owner, vector<Stretch> Viagem, int maxSeats, float price){
 	this->ownerID = owner;
@@ -155,6 +164,7 @@ ofstream & operator<<(ofstream & out, const Stretch & way) {
 }
 
 /////////////////////////////PATH///////////////////////////////////
+
 
 Path::Path(string first, string second, Time timeSpent){
 	this->first = first;

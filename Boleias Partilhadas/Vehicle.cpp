@@ -17,7 +17,7 @@ Vehicle::Vehicle() {
 	this->numberSeats = 0;
 	this->year = 0;
 	this->idCar = 0;
-	this->rate = 0;
+	this->rate = "A";
 	vector<string> a{};
 	this->route = a;
 	this->idCar = carstatic;
@@ -31,6 +31,7 @@ void Vehicle::setBrand(string brand) {
 void Vehicle::setYear(unsigned int year) {
 	this->year = year;
 }
+
 void Vehicle::setRate(string rate) {
 	this->rate = rate;
 }
@@ -55,7 +56,7 @@ string Vehicle::getRate() const{
 	return rate;
 }
 
-unsigned int Vehicle::getID() const{
+unsigned int Vehicle::getCarID() const{
 	return idCar;
 }
 
@@ -67,21 +68,11 @@ void Vehicle::setId(unsigned int id)  {
 	this->idCar = id;
 }
 
-void Vehicle::setYear(unsigned int year){
-	this->year = year;
-}
-
 void Vehicle::setSeats(unsigned int seats){
 	this->numberSeats = seats;
 }
 
-void Vehicle::setBrand(string brand){
-	this->brand = brand;
-}
 
-void Vehicle::setRate(char rate){
-	this->rate = rate;
-}
 
 void Vehicle::setVehicle(Vehicle * v1){
 	this->brand = v1->brand;
@@ -107,18 +98,8 @@ Vehicle& Vehicle::operator=(Vehicle car){
 	return *this;
 }
 
-ostream& operator<< (ostream& os, const Vehicle car) {
-	os << car.getID() << endl << car.getBrand() << endl << car.getYear() << endl << car.getRate() << endl;
-
-	for (size_t i = 0; i < car.getRoute().size(); i++){
-		os << car.getRoute()[i] << endl;
-	}
-
-	return os;
-}
-
 void Vehicle::save(ofstream& out) const {
-	out << this->getID() << ";" << this->getBrand() << ";" << this->getYear() << ";" << this->getRate() << ";";
+	out << this->getCarID() << ";" << this->getBrand() << ";" << this->getnumberSeats() << ";" << this->getYear() << ";" << this->getRate() << ";";
 	
 	if (this->getRoute().size() == 0)
 		out << endl;
@@ -133,16 +114,16 @@ void Vehicle::save(ofstream& out) const {
 
 	}
 }
-}
 
-ostream & operator<<(ostream & os, const Vehicle car){
-	os << "Brand: " << car.getBrand() << " ";
-	os << "Year: " << car.getYear() << " ";
-	os << "Seats: " << car.getnumberSeats() << " ";
-	os << "Rate(A-F): " << car.getRate() << endl;
 
-	for (size_t i = 0; i < car.getRoute().size(); i++) {
-		os << car.getRoute()[i] << endl;
+ostream & operator<<(ostream & os, const Vehicle* car){
+	os << "\nBrand: " << car->getBrand() << " ";
+	os << "\nYear: " << car->getYear() << " ";
+	os << "\nSeats: " << car->getnumberSeats() << " ";
+	os << "\nRate(A-F): " << car->getRate() << endl;
+
+	for (size_t i = 0; i < car->getRoute().size(); i++) {
+		os << car->getRoute()[i] << endl;
 	}
 
 	return os;

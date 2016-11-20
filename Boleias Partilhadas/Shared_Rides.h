@@ -25,7 +25,6 @@ class SharedRides
 	static vector<Path> caminhos;
 	static vector<waitingTrip> tripOffers;
 	User* currentUser = NULL;  //se não for pointer, slicing problem
-	//	static vector<takenTrip> tripsPrinter;
 	static vector<waitingTrip> tripsWaiting;
 	static vector<string>cities;
 

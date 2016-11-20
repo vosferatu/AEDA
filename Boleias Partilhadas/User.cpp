@@ -37,7 +37,7 @@ void User::chargeAccount(float addition){
 
 /////////////////////////////////////////////////// REGISTERED USER /////////////////////////////////////////////////////
 
-RegisteredUser::RegisteredUser(string username, string password, Vehicle* car) : User(username), vehicle(car){
+RegisteredUser::RegisteredUser(string username, string password, string city, Vehicle* car) : User(username), vehicle(car){
 	this->password = password;
 	this->homeCity = city;
 }
@@ -46,8 +46,6 @@ string RegisteredUser::getpassword() const
 {
 	return password;
 }
-
-
 
 float RegisteredUser::getmaintainenceTAX() const{
 	return maintainenceTAX;
@@ -91,8 +89,8 @@ vector<int> RegisteredUser::getFavs() const{
 	return favorites;
 }
 
-ofstream& operator<<(ofstream& os, const RegisteredUser* RU) {
-	os << RU->getID() << endl << RU->getusername() << endl << RU->getpassword() << endl << RU->getCity() << endl;
+ostream& operator<<(ostream& os, const RegisteredUser* RU) {
+	os << "|" << (*RU).getID() << "|" << endl << (*RU).getusername() << "|" << endl << "|" << (*RU).getpassword() << "|" << endl << "|" << (*RU).getCity() << "|" << endl;
 	return os;
 }
 
@@ -105,7 +103,7 @@ void RegisteredUser::save(ofstream& out) const {
 }
 
 void RegisteredUser::setVehicleID(unsigned int id) {
-	this->vehicle.setId(id);
+	this->vehicle->setId(id);
 }
 
 

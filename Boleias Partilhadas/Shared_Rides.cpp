@@ -5,7 +5,11 @@ using namespace std;
 
 vector<User*> SharedRides::users(0);
 vector<Vehicle*>SharedRides::cars(0);
+ vector<takenTrip> SharedRides::tripsPrinter(0);
 vector<string>SharedRides::cities(0);
+vector<Path> SharedRides::caminhos(0);
+vector<waitingTrip>SharedRides::tripOffers(0);
+
 
 const string SharedRides::citiesfile = "cities.txt";
 const string SharedRides::usersfile = "users.txt";
@@ -21,41 +25,68 @@ bool SharedRides::usersalterados = false;
 bool SharedRides::carsalterados = false;
 
 
-//void SharedRides::loadUsers() {
-//
-//	fstream file;
-//
-//	string info;					//string que ira conter a informacao de cada linha do ficheiro
-//	string strnumber;					//string que ira remover o numero no inicio do ficheiro
-//
-//
-//	file.open(usersfile);
-//
-//	if (!file.is_open())
-//	{
-//		throw FileException<string>("Error opening users file");
-//	}
-//
-//	getline(file, strnumber);
-//	maxUsersID = stoi(strnumber);
-//
-//	while (getline(file, info))
-//	{
-//		unsigned int search = 10000;
-//
-//		size_t findpos = info.find(';', 0);
-//		unsigned int id = stoul(info.substr(0, findpos - 1).c_str());
-//		
-//		info = info.substr(findpos + 1, search);			//string = desde inicio ate primeiro ';'
-//		findpos = info.find(';', 0);
-//
-//		string name = 
-//
-//
-//	}
-//
-//
-//}
+void SharedRides::loadUsers() {
+
+	ifstream infile(usersfile);
+
+	if (infile.peek() == std::ifstream::traits_type::eof())
+		return;
+
+	string info;					//string que ira conter a informacao de cada linha do ficheiro
+	string strnumber;					//string que ira remover o numero no inicio do ficheiro
+
+	if (!infile.is_open())
+	{
+		throw FileException<string>("ERROR! The Vehicles file could not be opened.");
+	}
+
+	getline(infile, strnumber);
+	maxUsersID = stoi(strnumber);
+	
+	unsigned int ID;
+	string username;
+	string password;
+	string homecity;
+	
+	while (getline(infile, info))
+	{
+		unsigned int search = 1000;
+
+
+		size_t findpos = info.find(';', 0);			//inteiro que tem a posicao do primeiro ';'
+
+		ID = stoul(info.substr(0, findpos).c_str());  //id = à string desde o inicio ate ';' transformada em unsigned int
+		info = info.substr(findpos + 1, search);			//string = desde findpos até ao resto da  string
+		findpos = info.find(';', 0);					//agora o inteiro é a posicao na string do segundo ';'
+
+		username = info.substr(0, findpos);
+		info = info.substr(findpos + 1, search);			//string = desde primeiro ';' até ao segundo
+		findpos = info.find(';', 0);					//agora o inteiro é a posicao na string do terceiro ';'
+
+		password = info.substr(0, findpos);
+		info = info.substr(findpos + 1, search);
+		findpos = info.find(';', 0);
+
+		homecity = info.substr(0, findpos);
+		bool usernocar = false;
+		Vehicle * nocar = new Vehicle();
+
+		for (size_t i = 0; i < cars.size(); i++) {
+				if (cars[i]->getCarID() == ID) {
+					RegisteredUser* RU = new RegisteredUser(username, password, homecity, cars[i]);
+					users.push_back(RU);
+				}
+				else usernocar = true;
+		}
+
+		if (usernocar || cars.size() == 0) {
+			RegisteredUser* RU = new RegisteredUser(username, password, homecity, nocar);
+			users.push_back(RU);
+		}
+	}
+}
+
+
 void SharedRides::loadVehicles() {
 
 	ifstream infile(carsfile);
@@ -73,27 +104,35 @@ void SharedRides::loadVehicles() {
 
 	getline(infile, strnumber);
 	maxVehiclesID = stoi(strnumber);
-
+	unsigned int ID; 
+	string brand;
+	unsigned int year;
+	string rate;
+	unsigned int seats;
 	while (getline(infile, info))
 	{
 		unsigned int search = 1000;
-		Vehicle car;
+		
 
 		size_t findpos = info.find(';', 0);			//inteiro que tem a posicao do primeiro ';'
 
-		car.setId(stoul(info.substr(0, findpos).c_str()));  //id = à string desde o inicio ate ';' transformada em unsigned int
+		ID = stoul(info.substr(0, findpos).c_str());  //id = à string desde o inicio ate ';' transformada em unsigned int
 		info = info.substr(findpos + 1, search);			//string = desde findpos até ao resto da  string
 		findpos = info.find(';', 0);					//agora o inteiro é a posicao na string do segundo ';'
 
-		car.setBrand(info.substr(0, findpos));
+		brand = info.substr(0, findpos);
 		info = info.substr(findpos + 1, search);			//string = desde primeiro ';' até ao segundo
 		findpos = info.find(';', 0);					//agora o inteiro é a posicao na string do terceiro ';'
 
-		car.setYear(stoul(info.substr(0, findpos).c_str()));
+		seats = stoul(info.substr(0, findpos).c_str());
 		info = info.substr(findpos + 1, search);
 		findpos = info.find(';', 0);
 
-		car.setRate(info.substr(0, findpos));
+		year = stoul(info.substr(0, findpos).c_str());
+		info = info.substr(findpos + 1, search);
+		findpos = info.find(';', 0);
+
+		rate = info.substr(0, findpos);
 		info = info.substr(findpos + 1, search);			//string = desde findpos até ao resto da  string
 		findpos = info.find(';', 0);
 
@@ -105,11 +144,11 @@ void SharedRides::loadVehicles() {
 			info = info.substr(findpos + 1, search);			//string = desde findpos até ao resto da  string
 			findpos = info.find(';', 0);
 		}
-
-		car.setRoute(route);
-		cars.push_back(car);
-
 		
+		
+		Vehicle* v1 = new Vehicle(seats, brand, year, rate);
+		v1->setRoute(route);
+		cars.push_back(v1);	
 		
 	}
 
@@ -148,8 +187,9 @@ void SharedRides::loadCities() {
 
 void SharedRides::load() {
 	loadCities();
-	//loadUsers();
 	loadVehicles();
+	loadUsers();
+	
 }
 void SharedRides::CreateRegis()
 {
@@ -338,11 +378,10 @@ void SharedRides::CreateRegis()
 			}
 
 			
-			Vehicle v1(seats, brand, year, rate);
-			v1.setRoute(rout);
+			Vehicle* v1 = new Vehicle(seats, brand, year, rate);
+			v1->setRoute(rout);
 			maxVehiclesID++;
-			Vehicle* v2 = &v1;
-			RegisteredUser* RU = new RegisteredUser(username, password1, v2);
+			RegisteredUser* RU = new RegisteredUser(username, password1, city, v1);
 			maxUsersID++;
 			(*RU).setVehicleID((*RU).getID());
 			
@@ -454,7 +493,7 @@ int SharedRides::getPositionCar(unsigned int id) const{
 int SharedRides::getPositionUser(unsigned int id) const{
 	int position = -1;
 	for (size_t i = 0; i < users.size(); i++) {
-		if (users[i]->getid() == id) {
+		if (users[i]->getID() == id) {
 			position = i;
 			return position;
 		}
@@ -546,13 +585,13 @@ void SharedRides::editVehicle(){
 
 		unsigned int year = get_input <unsigned int>("Please specify its year.");
 		unsigned int seats = get_input <unsigned int>("Please specify the number of seats of your car.");
-		char rate = get_input <char>("In a scale [F(worst) - A (best)], please specify your evaluation of your car conditions.");
+		string rate = get_input <string>("In a scale [F(worst) - A (best)], please specify your evaluation of your car conditions.");
 
 		currentUser->getVehicle()->setRate(rate);
 		currentUser->getVehicle()->setYear(year);
 		currentUser->getVehicle()->setSeats(seats);
 		currentUser->getVehicle()->setBrand(brand);
-		currentUser->getVehicle()->setId(currentUser->getid());
+		currentUser->getVehicle()->setId(currentUser->getID());
 		// adds route 
 		string cityroute;
 		vector<string> rout(0);
@@ -577,7 +616,7 @@ void SharedRides::editVehicle(){
 		currentUser->getVehicle()->setRoute(rout);
 
 		for (size_t i = 0; i < cars.size(); i++) {
-			if (cars[i]->getCarID() == currentUser->getid()) {
+			if (cars[i]->getCarID() == currentUser->getID()) {
 				cars[i] = currentUser->getVehicle();
 				break;
 			}
@@ -607,7 +646,7 @@ void SharedRides::editVehicle(){
 		currentUser->getVehicle()->setRoute(rout);
 
 		for (size_t i = 0; i < cars.size(); i++) {
-			if (cars[i]->getCarID() == currentUser->getid()) {
+			if (cars[i]->getCarID() == currentUser->getID()) {
 				cars[i] = currentUser->getVehicle();
 				break;
 			}
@@ -633,15 +672,15 @@ void SharedRides::removeVehicle(){
 			Vehicle* v1 = new Vehicle();
 			currentUser->getVehicle()->setVehicle(v1);
 			
-			recompensate(currentUser->getid());
+			recompensate(currentUser->getID());
 			for (size_t i = 0; i < tripOffers.size(); i++) {
-				if (tripOffers[i].getOwner() == currentUser->getid()) {
+				if (tripOffers[i].getOwner() == currentUser->getID()) {
 					tripOffers.erase(tripOffers.begin() + i);
 					i--;
 				}
 			}
 
-			size_t pos = getPositionCar(currentUser->getid());
+			size_t pos = getPositionCar(currentUser->getID());
 			cars.erase(cars.begin() + pos);
 
 			break;
@@ -663,13 +702,13 @@ void SharedRides::addVehicle() {
 
 	unsigned int year = get_input <unsigned int>("Please specify its year.");
 	unsigned int seats = get_input <unsigned int>("Please specify the number of seats of your car.");
-	char rate = get_input <char>("In a scale [F(worst) - A (best)], please specify your evaluation of your car conditions.");
+	string rate = get_input <string>("In a scale [F(worst) - A (best)], please specify your evaluation of your car conditions.");
 
 	currentUser->getVehicle()->setRate(rate);
 	currentUser->getVehicle()->setYear(year);
 	currentUser->getVehicle()->setSeats(seats);
 	currentUser->getVehicle()->setBrand(brand);
-	currentUser->getVehicle()->setId(currentUser->getid());
+	currentUser->getVehicle()->setId(currentUser->getID());
 	// adds route 
 	string cityroute;
 	vector<string> rout(0);
@@ -783,23 +822,23 @@ void SharedRides::deleteAccount(){
 					if (currentUser->getusername() == tripsPrinter[i].getName())
 						tripsPrinter[i].setName("Deleted");
 				}
-				recompensate(currentUser->getid());
+				recompensate(currentUser->getID());
 
 				for (size_t i = 0; i < tripOffers.size(); i++) {
-					if (tripOffers[i].getOwner() == currentUser->getid()) {
+					if (tripOffers[i].getOwner() == currentUser->getID()) {
 						tripOffers.erase(tripOffers.begin() + i);
 						i--;
 					}
 				}
 
-				size_t pos = getPositionCar(currentUser->getid());
+				size_t pos = getPositionCar(currentUser->getID());
 				cars.erase(cars.begin() + pos);
 			}
 
 			for (size_t i = 0; i < users.size(); i++) {
 				if (dynamic_cast<RegisteredUser*>(users[i]) != NULL && users[i] != currentUser) {
 					for (size_t z = 0; z < users[i]->getFavs().size(); i++) {
-						if (users[i]->getFavs()[i] == currentUser->getid()) {
+						if (users[i]->getFavs()[i] == currentUser->getID()) {
 							users[i]->getFavs().erase(users[i]->getFavs().begin() + z);
 							break;
 						}
@@ -818,7 +857,7 @@ void SharedRides::deleteAccount(){
 			for (size_t i = 0; i < tripOffers.size(); i++) {
 				for (size_t j = 0; j < tripOffers[i].getWay().size(); j++) {
 					for (size_t k = 0; k < tripOffers[i].getWay()[j].getusers().size(); k++) {
-						if (tripOffers[i].getWay()[j].getusers()[k] == currentUser->getid()) {
+						if (tripOffers[i].getWay()[j].getusers()[k] == currentUser->getID()) {
 							tripOffers[i].getWay()[j].getusers().erase(tripOffers[i].getWay()[j].getusers().begin() + k);
 							break;
 						}
@@ -827,7 +866,7 @@ void SharedRides::deleteAccount(){
 			}
 
 			//delete of system!!!!!!!!!!!!
-			size_t j = getPositionUser(currentUser->getid());
+			size_t j = getPositionUser(currentUser->getID());
 			currentUser = NULL;
 			users.erase(users.begin() + j);
 			cout << "Your account has been deleted. Sad to see you go, hope you enjoyed our App.\n";
@@ -916,7 +955,7 @@ void SharedRides::addBuddie() {
 		cin.ignore(numeric_limits <streamsize>::max(), '\n');
 	}
 
-	currentUser->getFavs().push_back(users[choice - 1]->getid());
+	currentUser->getFavs().push_back(users[choice - 1]->getID());
 	cout << endl << users[choice - 1]->getusername() << " is now one of your buddies." << endl;
 }
 
@@ -943,7 +982,7 @@ void SharedRides::myBuddies() {
 }
 
 void SharedRides::showBuddiesProfileToUser(){
-	size_t user = getPositionUser(currentUser->getid());
+	size_t user = getPositionUser(currentUser->getID());
 	vector<int> fav = users[user]->getFavs();
 
 	for (size_t i = 0; i < fav.size(); i++) {
@@ -977,7 +1016,7 @@ void SharedRides::saveChanges() const {
 
 		for (size_t i = 0; i < cars.size(); i++)		
 		{
-			cars.at(i).save(out_cars);  
+			cars[i]->save(out_cars);  
 		}
 		out_cars.close();
 	}
@@ -1000,12 +1039,10 @@ void SharedRides::run() {
 	
 	try {
 		load();
-		
-		for (size_t i = 0; i < cars.size(); i++)
+		for (size_t i = 0; i < users.size(); i++)
 		{
-			cout << cars[i] << endl;
+			cout << users[i] << endl;
 		}
-
 		main_menu();
 		saveChanges();
 	}
@@ -1021,7 +1058,7 @@ unsigned int SharedRides::getCARHighID() const {
 
 	for (size_t i = 0; i < cars.size(); i++)		
 	{
-		unsigned int ID = cars.at(i).getID();	
+		unsigned int ID = cars.at(i)->getCarID();	
 																
 		if (ID > maiorID)								
 			maiorID = ID;						
