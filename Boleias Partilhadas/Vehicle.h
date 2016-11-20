@@ -43,8 +43,10 @@ public:
 	Vehicle& operator=(Vehicle car);
 
 	friend ofstream& operator<<(ofstream& os, const Vehicle car); // for now, only for writing in file of users purpose
-	friend ostream& operator<<(ostream& os, const Vehicle car);
+	friend ostream& operator<<(ostream& os, const Vehicle car); // for now, only for writing in file of users purpose
+
 	void save(ofstream& out) const;
+
 };
 
 #endif /* VEHICLE_H_ */
