@@ -4,6 +4,7 @@
 
 #include <string>
 #include <vector>
+#include <fstream>
 #include "Vehicle.h"
 #include "DateTime.h"
 #include "Trip.h"
@@ -13,7 +14,8 @@ using namespace std;
 
 class User{
 
-	static unsigned int id;
+	static unsigned int idstatic;
+	unsigned int id;
 	string username;
 	float account;
 
@@ -21,11 +23,12 @@ public:
 	User() {};
 	User(string username);
 
-	unsigned int getid() const;
+	unsigned int getID() const;
 	string getusername() const;
 	float getAccount() const;
 	virtual string getpassword() const = 0;
 	virtual Vehicle getVehicle() const=0;
+	virtual void save(ofstream& out) const = 0;
 
 };
 
@@ -41,7 +44,7 @@ class RegisteredUser : public User {
 
 public:
 
-	RegisteredUser(string username, string password, Vehicle car);
+	RegisteredUser(string username, string password, string city, Vehicle car);
 
 	string getpassword() const;
 	float getmaintainenceTAX() const;
@@ -51,6 +54,10 @@ public:
 	
 	void setVehicle(Vehicle* car);
 	Vehicle getVehicle() const;
+
+	void setVehicleID(unsigned int id);
+
+	void save(ofstream& out) const;
 
 	vector<int> getBuddies() const;
 

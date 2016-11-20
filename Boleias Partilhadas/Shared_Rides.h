@@ -25,13 +25,19 @@ class SharedRides
 	static vector<Path> caminhos;
 	static vector<waitingTrip> tripOffers;
 	User* currentUser = NULL;  //se não for pointer, slicing problem
-//	static vector<takenTrip> tripsPrinter;
+	//	static vector<takenTrip> tripsPrinter;
 	static vector<waitingTrip> tripsWaiting;
 	static vector<string>cities;
 
-	static const string citiesfile;
+	static unsigned int maxUsersID;
+	static unsigned int maxVehiclesID;
+
+	static const string citiesfile, usersfile, carsfile; 
 
 	static unsigned int numbercities;
+
+	static bool usersalterados;
+	static bool carsalterados;
 
 
 public:
@@ -52,15 +58,22 @@ public:
 	// SAVE
 	void saveUsers() const;
 	void saveVehicles() const;
-
+	void saveChanges() const;
+	
 	// LOAD
-	void load();
+	static void load();
 	static void loadCities();
+	static void loadUsers();
+	static void loadVehicles();
 
 
 	//LOGIN & REGISTRATION
 	User* login(const string &username, const string &password);
 	static void CreateRegis();
+
+	unsigned int getCARHighID() const;
+	unsigned int getUSERHighID() const;
+
 
 	~SharedRides(){
 		for (unsigned int i = 0; i < users.size(); ++i)
@@ -97,6 +110,20 @@ public:
 		this->info = info;
 	}
 };
+
+template<class T>
+class RegistrationException
+{
+public:
+	T info;
+	RegistrationException(T info)
+	{
+		this->info = info;
+	}
+};
+
+
+
 
 
 #endif

@@ -9,15 +9,10 @@
 
 using namespace std;
 
-int main() {
-	
-	cout << endl << "Welcome to Shared Rides, please put your seatbelts on and enjoy your travel." << endl;
-
+int main() {	
 	SharedRides Boleias;
 	Boleias.run();
-
-
-
+	
 	return 0;
 
 

@@ -48,5 +48,13 @@ void getEnter();
 
 void ClearScreen();
 
+string ltrim(string& s);
+//elimina os espaços inicias de uma string
+// @param s - string a ser analisada
+
+string rtrim(string& s);
+//elimina os espaços finais de uma string
+// @param s - string a ser analisada
+
 
 #endif /* HELPER_H_ */

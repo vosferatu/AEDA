@@ -6,7 +6,7 @@
 
 void SharedRides::main_menu() {
 
-	load();
+	cout << endl << "Welcome to Shared Rides, please put your seatbelts on and enjoy your travel." << endl;
 
 	int choice = get_input <int>(
 		"[0] Enter as guest" "\n"
@@ -23,16 +23,19 @@ void SharedRides::main_menu() {
 		break;
 	case 1:
 	{
-		cout << "Username: ";
+		cin.clear();
+		cin.ignore(numeric_limits <streamsize>::max(), '\n');
+		cout << "Username: \n";
 		string usern = readLine();
-		cout << "Password: ";
-		string pass = readLine();
-		
+		string pass = readPassword("Password:", true);
+
+		if (usern == "admin") 
+			if (pass == "admin")
+				manage_menu();
+			
 		try {
 			currentUser = login(usern, pass);
-			if (currentUser->getusername() == "admin")
-				manage_menu();
-			else user_menu(); //chama o menu de user(Seja ele carro, sem carro)
+			user_menu(); //chama o menu de user(Seja ele carro, sem carro)
 		}
 		catch (LoginException<string> err)
 		{
@@ -43,8 +46,9 @@ void SharedRides::main_menu() {
 		break;
 	}
 	case 2:
-		CreateRegis();
-		//main_menu();
+		CreateRegis();		
+		ClearScreen();
+		main_menu();
 		break;
 	case 3:
 		return;
@@ -79,7 +83,7 @@ void SharedRides::user_menu(){
 	if (dynamic_cast<RegisteredUser*>(currentUser) != NULL) { //isto da erro porque nao temos uma
 		//função virtual em user, mas vamos ter, por isso deixa assim
 
-		if (currentUser->getVehicle().getCarID() != 0) { //currentUser has a CAR			
+		if (currentUser->getVehicle().getID() != 0) { //currentUser has a CAR			
 		
 			int choice = get_input <int>(
 				"[0] My Trips" "\n"

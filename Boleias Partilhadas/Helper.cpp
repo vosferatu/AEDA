@@ -17,6 +17,7 @@ string readPassword(const char *prompt, bool show_asterisk)
 	unsigned char ch = 0;
 
 	cout << prompt << endl;
+	cout << "> ";
 
 	while ((ch = _getch()) != RETURN)
 	{
@@ -95,4 +96,23 @@ void ClearScreen()
 
 	/* Move the cursor home */
 	SetConsoleCursorPosition(hStdOut, homeCoords);
+}
+
+//elimina os espaços inicias de uma string
+string ltrim(std::string& s)
+{
+	s.erase(0, s.find_first_not_of(' '));
+	return s;
+}
+
+//elimina os espaços finais de uma string
+string rtrim(string& s)
+{
+	size_t endpos = s.find_last_not_of(" \t");
+	if (string::npos != endpos)
+	{
+		s = s.substr(0, endpos + 1);
+	}
+	//s.erase(0, s.find_first_of(' ') + 1);
+	return s;
 }

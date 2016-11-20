@@ -1,11 +1,11 @@
 #include "User.h"
 #include "Helper.h"
 #include <string>
-#include <fstream>
+
 
 using namespace std;
 
-unsigned int User::id = 1;
+unsigned int User::idstatic = 1;
 
 
 
@@ -13,8 +13,8 @@ unsigned int User::id = 1;
 
 User::User(string username) {
 	this->username = username;
-	this->id = id;
-	id++;
+	this->id = idstatic;
+	idstatic++;
 }
 
 
@@ -23,7 +23,7 @@ string User::getusername() const {
 }
 
 
-unsigned int User::getid() const {
+unsigned int User::getID() const {
 	return id; 
 }
 
@@ -33,8 +33,9 @@ float User::getAccount() const{
 
 /////////////////////////////////////////////////// REGISTERED USER /////////////////////////////////////////////////////
 
-RegisteredUser::RegisteredUser(string username, string password, Vehicle car) : User(username), vehicle(car){
+RegisteredUser::RegisteredUser(string username, string password, string city, Vehicle car) : User(username), vehicle(car){
 	this->password = password;
+	this->homeCity = city;
 }
 
 string RegisteredUser::getpassword() const
@@ -70,12 +71,20 @@ vector<int> RegisteredUser::getBuddies() const{
 
 
 ofstream& operator<<(ofstream& os, const RegisteredUser* RU) {
-	os << RU->getid() << endl << RU->getusername() << endl << RU->getpassword() << endl << RU->getCity() << endl;
+	os << RU->getID() << endl << RU->getusername() << endl << RU->getpassword() << endl << RU->getCity() << endl;
 	return os;
 }
 
 void RegisteredUser::setVehicle(Vehicle* car)  {
 	this->vehicle = (*car);
+}
+
+void RegisteredUser::save(ofstream& out) const {
+	out << this->getID() << ";" << this->getusername() << ";" << this->getpassword() << ";" << this->getCity() << endl;
+}
+
+void RegisteredUser::setVehicleID(unsigned int id) {
+	this->vehicle.setId(id);
 }
 
 

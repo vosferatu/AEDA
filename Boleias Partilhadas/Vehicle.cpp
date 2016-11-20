@@ -2,7 +2,7 @@
 
 using namespace std;
 
-
+unsigned int Vehicle::carstatic = 0;
 
 Vehicle::Vehicle(unsigned int noSeats, string brand, unsigned int year, char rate) : numberSeats(noSeats){
 	this->brand = brand;
@@ -16,8 +16,9 @@ Vehicle::Vehicle() {
 	this->brand = "nobrand";
 	this->numberSeats = 0;
 	this->year = 0;
-	this->idCar = 0;
+	this->idCar = carstatic;
 	this->rate = 0;
+	carstatic++;
 }
 
 unsigned int Vehicle::getnumberSeats() const{
@@ -36,7 +37,7 @@ char Vehicle::getRate() const{
 	return rate;
 }
 
-unsigned int Vehicle::getCarID() const{
+unsigned int Vehicle::getID() const{
 	return idCar;
 }
 
@@ -64,11 +65,26 @@ Vehicle& Vehicle::operator=(Vehicle car){
 }
 
 ofstream& operator<< (ofstream& os, const Vehicle car) {
-	os << car.getCarID() << endl << car.getBrand() << endl << car.getYear() << endl <<car.getRate() << endl;
+	os << car.getID() << endl << car.getBrand() << endl << car.getYear() << endl <<car.getRate() << endl;
 
 	for (size_t i = 0; i < car.getRoute().size(); i++){
 		os << car.getRoute()[i] << endl;
 	}
 
 	return os;
+}
+
+void Vehicle::save(ofstream& out) const {
+	out << this->getID() << ";" << this->getBrand() << ";" << this->getYear() << ";" << this->getRate() << ";";
+	
+	for (size_t i = 0; i < this->getRoute().size(); i++) {
+		
+		if (i < getRoute().size() - 1)
+			out << this->getRoute()[i] << ";";
+		else
+			out << this->getRoute()[i] << endl;
+
+	}
+
+
 }

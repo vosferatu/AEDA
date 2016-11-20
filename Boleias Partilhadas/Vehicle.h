@@ -16,6 +16,7 @@ class Vehicle {
 	unsigned int year; //user might not choose this vehicle for this
 	char rate;  //optional. grade from A to F based on vehicle condition
 	unsigned int idCar; //same as user ID
+	static unsigned int carstatic;
 	vector<string> route;
 	
 public:
@@ -27,7 +28,7 @@ public:
 	string getBrand() const;
 	unsigned int getYear() const;
 	char getRate() const;
-	unsigned int getCarID() const;
+	unsigned int getID() const;
 	vector<string> getRoute() const;
 	
 	//set functions
@@ -38,6 +39,7 @@ public:
 
 	friend ofstream& operator<<(ofstream& os, const Vehicle car); // for now, only for writing in file of users purpose
 
+	void save(ofstream& out) const;
 
 };
 
