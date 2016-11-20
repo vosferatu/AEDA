@@ -150,6 +150,8 @@ ofstream & operator<<(ofstream & out, const Stretch & way) {
 	for (size_t i = 0; i < way.usersID.size(); i++) {
 		out << way.usersID[i] << ";";
 	}
+
+	return out;
 }
 
 /////////////////////////////PATH///////////////////////////////////

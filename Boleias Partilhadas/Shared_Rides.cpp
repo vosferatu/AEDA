@@ -13,6 +13,7 @@ unsigned int  SharedRides::numbercities = 0;
 
 void SharedRides::load()
 {
+	fillPaths();
 	loadCities();
 	//loadUsers();
 	//loadAnuncios();
@@ -115,8 +116,8 @@ void SharedRides::CreateRegis()
 			char rate = get_input <char>("In a scale [F(worst) - A (best)], please specify your evaluation of your car conditions.");
 
 			Vehicle v1(seats, brand, year, rate);
-
-			RegisteredUser* RU = new RegisteredUser(username, password1, v1);
+			Vehicle* v2 = &v1;
+			RegisteredUser* RU = new RegisteredUser(username, password1, v2);
 
 			RU->getVehicle()->setId(RU->getid());
 			
@@ -174,7 +175,7 @@ void SharedRides::CreateRegis()
 		}
 
 		else if (addvehicle == "n") {
-			Vehicle* nocar;
+			Vehicle* nocar = new Vehicle();
 
 			RegisteredUser* RU = new RegisteredUser(username, password1, nocar);
 
@@ -260,22 +261,24 @@ void SharedRides::fillPaths(){
 
 int SharedRides::getPositionCar(unsigned int id) const{
 	int position = -1;
-	for (size_t i; i < cars.size(); i++) {
+	for (size_t i = 0; i < cars.size(); i++) {
 		if (cars[i]->getCarID() == id) {
 			position = i;
 			return position;
 		}	
 	}
+	return position;
 }
 
 int SharedRides::getPositionUser(unsigned int id) const{
 	int position = -1;
-	for (size_t i; i < users.size(); i++) {
+	for (size_t i = 0; i < users.size(); i++) {
 		if (users[i]->getid() == id) {
 			position = i;
 			return position;
 		}
 	}
+	return position;
 }
 
 void SharedRides::recompensate(unsigned int id){
@@ -328,7 +331,7 @@ void SharedRides::showTrips() const{
 
 void SharedRides::userWithVehicleMenu() {
 	cout << endl << "Your Vehicle:" << endl;
-	cout << currentUser->getVehicle << endl;
+	cout << currentUser->getVehicle() << endl;
 
 	int choice = get_input <int>(
 		"[0] Edit my Vehicle" "\n"
@@ -446,7 +449,7 @@ void SharedRides::removeVehicle(){
 		cin.ignore(numeric_limits <streamsize>::max(), '\n');
 
 		if (remvehicle == "y") {
-			Vehicle* v1;
+			Vehicle* v1 = new Vehicle();
 			currentUser->getVehicle()->setVehicle(v1);
 			
 			recompensate(currentUser->getid());
