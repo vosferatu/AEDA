@@ -24,9 +24,39 @@ string takenTrip::getName() const{
 	return owner;
 }
 
+string takenTrip::getStart() const
+{
+	return this->startPoint;
+}
+string takenTrip::getEnd() const {
+	return this->endPoint;
+}
+Time takenTrip::getEndTime() const {
+	return this->endTime;
+}
+Time takenTrip::getStartTime() const {
+	return this->startTime;
+}
+Date takenTrip::getDay() const { 
+	return this->day; }
+
 void takenTrip::setName(string nome){
 	this->owner = nome;
 }
+
+void takenTrip::setStartime(Time start) {
+	this->startTime = start;
+}
+
+void takenTrip::setTripCode(unsigned int tripcode) {
+	this->tripCode = tripcode;
+}
+
+
+
+
+
+
 
 ofstream & operator<<(ofstream & out, const takenTrip & trip){
 	out << trip.owner << ";";
@@ -49,6 +79,16 @@ ostream & operator<<(ostream & out, const takenTrip & trip){
 
 	return out;
 }
+
+void takenTrip::save(ofstream& out) const {
+	out << this->getName() << ";" << this->getStart() << ";" <<
+		this->getEnd() << ";" << this->getStartTime() << ";" <<
+		this->getEndTime() << ";" << this->getTripCode() << endl;
+}
+
+
+
+
 
 //////////////////////////////////WAITING/////////////////////
 
@@ -122,6 +162,22 @@ ofstream & operator<<(ofstream & out, const waitingTrip & trip){
 	return out;
 }
 
+
+void waitingTrip::save(ofstream& out) const {
+	out << this->getOwner() << ";";
+
+	out << this->Viagem.size() << ";";
+
+	for (size_t i = 0; i < this->Viagem.size(); i++)
+	{
+		out << this->Viagem[i] << ";";
+	}
+
+	out << this->getpriceStop() << ";" << getmaxSeats() << endl;
+
+
+}
+
 ///////////////////////////////////STRETCH//////////////////////////////
 
 Stretch::Stretch(string city, Time next){
@@ -154,8 +210,15 @@ void Stretch::setTime(Time newTime){
 	this->toNext = newTime;
 }
 
+void Stretch::setvectID(vector<int> usersID) {
+	this->usersID = usersID;
+}
+
 ofstream & operator<<(ofstream & out, const Stretch & way) {
 	out << way.stop << ";" << way.toNext << ";";
+	
+	out << way.usersID.size();
+	
 	for (size_t i = 0; i < way.usersID.size(); i++) {
 		out << way.usersID[i] << ";";
 	}

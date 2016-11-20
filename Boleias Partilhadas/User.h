@@ -17,7 +17,7 @@ class User{
 	static unsigned int idstatic;
 	unsigned int id;
 	string username;
-	float account;
+	float account = 0;
 
 public:
 	User() {};
@@ -26,6 +26,7 @@ public:
 	unsigned int getID() const;
 	string getusername() const;
 	float getAccount() const;
+	void setAccount(float account);
 	virtual string getpassword() const = 0;
 	virtual Vehicle* getVehicle() const = 0;
 	virtual void chargeAccount(float addition);
@@ -37,7 +38,8 @@ public:
 	virtual void setHome(string city) = 0;
 	virtual void showProfile() = 0;
 	virtual void save(ofstream& out) const = 0;
-
+	virtual void setTrips(vector<int> trips) = 0;
+	virtual void setFavs(vector<int> favs) = 0;
 };
 
 class RegisteredUser : public User {
@@ -59,6 +61,9 @@ public:
 	string getCity() const;
 	vector<int> getTrips() const;
 	vector<int> getFavs() const;
+
+	void setTrips(vector<int> trips);
+	void setFavs(vector<int> favs);
 	
 
 	float getmaintainenceTAX() const;
@@ -72,7 +77,6 @@ public:
 
 	void save(ofstream& out) const;
 
-	vector<int> getBuddies() const;
 	void showProfile();
 
 	friend ofstream& operator<<(ofstream& os, const RegisteredUser* RU); // for now, only for writing in file of users purpose

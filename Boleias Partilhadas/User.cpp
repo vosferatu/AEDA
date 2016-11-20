@@ -88,6 +88,9 @@ void RegisteredUser::showProfile(){
 vector<int> RegisteredUser::getFavs() const{
 	return favorites;
 }
+void User::setAccount(float account) {
+	this->account = account;
+}
 
 ostream& operator<<(ostream& os, const RegisteredUser* RU) {
 	os << "|" << (*RU).getID() << "|" << endl << (*RU).getusername() << "|" << endl << "|" << (*RU).getpassword() << "|" << endl << "|" << (*RU).getCity() << "|" << endl;
@@ -98,8 +101,37 @@ void RegisteredUser::setVehicle(Vehicle* car)  {
 	this->vehicle = car;
 }
 
+void RegisteredUser::setTrips(vector<int> trips) {
+	this->Trips = trips;
+}
+
+void RegisteredUser::setFavs(vector<int> favs) {
+	this->favorites = favs;
+}
+
+
+
+
 void RegisteredUser::save(ofstream& out) const {
-	out << this->getID() << ";" << this->getusername() << ";" << this->getpassword() << ";" << this->getCity() << endl;
+	out << this->getID() << ";" << this->getusername() << ";" << this->getpassword() << ";" << this->getAccount() << ";" << this->getCity() << ";";
+
+	if (Trips.size() == 0)
+		out << this->Trips.size() << ";";
+
+	for (size_t i = 0; i < this->Trips.size(); i++)
+	{
+		out << this->Trips.size() << ";";
+		out << this->Trips[i] << ";";
+	}
+
+	if (favorites.size() == 0)
+		out << this->favorites.size() << ";";
+
+	for (size_t i = 0; i < this->favorites.size(); i++)
+	{
+		out << this->favorites.size() << ";";
+		out << this->favorites[i] << ";";
+	}
 }
 
 void RegisteredUser::setVehicleID(unsigned int id) {

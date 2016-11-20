@@ -22,6 +22,22 @@ public:
 	takenTrip(){}
 	unsigned int getTripCode() const;
 	string getName() const;
+	
+	string getStart() const;
+	string getEnd() const;
+	Time getEndTime() const;
+	Time getStartTime() const;
+	Date getDay() const;
+
+	void setStartime(Time start);
+
+	void setTripCode(unsigned int tripcode);
+
+
+
+
+	void save(ofstream& out) const;
+
 
 	void setName(string nome);
 
@@ -45,6 +61,9 @@ public:
 	void setCity(string city);
 	void addUser(int id);
 	void setTime(Time newTime);
+	void setvectID(vector<int> usersID);
+
+
 
 	friend ofstream& operator<<(ofstream& out, const Stretch& way);//save on file
 };
@@ -59,6 +78,7 @@ class waitingTrip {
 public:
 	waitingTrip(unsigned int owner, vector<Stretch> Viagem, int maxSeats, float price);
 	waitingTrip();
+
 	unsigned int getOwner() const;
 	vector<Stretch> getWay() const;
 	bool getFull() const;
@@ -70,6 +90,9 @@ public:
 	void setFull(bool change);
 	void setpriceStop(float price);
 	void setmaxSeats(int seats);
+
+
+	void save(ofstream& out) const;
 
 	friend ofstream& operator<<(ofstream& out, const waitingTrip& trip);//save on file
 };

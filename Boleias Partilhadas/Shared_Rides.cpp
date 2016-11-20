@@ -5,18 +5,24 @@ using namespace std;
 
 vector<User*> SharedRides::users(0);
 vector<Vehicle*>SharedRides::cars(0);
- vector<takenTrip> SharedRides::tripsPrinter(0);
 vector<string>SharedRides::cities(0);
-vector<Path> SharedRides::caminhos(0);
-vector<waitingTrip>SharedRides::tripOffers(0);
+vector<takenTrip> SharedRides::tripsPrinter(0);
+vector<waitingTrip> SharedRides::tripOffers(0);
+
 
 
 const string SharedRides::citiesfile = "cities.txt";
 const string SharedRides::usersfile = "users.txt";
 const string SharedRides::carsfile = "cars.txt";
+const string SharedRides::takenfile = "takentrips.txt";
+const string SharedRides::waitingfile = "waitingtrips.txt";
+
+
+
 
 unsigned int SharedRides::maxUsersID = 0;
 unsigned int SharedRides::maxVehiclesID = 0;
+unsigned int SharedRides::maxTakenCode = 0;
 
 
 unsigned int  SharedRides::numbercities = 0;
@@ -47,7 +53,10 @@ void SharedRides::loadUsers() {
 	string username;
 	string password;
 	string homecity;
-	
+	float account; 
+	unsigned int numTrips;
+	unsigned int numBuddies;
+
 	while (getline(infile, info))
 	{
 		unsigned int search = 1000;
@@ -67,13 +76,53 @@ void SharedRides::loadUsers() {
 		info = info.substr(findpos + 1, search);
 		findpos = info.find(';', 0);
 
+		account = stof(info.substr(0, findpos).c_str());  
+		info = info.substr(findpos + 1, search);
+		findpos = info.find(';', 0);
+
 		homecity = info.substr(0, findpos);
+		info = info.substr(findpos + 1, search);
+		findpos = info.find(';', 0);
+
+		numTrips = atoi(info.substr(0, findpos).c_str());
+		info = info.substr(findpos + 1, search);
+		findpos = info.find(';', 0);
+
+		unsigned int i = 0;
+
+		int IDtrip;
+		vector <int> trips(0);
+
+		while (i < numTrips) {
+			IDtrip = atoi(info.substr(0, findpos).c_str());
+			trips.push_back(IDtrip);
+			info = info.substr(findpos + 1, search);
+			findpos = info.find(';', 0);
+			i++;
+		}
+
+		numBuddies = atoi(info.substr(0, findpos).c_str());
+
+		int IDBuddie;
+		vector <int> buddies(0);
+
+		while (i < numBuddies) {
+			IDBuddie = atoi(info.substr(0, findpos).c_str());
+			buddies.push_back(IDBuddie);
+			info = info.substr(findpos + 1, search);
+			findpos = info.find(';', 0);
+			i++;
+		}
+
 		bool usernocar = false;
 		Vehicle * nocar = new Vehicle();
 
 		for (size_t i = 0; i < cars.size(); i++) {
 				if (cars[i]->getCarID() == ID) {
 					RegisteredUser* RU = new RegisteredUser(username, password, homecity, cars[i]);
+					RU->setAccount(account);
+					RU->setFavs(buddies);
+					RU->setTrips(trips);
 					users.push_back(RU);
 				}
 				else usernocar = true;
@@ -81,10 +130,182 @@ void SharedRides::loadUsers() {
 
 		if (usernocar || cars.size() == 0) {
 			RegisteredUser* RU = new RegisteredUser(username, password, homecity, nocar);
+			RU->setAccount(account);
+			RU->setFavs(buddies);
+			RU->setTrips(trips);
 			users.push_back(RU);
 		}
 	}
 }
+
+void SharedRides::loadTakenTrips() {
+
+	ifstream infile(takenfile);
+
+	if (infile.peek() == std::ifstream::traits_type::eof())
+		return;
+
+	string info;					//string que ira conter a informacao de cada linha do ficheiro
+	string strnumber;					//string que ira remover o numero no inicio do ficheiro
+
+	if (!infile.is_open())
+	{
+		throw FileException<string>("ERROR! The TakenTrip file could not be opened.");
+	}
+
+	getline(infile, strnumber);
+	maxTakenCode = stoi(strnumber);
+
+	string name;
+	string start;
+	string end;
+	Time startime;
+	int startimehora;
+	int startimeminuto;
+	Time endtime;
+	int endtimehora;
+	int endtimeminuto;
+	unsigned int tripcode;
+
+	while (getline(infile, info))
+	{
+		unsigned int search = 1000;
+
+
+		size_t findpos = info.find(';', 0);			//inteiro que tem a posicao do primeiro ';'
+
+		name = info.substr(0, findpos);  //id = à string desde o inicio ate ';' transformada em unsigned int
+		info = info.substr(findpos + 1, search);			//string = desde findpos até ao resto da  string
+		findpos = info.find(';', 0);					//agora o inteiro é a posicao na string do segundo ';'
+
+		start = info.substr(0, findpos);
+		info = info.substr(findpos + 1, search);			//string = desde primeiro ';' até ao segundo
+		findpos = info.find(';', 0);					//agora o inteiro é a posicao na string do terceiro ';'
+
+		end = info.substr(0, findpos);
+		info = info.substr(findpos + 1, search);
+		findpos = info.find(';', 0);
+
+		startimehora = atoi(info.substr(0, findpos).c_str());
+		info = info.substr(findpos + 1, search);
+		findpos = info.find(':', 0);
+
+		startimeminuto = atoi(info.substr(0, findpos).c_str());
+		info = info.substr(findpos + 1, search);
+		findpos = info.find(';', 0);
+
+		startime = Time(startimehora, startimeminuto);
+		
+		endtimehora = atoi(info.substr(0, findpos).c_str());
+		info = info.substr(findpos + 1, search);
+		findpos = info.find(':', 0);
+
+		endtimeminuto = atoi(info.substr(0, findpos).c_str());
+		info = info.substr(findpos + 1, search);
+		findpos = info.find(';', 0);
+
+		endtime = Time(endtimehora,endtimeminuto);
+
+		tripcode = stoi(info.substr(0, findpos).c_str());
+	
+		takenTrip v1(name, start, end, endtime);
+		v1.setStartime(startime);
+		v1.setTripCode(tripcode);
+
+		tripsPrinter.push_back(v1);
+	}
+}
+
+
+void SharedRides::loadWaitingTrips() {
+
+	ifstream infile(waitingfile);
+
+	if (infile.peek() == std::ifstream::traits_type::eof())
+		return;
+
+	string info;					//string que ira conter a informacao de cada linha do ficheiro
+	
+	if (!infile.is_open())
+	{
+		throw FileException<string>("ERROR! The waiting file could not be opened.");
+	}
+
+	unsigned int owner;
+	int viagemsize;
+	string stop;
+	int tonexthora;
+	int tonextminuto;
+	Time tonext;
+	int  ID;
+	int numIDs;
+	float pricestop;
+	int maxseats;
+	vector<Stretch> viagem;
+
+	while (getline(infile, info)) {
+		unsigned int search = 1000;
+
+
+		size_t findpos = info.find(';', 0);			//inteiro que tem a posicao do primeiro ';'
+
+		owner = atoi(info.substr(0, findpos).c_str());
+		info = info.substr(findpos + 1, search);			//string = desde findpos até ao resto da  string
+		findpos = info.find(';', 0);					//agora o inteiro é a posicao na string do segundo ';'
+
+		viagemsize = atoi(info.substr(0, findpos).c_str());
+		info = info.substr(findpos + 1, search);			//string = desde primeiro ';' até ao segundo
+		findpos = info.find(';', 0);
+		
+		unsigned int i = 0;
+		
+		
+		while (i < viagemsize) {
+			stop = info.substr(0, findpos);
+			info = info.substr(findpos + 1, search);			//string = desde primeiro ';' até ao segundo
+			findpos = info.find(';', 0);
+
+			tonexthora = atoi(info.substr(0, findpos).c_str());
+			info = info.substr(findpos + 1, search);			//string = desde primeiro ';' até ao segundo
+			findpos = info.find(':', 0);
+
+			tonextminuto = atoi(info.substr(0, findpos).c_str());
+			info = info.substr(findpos + 1, search);			//string = desde primeiro ';' até ao segundo
+			findpos = info.find(';', 0);
+
+			tonext = Time(tonexthora, tonextminuto);
+
+			numIDs = atoi(info.substr(0, findpos).c_str());
+			info = info.substr(findpos + 1, search);			//string = desde primeiro ';' até ao segundo
+			findpos = info.find(';', 0);
+			unsigned int j = 0;
+			vector<int> vectID;
+				while (j < numIDs)	{
+					ID = atoi(info.substr(0, findpos).c_str());
+					vectID.push_back(ID);
+					info = info.substr(findpos + 1, search);			//string = desde primeiro ';' até ao segundo
+					findpos = info.find(';', 0);
+					j++;
+				}
+				Stretch str(stop, tonext);
+				str.setvectID(vectID);
+				viagem.push_back(str);
+			i++;
+
+			pricestop = stof (info.substr(0, findpos).c_str());
+			info = info.substr(findpos + 1, search);			//string = desde primeiro ';' até ao segundo
+			findpos = info.find(';', 0);
+
+			maxseats = atoi(info.substr(0, findpos).c_str());
+		}
+
+		
+		waitingTrip waiting(owner, viagem, maxseats, pricestop);
+		tripOffers.push_back(waiting);
+	}
+}
+
+
 
 
 void SharedRides::loadVehicles() {
@@ -1033,16 +1254,31 @@ void SharedRides::saveChanges() const {
 		}
 		out_users.close();
 	}
+
+	ofstream out_taken(takenfile, ios::trunc);   //declaracao do ficheiro para escrita
+
+	out_taken << getTAKENHighID() << endl;
+
+	for (size_t i = 0; i < tripsPrinter.size(); i++)
+	{
+		tripsPrinter[i].save(out_taken);   //funcao save da classe
+	}
+	out_taken.close();
+
+
+
+	ofstream out_waiting(waitingfile, ios::trunc);   //declaracao do ficheiro para escrita
+
+	for (size_t i = 0; i < tripOffers.size(); i++)
+	{
+		tripOffers[i].save(out_taken);   //funcao save da classe
+	}
+	out_waiting.close();
 }
 
 void SharedRides::run() {
-	
 	try {
 		load();
-		for (size_t i = 0; i < users.size(); i++)
-		{
-			cout << users[i] << endl;
-		}
 		main_menu();
 		saveChanges();
 	}
@@ -1074,6 +1310,21 @@ unsigned int SharedRides::getUSERHighID() const {
 	for (size_t i = 0; i < users.size(); i++)
 	{
 		unsigned int ID = users.at(i)->getID();
+
+		if (ID > maiorID)
+			maiorID = ID;
+	}
+
+	return maiorID;
+}
+
+unsigned int SharedRides::getTAKENHighID() const {
+
+	unsigned int maiorID = 0;
+
+	for (size_t i = 0; i < tripsPrinter.size(); i++)
+	{
+		unsigned int ID = tripsPrinter.at(i).getTripCode();
 
 		if (ID > maiorID)
 			maiorID = ID;

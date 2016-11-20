@@ -1,2 +1,2 @@
 1
-1;joao3;manel;Porto
+1;joao3;manel;0.0;Porto

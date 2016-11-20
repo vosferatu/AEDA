@@ -22,7 +22,7 @@ class SharedRides
 	static vector<User*> users;
 	static vector<takenTrip> tripsPrinter;
 	static vector<Vehicle*> cars;//used to list cars in manage app
-	static vector<Path> caminhos;
+	vector<Path> caminhos;
 	static vector<waitingTrip> tripOffers;
 	User* currentUser = NULL;  //se não for pointer, slicing problem
 	static vector<waitingTrip> tripsWaiting;
@@ -30,8 +30,9 @@ class SharedRides
 
 	static unsigned int maxUsersID;
 	static unsigned int maxVehiclesID;
+	static unsigned int maxTakenCode;
 
-	static const string citiesfile, usersfile, carsfile; 
+	static const string citiesfile, usersfile, carsfile, takenfile, waitingfile;
 
 	static unsigned int numbercities;
 	static float TAX;
@@ -42,8 +43,6 @@ class SharedRides
 
 public:
 	
-	
-	//void saveUsers() const;
 	
 	SharedRides() {}; //podemos fazer os loads todos no construtor
 	 
@@ -63,6 +62,8 @@ public:
 	static void loadCities();
 	static void loadUsers();
 	static void loadVehicles();
+	static void loadTakenTrips();
+	static void loadWaitingTrips();
 
 
 	//LOGIN & REGISTRATION
@@ -71,6 +72,7 @@ public:
 
 	unsigned int getCARHighID() const;
 	unsigned int getUSERHighID() const;
+	unsigned int getTAKENHighID() const;
 
 
 	~SharedRides(){
