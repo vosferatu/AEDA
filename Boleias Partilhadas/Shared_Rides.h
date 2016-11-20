@@ -56,8 +56,6 @@ public:
 	void user_menu();
 
 	// SAVE
-	void saveUsers() const;
-	void saveVehicles() const;
 	void saveChanges() const;
 	
 	// LOAD

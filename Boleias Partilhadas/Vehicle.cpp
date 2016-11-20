@@ -4,7 +4,7 @@ using namespace std;
 
 unsigned int Vehicle::carstatic = 0;
 
-Vehicle::Vehicle(unsigned int noSeats, string brand, unsigned int year, char rate) : numberSeats(noSeats){
+Vehicle::Vehicle(unsigned int noSeats, string brand, unsigned int year, string rate) : numberSeats(noSeats){
 	this->brand = brand;
 	this->numberSeats = noSeats;
 	this->year = year;
@@ -17,9 +17,23 @@ Vehicle::Vehicle() {
 	this->numberSeats = 0;
 	this->year = 0;
 	this->idCar = carstatic;
-	this->rate = 0;
 	carstatic++;
 }
+
+void Vehicle::setBrand(string brand) {
+	this->brand = brand;
+}
+
+void Vehicle::setYear(unsigned int year) {
+	this->year = year;
+}
+void Vehicle::setRate(string rate) {
+	this->rate = rate;
+}
+
+
+
+
 
 unsigned int Vehicle::getnumberSeats() const{
 	return numberSeats;
@@ -33,7 +47,7 @@ unsigned int Vehicle::getYear() const{
 	return year;
 }
 
-char Vehicle::getRate() const{
+string Vehicle::getRate() const{
 	return rate;
 }
 
@@ -64,8 +78,8 @@ Vehicle& Vehicle::operator=(Vehicle car){
 	return *this;
 }
 
-ofstream& operator<< (ofstream& os, const Vehicle car) {
-	os << car.getID() << endl << car.getBrand() << endl << car.getYear() << endl <<car.getRate() << endl;
+ostream& operator<< (ostream& os, const Vehicle car) {
+	os << car.getID() << endl << car.getBrand() << endl << car.getYear() << endl << car.getRate() << endl;
 
 	for (size_t i = 0; i < car.getRoute().size(); i++){
 		os << car.getRoute()[i] << endl;
@@ -77,14 +91,16 @@ ofstream& operator<< (ofstream& os, const Vehicle car) {
 void Vehicle::save(ofstream& out) const {
 	out << this->getID() << ";" << this->getBrand() << ";" << this->getYear() << ";" << this->getRate() << ";";
 	
-	for (size_t i = 0; i < this->getRoute().size(); i++) {
-		
-		if (i < getRoute().size() - 1)
-			out << this->getRoute()[i] << ";";
-		else
-			out << this->getRoute()[i] << endl;
+	if (this->getRoute().size() == 0)
+		out << endl;
+	else {
+		for (size_t i = 0; i < this->getRoute().size(); i++) {
+
+			if (i < getRoute().size() - 1)
+				out << this->getRoute()[i] << ";";
+			else
+				out << this->getRoute()[i] << ";" << endl;
+		}
 
 	}
-
-
 }

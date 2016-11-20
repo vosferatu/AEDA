@@ -1,3 +1,0 @@
-3
-2;ModelA;1901;A;Braga;Porto;Aveiro
-3;COUPE;2002;A;Viseu;Aveiro

@@ -61,6 +61,13 @@ void getEnter() {
 	//std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 }
 
+bool is_empty(std::ifstream& pFile)
+{
+	return pFile.peek() == std::ifstream::traits_type::eof();
+}
+
+
+
 void ClearScreen()
 {
 	HANDLE                     hStdOut;

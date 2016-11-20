@@ -7,7 +7,7 @@
 #include <string>
 #include <iostream>
 #include <windows.h>
-
+#include <fstream>
 #include <conio.h>
 
 #undef max // because of numeric_limits
@@ -56,5 +56,5 @@ string rtrim(string& s);
 //elimina os espaços finais de uma string
 // @param s - string a ser analisada
 
-
+bool is_empty(ifstream& pFile);
 #endif /* HELPER_H_ */

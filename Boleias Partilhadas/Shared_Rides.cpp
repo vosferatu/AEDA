@@ -20,52 +20,96 @@ bool SharedRides::usersalterados = false;
 bool SharedRides::carsalterados = false;
 
 
-void SharedRides::loadUsers() {
-
-	fstream file;
-
-	string info;					//string que ira conter a informacao de cada linha do ficheiro
-	string strnumber;					//string que ira remover o numero no inicio do ficheiro
-
-
-	file.open(citiesfile);
-
-	if (!file.is_open())
-	{
-		throw FileException<string>("Erro ao abrir o ficheiro de cidades.");
-	}
-
-	getline(file, strnumber);
-	numbercities = stoi(strnumber);
-
-	while (getline(file, info))
-	{
-		cities.push_back(info);
-	}
-
-
-}
+//void SharedRides::loadUsers() {
+//
+//	fstream file;
+//
+//	string info;					//string que ira conter a informacao de cada linha do ficheiro
+//	string strnumber;					//string que ira remover o numero no inicio do ficheiro
+//
+//
+//	file.open(usersfile);
+//
+//	if (!file.is_open())
+//	{
+//		throw FileException<string>("Error opening users file");
+//	}
+//
+//	getline(file, strnumber);
+//	maxUsersID = stoi(strnumber);
+//
+//	while (getline(file, info))
+//	{
+//		unsigned int search = 10000;
+//
+//		size_t findpos = info.find(';', 0);
+//		unsigned int id = stoul(info.substr(0, findpos - 1).c_str());
+//		
+//		info = info.substr(findpos + 1, search);			//string = desde inicio ate primeiro ';'
+//		findpos = info.find(';', 0);
+//
+//		string name = 
+//
+//
+//	}
+//
+//
+//}
 void SharedRides::loadVehicles() {
 
-	fstream file;
+	ifstream infile(carsfile);
 
+	if (infile.peek() == std::ifstream::traits_type::eof())
+		return;
+	
 	string info;					//string que ira conter a informacao de cada linha do ficheiro
 	string strnumber;					//string que ira remover o numero no inicio do ficheiro
 
-
-	file.open(citiesfile);
-
-	if (!file.is_open())
+	if (!infile.is_open())
 	{
-		throw FileException<string>("Erro ao abrir o ficheiro de cidades.");
+		throw FileException<string>("ERROR! The Vehicles file could not be opened.");
 	}
 
-	getline(file, strnumber);
-	numbercities = stoi(strnumber);
+	getline(infile, strnumber);
+	maxVehiclesID = stoi(strnumber);
 
-	while (getline(file, info))
+	while (getline(infile, info))
 	{
-		cities.push_back(info);
+		unsigned int search = 1000;
+		Vehicle car;
+
+		size_t findpos = info.find(';', 0);			//inteiro que tem a posicao do primeiro ';'
+
+		car.setId(stoul(info.substr(0, findpos).c_str()));  //id = à string desde o inicio ate ';' transformada em unsigned int
+		info = info.substr(findpos + 1, search);			//string = desde findpos até ao resto da  string
+		findpos = info.find(';', 0);					//agora o inteiro é a posicao na string do segundo ';'
+
+		car.setBrand(info.substr(0, findpos));
+		info = info.substr(findpos + 1, search);			//string = desde primeiro ';' até ao segundo
+		findpos = info.find(';', 0);					//agora o inteiro é a posicao na string do terceiro ';'
+
+		car.setYear(stoul(info.substr(0, findpos).c_str()));
+		info = info.substr(findpos + 1, search);
+		findpos = info.find(';', 0);
+
+		car.setRate(info.substr(0, findpos));
+		info = info.substr(findpos + 1, search);			//string = desde findpos até ao resto da  string
+		findpos = info.find(';', 0);
+
+		vector<string> route;
+
+		
+		while (findpos != -1) {
+			route.push_back(info.substr(0, findpos));
+			info = info.substr(findpos + 1, search);			//string = desde findpos até ao resto da  string
+			findpos = info.find(';', 0);
+		}
+
+		car.setRoute(route);
+		cars.push_back(car);
+
+		
+		
 	}
 
 
@@ -104,7 +148,7 @@ void SharedRides::loadCities() {
 void SharedRides::load() {
 	loadCities();
 	//loadUsers();
-	//loadVehicles();
+	loadVehicles();
 }
 void SharedRides::CreateRegis()
 {
@@ -216,11 +260,11 @@ void SharedRides::CreateRegis()
 			}
 
 			bool goodrate = false;
-			char rate;
+			string rate;
 			while (!goodrate) {
 				rate = get_input <char>("In a scale [F(worst) - A (best)], please specify your evaluation of your car conditions.");
 			
-				if (rate != 'A' && rate != 'B' && rate != 'C' && rate != 'D' && rate != 'E' && rate != 'F')
+				if (rate != "A" && rate != "B" && rate != "C" && rate != "D" && rate != "E" && rate != "F")
 				{
 					cout << "\nError! Please give an evaluation in the provided scale.\n";
 					goodrate = false;
@@ -259,9 +303,29 @@ void SharedRides::CreateRegis()
 						rout.push_back(substr);
 					}
 
-				 routebool = true;
+					//bool total = false;
+					//for (size_t i = 0; i < rout.size(); i++) {
+					//	if (!total) {
+					//		for (size_t j = 0; j < cities.size(); j++) { // vetor principal 
+					//			if (cities[j] == rout[i])
+					//				break;                           // se encontrou para 
+					//			else if (j = cities.size() - 1) {		   //se chegou ao fim sem encontrar, é porque
+					//				total = true;					// o elemento nao foi encontrado
+					//				break;
+					//			}
+					//		}
+					//	}
+					//	else break;
+					//}
+
+					//if (total)
+					//	cout << "\nError! One of entered cities doesn't belong to supported ones.\n";
+					//else { routebool = true; break; }
+
+					routebool = true;
+					break;
 					
-					break; 
+					 
 				}
 				else if (addroute == "n") {
 					routebool = true;
@@ -319,37 +383,6 @@ User* SharedRides::login(const string &username, const string &password) {
 	throw LoginException<string>("\nInvalid combination of username/password. Please try again.\n");
 }
 
-void SharedRides::saveUsers() const {
-
-	ofstream myfile;
-	myfile.open("users.txt");  // in the users.txt file
-	 
-	myfile << users.size();
-
-	for (size_t i = 0; i < users.size(); i++)
-	{
-		myfile << users[i];
-	}
-
-	myfile.close();
-
-}
-
-void SharedRides::saveVehicles() const {
-
-	ofstream myfile;
-	myfile.open("cars.txt");  // in the users.txt file
-
-	myfile << cars.size();
-
-	for (size_t i = 0; i < cars.size(); i++)
-	{
-		myfile << cars[i];
-	}
-
-	myfile.close();
-
-}
 
 void SharedRides::saveChanges() const {
 
@@ -384,6 +417,12 @@ void SharedRides::run() {
 	
 	try {
 		load();
+		
+		for (size_t i = 0; i < cars.size(); i++)
+		{
+			cout << cars[i] << endl;
+		}
+
 		main_menu();
 		saveChanges();
 	}
