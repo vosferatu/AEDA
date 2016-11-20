@@ -11,7 +11,7 @@
 #include <vector>
 #include <limits>
 #include <sstream>
-#include <iostream>
+#include <ostream>
 
 #undef max // because of numeric_limits
 
@@ -21,7 +21,7 @@ class SharedRides
 {
 	static vector<User*> users;
 	static vector<takenTrip> tripsPrinter;
-	static vector<Vehicle> cars;//used to list cars in manage app
+	static vector<Vehicle*> cars;//used to list cars in manage app
 	static vector<Path> caminhos;
 	static vector<waitingTrip> tripOffers;
 	User* currentUser = NULL;  //se não for pointer, slicing problem
@@ -35,6 +35,7 @@ class SharedRides
 	static const string citiesfile, usersfile, carsfile; 
 
 	static unsigned int numbercities;
+	static float TAX;
 
 	static bool usersalterados;
 	static bool carsalterados;
@@ -80,7 +81,33 @@ public:
 		}
 	}
 
-	
+	//helpers
+	void fillPaths();
+	int getPositionCar(unsigned int id) const;
+	int getPositionUser(unsigned int id) const;
+	void recompensate(unsigned int id);
+
+	//MENUS Functions
+	void showTrips() const;
+
+	void userWithVehicleMenu();
+	void editVehicle();
+	void removeVehicle();
+
+	void addVehicle();
+
+	void creditAccount();
+
+	void changeProfile();
+
+	void deleteAccount();
+
+	void buddiesMenu();
+	void addBuddie();
+	void removeBuddie();
+	void showBuddiesProfileToUser();
+	void myBuddies();
+
 };
 
 // tratamento de exceções

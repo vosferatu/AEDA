@@ -62,6 +62,8 @@ public:
 	friend bool operator<(const Time &horas1, const Time &horas2);
 	friend bool operator==(const Time &horas1, const Time &horas2); //horas iguais
 
+	friend Time operator+(const Time & t1, const Time &t2);
+
 	friend ostream& operator<<(ostream& out, const Time & horas); //mostrar horas
 	friend istream& operator>> (istream& in, const Time & horas); //escrever horas
 };

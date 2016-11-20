@@ -2,9 +2,15 @@
 
 string readLine()
 {
+	bool done = false;
 	string linha;
-	cout << "> ";
-	getline(cin, linha);
+
+	while (!done) {
+		cout << "> ";
+		getline(cin, linha);
+		if (linha != "" || linha != "\n" || linha.size() > 0)
+			done = true;
+	}
 	return linha;
 }
 

@@ -31,9 +31,13 @@ float User::getAccount() const{
 	return account;
 }
 
+void User::chargeAccount(float addition){
+	account = account + addition;
+}
+
 /////////////////////////////////////////////////// REGISTERED USER /////////////////////////////////////////////////////
 
-RegisteredUser::RegisteredUser(string username, string password, string city, Vehicle car) : User(username), vehicle(car){
+RegisteredUser::RegisteredUser(string username, string password, Vehicle* car) : User(username), vehicle(car){
 	this->password = password;
 	this->homeCity = city;
 }
@@ -61,14 +65,31 @@ string RegisteredUser::getCity() const {
 	return homeCity;
 }
 
-Vehicle RegisteredUser::getVehicle() const {
-	return this->vehicle;
+Vehicle* RegisteredUser::getVehicle() const {
+	return vehicle;
 }
 
-vector<int> RegisteredUser::getBuddies() const{
-	return friends;
+void RegisteredUser::setHome(string city){
+	this->homeCity = city;
 }
 
+void RegisteredUser::setPassword(string password){
+	this->password = password;
+}
+
+void RegisteredUser::showProfile(){
+	cout << "\n\tProfile of " << this->getusername() << ":" << endl;
+	cout << "Home City: " << this->getCity() << endl;
+	cout << "Number of Trips: " << this->getnumTrips() << endl;
+	cout << "Number of Buddies: " << this->getFavs().size() << endl;
+	if (this->getVehicle()->getYear() == 0)
+		cout << "Car: No." << endl;
+	else cout << "Car: Yes." << endl;
+}
+
+vector<int> RegisteredUser::getFavs() const{
+	return favorites;
+}
 
 ofstream& operator<<(ofstream& os, const RegisteredUser* RU) {
 	os << RU->getID() << endl << RU->getusername() << endl << RU->getpassword() << endl << RU->getCity() << endl;
@@ -76,7 +97,7 @@ ofstream& operator<<(ofstream& os, const RegisteredUser* RU) {
 }
 
 void RegisteredUser::setVehicle(Vehicle* car)  {
-	this->vehicle = (*car);
+	this->vehicle = car;
 }
 
 void RegisteredUser::save(ofstream& out) const {

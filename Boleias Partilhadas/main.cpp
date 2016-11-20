@@ -12,7 +12,9 @@ using namespace std;
 int main() {	
 	SharedRides Boleias;
 	Boleias.run();
-	
+
+	cout << "Successfull exit." << endl;
+
 	return 0;
 
 
