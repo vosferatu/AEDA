@@ -21,6 +21,7 @@ class User{
 
 public:
 	User() {};
+	~User() {};
 	User(string username);
 
 	unsigned int getID() const;
@@ -40,6 +41,7 @@ public:
 	virtual void save(ofstream& out) const = 0;
 	virtual void setTrips(vector<int> trips) = 0;
 	virtual void setFavs(vector<int> favs) = 0;
+	virtual void addTrip(unsigned int ID) = 0;
 };
 
 class RegisteredUser : public User {
@@ -48,7 +50,6 @@ class RegisteredUser : public User {
 	string homeCity;
 	vector<int> favorites; //friends ID
 	string password;
-	float maintainenceTAX;
 	Vehicle* vehicle;
 
 
@@ -72,6 +73,7 @@ public:
 	Vehicle* getVehicle() const;
 	void setHome(string city);
 	void setPassword(string password);
+	void addTrip(unsigned int ID);
 
 	void setVehicleID(unsigned int id);
 
@@ -85,7 +87,6 @@ public:
 
 
 class GuestUser : public User {
-	float tripCosts;
 
 public:
 	GuestUser(string username);
@@ -93,4 +94,4 @@ public:
 
 
 
-#endif /* USER_H_ */
+#endif USER_H_ 

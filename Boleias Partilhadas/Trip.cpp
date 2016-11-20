@@ -105,7 +105,6 @@ waitingTrip::waitingTrip(unsigned int owner, vector<Stretch> Viagem, int maxSeat
 	this->Viagem = Viagem;
 	this->maxSeats = maxSeats;
 	this->pricePerStop = price;
-	this->full = false;
 }
 
 unsigned int waitingTrip::getOwner() const{
@@ -117,10 +116,6 @@ vector<Stretch> waitingTrip::getWay() const
 	return Viagem;
 }
 
-bool waitingTrip::getFull() const{
-	return full;
-}
-
 float waitingTrip::getpriceStop() const{
 	return pricePerStop;
 }
@@ -129,16 +124,20 @@ int waitingTrip::getmaxSeats() const{
 	return maxSeats;
 }
 
+Time waitingTrip::getTotalTime() const{
+	Time t1(0, 0);
+	for (size_t i = 0; i < Viagem.size(); i++) {
+		t1 = t1 + Viagem[i].getTime();
+	}
+	return t1;
+}
+
 void waitingTrip::setOwner(unsigned int id){
 	this->ownerID = id;
 }
 
 void waitingTrip::setWay(vector<Stretch> way){
 	this->Viagem = way;
-}
-
-void waitingTrip::setFull(bool change){
-	this->full = change;
 }
 
 void waitingTrip::setpriceStop(float price){
@@ -159,6 +158,13 @@ ofstream & operator<<(ofstream & out, const waitingTrip & trip){
 		else out << trip.Viagem[i] << ";";
 	}
 	
+	return out;
+}
+
+ostream & operator<<(ostream & out, const waitingTrip & trip){
+	out << "Dono: " << trip.ownerID << "; ";
+	out << "Preco por Paragem: " << trip.pricePerStop << "; ";
+	out << "MaxSeats: " << trip.maxSeats;
 	return out;
 }
 

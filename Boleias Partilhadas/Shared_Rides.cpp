@@ -372,8 +372,6 @@ void SharedRides::loadVehicles() {
 		cars.push_back(v1);	
 		
 	}
-
-
 }
 
 
@@ -412,6 +410,7 @@ void SharedRides::load() {
 	loadUsers();
 	
 }
+
 void SharedRides::CreateRegis()
 {
 
@@ -571,7 +570,7 @@ void SharedRides::CreateRegis()
 					//		for (size_t j = 0; j < cities.size(); j++) { // vetor principal 
 					//			if (cities[j] == rout[i])
 					//				break;                           // se encontrou para 
-					//			else if (j = cities.size() - 1) {		   //se chegou ao fim sem encontrar, é porque
+					//			else if (j == cities.size() - 1) {		   //se chegou ao fim sem encontrar, é porque
 					//				total = true;					// o elemento nao foi encontrado
 					//				break;
 					//			}
@@ -617,7 +616,7 @@ void SharedRides::CreateRegis()
 		else if (addvehicle == "n") {
 			Vehicle* nocar = new Vehicle();
 
-			RegisteredUser* RU = new RegisteredUser(username, password1,city, nocar);
+			RegisteredUser* RU = new RegisteredUser(username, password1, city, nocar);
 
 			users.push_back(RU);
 			usersalterados = true;
@@ -633,6 +632,8 @@ void SharedRides::CreateRegis()
 	cout << endl << "Now you have to Login to confirm your account.\n";
 }
 
+
+//Helper Functions
 void SharedRides::fillPaths(){
 	//Braga Porto Vila Real Aveiro Viseu Lisboa Faro Beja
 	Path p1("Braga", "Porto", Time(0, 40)); caminhos.push_back(p1);
@@ -747,6 +748,41 @@ void SharedRides::recompensate(unsigned int id){
 	cout << endl << "Users who payed for your vehicle's trips where recompensated with 5$.\n";
 }
 
+Time SharedRides::searchStretchTime(string one, string two) {
+	for (size_t i = 0; i < caminhos.size(); i++) {
+		if ((caminhos[i].getFirst() == one) && (caminhos[i].getSecond() == two))
+			return caminhos[i].getTime();
+	}
+}
+
+string SharedRides::searchStretchCity(string one, Time t1) {
+	for (size_t i = 0; i < caminhos.size(); i++) {
+		if ((caminhos[i].getFirst() == one) && (caminhos[i].getTime() == t1))
+			return caminhos[i].getSecond();
+	}
+}
+
+int SharedRides::checkTrip(string a, string b, const vector<Stretch> & v) const {
+	int found1 = -1000;
+	int found2 = -100;
+	for (size_t i = 0; v.size(); i++) {
+		if (v[i].getCity() == a)
+			found1 = i;
+		if (v[i].getCity() == b)
+			found2 = i;
+	}
+	return ((found2 - found1) + 1);
+}
+
+bool SharedRides::checkBuddie(unsigned int user1) {
+	for (size_t i = 0; i < currentUser->getFavs().size(); i++) {
+		if (user1 == currentUser->getFavs()[i])
+			return true;
+	}
+	return false;
+}
+
+//Functions called by Menus
 void SharedRides::showTrips() const{
 	if (dynamic_cast<RegisteredUser*>(currentUser) == NULL) {
 		cout << endl << "Not available!" << endl;
@@ -754,7 +790,7 @@ void SharedRides::showTrips() const{
 	}
 
 	if (currentUser->getnumTrips() == 0) {
-		cout << endl << "You have no trips in your history!" << endl;
+		cout << endl << "You have no taken trips in your history!" << endl;
 	}
 
 	vector<int> vec = currentUser->getTrips();
@@ -837,7 +873,7 @@ void SharedRides::editVehicle(){
 		currentUser->getVehicle()->setRoute(rout);
 
 		for (size_t i = 0; i < cars.size(); i++) {
-			if (cars[i]->getCarID() == currentUser->getID()) {
+			if (cars[i]->getID() == currentUser->getID()) {
 				cars[i] = currentUser->getVehicle();
 				break;
 			}
@@ -867,7 +903,7 @@ void SharedRides::editVehicle(){
 		currentUser->getVehicle()->setRoute(rout);
 
 		for (size_t i = 0; i < cars.size(); i++) {
-			if (cars[i]->getCarID() == currentUser->getID()) {
+			if (cars[i]->getID() == currentUser->getID()) {
 				cars[i] = currentUser->getVehicle();
 				break;
 			}
@@ -880,6 +916,8 @@ void SharedRides::editVehicle(){
 		editVehicle();
 		break;
 	}
+	usersalterados = true;
+	carsalterados = true;
 }
 
 void SharedRides::removeVehicle(){
@@ -913,7 +951,8 @@ void SharedRides::removeVehicle(){
 		}
 		else cout << "Error! Please enter y or n." << endl;
 	}
-
+	usersalterados = true;
+	carsalterados = true;
 	return;
 }
 
@@ -954,6 +993,8 @@ void SharedRides::addVehicle() {
 	currentUser->getVehicle()->setRoute(rout);
 
 	cars.push_back(currentUser->getVehicle());
+	usersalterados = true;
+	carsalterados = true;
 }
 
 void SharedRides::creditAccount(){
@@ -972,6 +1013,7 @@ void SharedRides::creditAccount(){
 		break;
 	}
 	cout << endl << "Your new balance: " << currentUser->getAccount() << "$" << endl;
+	usersalterados = true;
 }
 
 void SharedRides::changeProfile(){
@@ -1027,13 +1069,14 @@ void SharedRides::changeProfile(){
 		changeProfile();
 		break;
 	}
+	usersalterados = true;
 }
 
 void SharedRides::deleteAccount(){
 	string remaccount;
 
 	while (true) {
-		remaccount = get_input <string>("Do you want to remove your vehicle? [y|n]");
+		remaccount = get_input <string>("Do you want to remove your account? [y|n]");
 		cin.ignore(numeric_limits <streamsize>::max(), '\n');
 
 		if (remaccount == "y") {
@@ -1091,6 +1134,8 @@ void SharedRides::deleteAccount(){
 			currentUser = NULL;
 			users.erase(users.begin() + j);
 			cout << "Your account has been deleted. Sad to see you go, hope you enjoyed our App.\n";
+			usersalterados = true;
+			carsalterados = true;
 			break;
 		}
 
@@ -1115,14 +1160,14 @@ void SharedRides::buddiesMenu(){
 		);
 
 	switch (choice) {
+	case 0:
+		addBuddie();
+		break;
 	case 1:
-		//addBuddie();
+		removeBuddie();
 		break;
 	case 2:
-		//removeBuddie();
-		break;
-	case 3:
-		//showBuddiesToUser();
+		myBuddies();
 		break;
 	default:
 		cout << "Please, input an integer suitable to the options shown." << endl;
@@ -1165,12 +1210,12 @@ void SharedRides::addBuddie() {
 		}
 	}
 
-	int choice;
+	unsigned int choice;
 	while (true) {
-		choice = get_input <int>(
-			"\tSelect one of your buddies, by their number identifier." "\n"
+		choice = get_input <unsigned int>(
+			"\tSelect one of the users, by their number identifier." "\n"
 			);
-		if ((choice > 0) && (choice < currentUser->getFavs().size() + 1))
+		if ((choice > 0) && (choice < users.size() + 1))
 			break;
 		else cout << "Input a valid number!" << endl;
 		cin.ignore(numeric_limits <streamsize>::max(), '\n');
@@ -1178,14 +1223,24 @@ void SharedRides::addBuddie() {
 
 	currentUser->getFavs().push_back(users[choice - 1]->getID());
 	cout << endl << users[choice - 1]->getusername() << " is now one of your buddies." << endl;
+	usersalterados = true;
 }
 
 void SharedRides::removeBuddie() {
-	showBuddiesProfileToUser();
-	int choice;
+	size_t user = getPositionUser(currentUser->getID());
+	vector<int> fav = users[user]->getFavs();
+
+	for (size_t i = 0; i < fav.size(); i++) {
+		size_t j = getPositionUser(fav[i]);
+		cout << "Buddie number " << i + 1 << ":\n";
+		users[j]->showProfile();
+		cout << endl;
+	}
+
+	unsigned int choice;
 	while (true) {
-		 choice = get_input <int>(
-			"\tSelect on of your buddies, by their number identifier." "\n"
+		 choice = get_input <unsigned int>(
+			"\tSelect one of your buddies, by their number identifier." "\n"
 			);
 		 if ((choice > 0) && (choice < currentUser->getFavs().size() + 1))
 			 break;
@@ -1196,23 +1251,360 @@ void SharedRides::removeBuddie() {
 	currentUser->getFavs().erase(currentUser->getFavs().begin() + (choice - 1));
 	size_t amigo = getPositionUser(currentUser->getFavs()[choice - 1]);
 	cout << endl << users[amigo]->getusername() << " is no longer one of your Buddies." << endl;
+	usersalterados = true;
 }
 
-void SharedRides::myBuddies() {
-
-}
-
-void SharedRides::showBuddiesProfileToUser(){
+void SharedRides::myBuddies() const{
 	size_t user = getPositionUser(currentUser->getID());
 	vector<int> fav = users[user]->getFavs();
-
+	vector<int> nearfav{};
+	vector<int> farfav{};
 	for (size_t i = 0; i < fav.size(); i++) {
 		size_t j = getPositionUser(fav[i]);
-		cout << "Buddie number " << i + 1 << ":\n";
-		users[j]->showProfile();
+		if (users[j]->getCity() == users[user]->getCity())
+			nearfav.push_back(j);
+		else farfav.push_back(j);
+	}
+	nearfav.insert(nearfav.end(), farfav.begin(), farfav.end());
+
+	for (size_t i = 0; i < nearfav.size(); i++) {
+		cout << "Buddie number " << nearfav[i]+1 << ":\n";
+		users[nearfav[i]]->showProfile();
 		cout << endl;
 	}
+
+	string seetrip;
+	while (true) {
+		seetrip = get_input <string>("Do you want to see Buddies Trips? [y|n]");
+		cin.ignore(numeric_limits <streamsize>::max(), '\n');
+
+		if (seetrip == "y") {
+			break;
+		}
+
+		if (seetrip == "n") {
+			cout << "Getting back..." << endl;
+			return;
+		}
+		else cout << "Error! Please enter y or n." << endl;
+	}
+
+	unsigned int choice;
+	bool can = false;
+	while (true) {
+		choice = get_input <unsigned int>(
+			"\tSelect on of your buddies, by their number identifier, to see their trips." "\n"
+			);
+		for (size_t i = 0; i < nearfav.size(); i++) {
+			if (choice == nearfav[i] + 1) {
+				can = true;
+				break;
+			}
+		}
+		if ((choice >= 0) && (choice < users.size() + 1) && (can == true))
+			break;
+		else cout << "Input a valid number!" << endl;
+		cin.ignore(numeric_limits <streamsize>::max(), '\n');
+	}
+	
+	if (users[choice - 1]->getnumTrips() == 0) {
+		cout << endl << "\t" << users[choice - 1]->getusername() << " has no trips in his history!" << endl;
+	}
+
+	vector<int> vec = users[choice-1]->getTrips();
+	cout << endl << "\tViagens de " << users[choice - 1]->getusername() << " :\n";
+	for (size_t i = 0; i < vec.size(); i++) {
+		for (size_t j = 0; j < tripsPrinter.size(); j++) {
+			if (tripsPrinter[j].getTripCode() == vec[i]) {
+				cout << "Trip number " << i + 1 << endl;
+				cout << tripsPrinter[j] << endl;
+				break;
+			}
+		}
+	}
 }
+
+void SharedRides::VehicleTripMenu(){
+	int choice = get_input <int>(
+		"[0] Start Trip" "\n"
+		"[1] Add a Trip" "\n"
+		"[2] Enter a Trip" "\n"
+		);
+
+	switch (choice) {
+	case 0:
+		startTrip();
+		break;
+	case 1:
+		addTrip();
+		break;
+	case 2:
+		//enterTrip();
+		break;
+	default:
+		cout << "Please, input an integer suitable to the options shown." << endl;
+		cin.ignore(numeric_limits <streamsize>::max(), '\n');
+		buddiesMenu();
+		break;
+	}
+}
+
+void SharedRides::addTrip(){
+	if (currentUser->getAccount() < 0) {
+		cout << "Your account is under 0. Please charge account to pay your taxes." << endl;
+		return;
+	}
+	for (size_t i = 0; i < tripOffers.size(); i++) {
+		if (tripOffers[i].getOwner() == currentUser->getID()) {
+			cout << "You already have an active Trip." << endl;
+			return;
+		}
+	}
+
+	int choice = get_input <int>(
+		"[0] Normal Trip" "\n"
+		"[1] Different Rout" "\n"
+		);
+
+	switch (choice) {
+	case 0: {
+		vector<string> rota = currentUser->getVehicle()->getRoute();
+		vector<Stretch> novo{};
+		for (size_t i = 0; i < rota.size() - 1; i++) {
+			Time t1 = searchStretchTime(rota[i], rota[i + 1]);
+			Stretch s1(rota[i], t1);
+			novo.push_back(s1);
+		}
+		float pps = 0;
+		while (true) {
+			 pps = get_input <float>(
+				"Input a Price per Stop: "
+				);
+			 if (pps > 0)
+				 break;
+			 else cout << endl << "No negatives!" << endl;
+			 cin.ignore(numeric_limits <streamsize>::max(), '\n');
+		}
+		novo.push_back(Stretch(rota[rota.size() - 1], Time(0, 0)));
+		waitingTrip nova(currentUser->getID(), novo, currentUser->getVehicle()->getnumberSeats() - 1, pps);
+		tripOffers.push_back(nova);
+		cout << "New Trip Added." << endl;
+		break;
+	}
+	case 1:
+	{//---------------------------------------------------------------------------------
+		string cityroute;
+		vector<string> rota;
+		cout << "Please specify the cities of your route, separared by slash";
+		cout << endl << "Example: Porto-Lisboa-Vila Real" << endl;
+		cout << "It must belong to one of these : ";
+		for (size_t i = 0; i < cities.size(); i++) {
+			if (i < cities.size() - 1)
+				cout << cities[i] << ", ";
+			else cout << cities[i] << ".\n";
+		}
+		cityroute = readLine();
+		stringstream ss(cityroute);
+
+		while (ss.good()) {
+			string substr;
+			getline(ss, substr, '-');
+			rota.push_back(substr);
+		}
+//_-----------------------------------------------------------------------------------
+		vector<Stretch> novo{};
+		for (size_t i = 0; i < rota.size() - 1; i++) {
+			Time t1 = searchStretchTime(rota[i], rota[i + 1]);
+			Stretch s1(rota[i], t1);
+			novo.push_back(s1);
+		}
+		float pps = 0;
+		while (true) {
+			pps = get_input <float>(
+				"Input a Price per Stop: "
+				);
+			if (pps > 0)
+				break;
+			else cout << endl << "No negatives!" << endl;
+			cin.ignore(numeric_limits <streamsize>::max(), '\n');
+		}
+		novo.push_back(Stretch(rota[rota.size() - 1], Time(0, 0)));
+		waitingTrip nova(currentUser->getID(), novo, currentUser->getVehicle()->getnumberSeats() - 1, pps);
+		tripOffers.push_back(nova);
+		cout << "New Trip Added." << endl;
+	}
+		break;
+	default:
+		cout << "Please, input an integer suitable to the options shown." << endl;
+		cin.ignore(numeric_limits <streamsize>::max(), '\n');
+		buddiesMenu();
+		break;
+	}
+}
+
+void SharedRides::startTrip() {
+	bool noTrip = false;
+	unsigned int codigo = 0;
+	vector<Stretch> s1;
+	for (size_t i = 0; i < tripOffers.size(); i++) {
+		if (tripOffers[i].getOwner() == currentUser->getID()) {
+			s1 = tripOffers[i].getWay();
+			string end = searchStretchCity(s1[s1.size() - 1].getCity(), s1[s1.size() - 1].getTime());
+			Time tfim = Time() + tripOffers[i].getTotalTime();
+
+			takenTrip t1(currentUser->getusername(), s1[0].getCity(), end, tfim);
+			codigo = t1.getTripCode();
+			tripOffers.erase(tripOffers.begin() + i);
+			noTrip = true;
+			break;
+		}
+	}
+
+	if (noTrip == false)
+		cout << endl << "You have no pending Trips!" << endl;
+	else {
+		cout << endl << "Your trip has been started!" << endl;
+		vector<int> gajos{};
+		for (size_t i = 0; i < s1.size(); i++) {
+			for (size_t j = 0; j < s1[i].getusers().size(); j++)
+				gajos.push_back(s1[i].getusers()[j]);
+		}
+		gajos.push_back(currentUser->getID());
+		sort(gajos.begin(), gajos.end());
+		gajos.erase(unique(gajos.begin(), gajos.end()), gajos.end());
+		//fica com vetor de users na viagem
+		for (size_t i = 0; i < gajos.size(); i++) {
+			size_t j = getPositionUser(gajos[i]);
+			users[j]->addTrip(codigo);
+		}
+		usersalterados = true;
+	}
+}
+
+void SharedRides::enterTrip(){
+	if (currentUser->getAccount() < 0) {
+		cout << "Your account is under 0. Please charge account to pay your taxes." << endl;
+		return;
+	}
+
+	string firstPoint;
+	string secondPoint;
+	cout << "\t Where are you catching a ride?" << endl;
+	cout << "It must belong to one of these : ";
+	for (size_t i = 0; i < cities.size(); i++) {
+		if (i < cities.size() - 1)
+			cout << cities[i] << ", ";
+		else cout << cities[i] << ".\n";
+	}
+	firstPoint = readLine();
+	ClearScreen();
+	cout << "\t Where are you dropping off?" << endl;
+	cout << "It must belong to one of these : ";
+	for (size_t i = 0; i < cities.size(); i++) {
+		if (i < cities.size() - 1)
+			cout << cities[i] << ", ";
+		else cout << cities[i] << ".\n";
+	}
+	secondPoint = readLine();
+	ClearScreen();
+
+	int counter = 0;
+	int stops = 0;
+	vector<int> AvailableTrips{};
+	for (size_t i = 0; i < tripOffers.size(); i++) {
+		if (tripOffers[i].getOwner() != currentUser->getID()) {
+			stops = checkTrip(firstPoint, secondPoint, tripOffers[i].getWay());
+			if (stops > 0) {
+				if (currentUser->getAccount()> stops*tripOffers[i].getpriceStop()) {
+					AvailableTrips.push_back(i);
+					counter++;
+				}
+			}
+		}
+	}
+	if (counter == 0) {
+		cout << "There are no trips available in your conditions." << endl;
+	}
+
+	if (dynamic_cast<RegisteredUser*>(currentUser) != NULL) {//REGISTERED
+		for (size_t i = 0; i < AvailableTrips.size(); i++) {
+			if (checkBuddie(tripOffers[AvailableTrips[i]].getOwner()))
+				cout << "Buddie Trip!" << endl;
+			cout << "Trip number: " << AvailableTrips[i];
+			cout << tripOffers[AvailableTrips[i]] << endl;
+		}
+	}
+	else {//GUEST
+		for (size_t i = 0; i < AvailableTrips.size(); i++) {
+			cout << "Trip number: " << AvailableTrips[i];
+			cout << tripOffers[AvailableTrips[i]] << endl;
+		}
+	}
+
+	unsigned int choice;
+	while (true) {
+		choice = get_input <unsigned int>(
+			"\tSelect one of the Trips, by their number identifier." "\n"
+			);
+		if ((choice >= 0) && (choice < tripOffers.size() + 1))
+			break;
+
+		cout << "Input a valid number!" << endl;
+		cin.ignore(numeric_limits <streamsize>::max(), '\n');
+	}
+
+	int contador = 0;
+	int bancos = tripOffers[choice].getmaxSeats();
+	vector<Stretch> novo = tripOffers[choice].getWay();
+	for (size_t i = 0; i < novo.size(); i++) {
+		if (novo[i].getCity() == firstPoint) {
+			if (novo[i].getusers().size() < bancos)
+				contador++;
+		}
+		if ((contador > 0) && (novo[i].getCity() != secondPoint)) {
+			if (novo[i].getusers().size() < bancos)
+				contador++;
+		}
+		if (novo[i].getCity() == secondPoint) {
+			if (novo[i].getusers().size() < bancos)
+				contador++;
+			break;
+		}
+	}
+	if (contador != stops) {
+		cout << "Not enough seats available! We're sorry." << endl;
+		return;
+	}
+
+	for (size_t i = 0; i < novo.size(); i++) {
+		if (novo[i].getCity() == firstPoint) {
+			novo[i].addUser(currentUser->getID());
+		}
+		if ((contador > 0) && (novo[i].getCity() != secondPoint)) {
+			novo[i].addUser(currentUser->getID());
+		}
+		if (novo[i].getCity() == secondPoint) {
+			novo[i].addUser(currentUser->getID());
+			break;
+		}
+	}
+
+void SharedRides::showBuddiesProfileToUser(){
+	size_t user = getPositionUser(currentUser->getid());
+	vector<int> fav = users[user]->getFavs();
+
+	contador = 0;
+	for (size_t i = 0; i < novo.size(); i++) {
+		if (novo[i].getusers().size() == bancos)
+			contador++;
+	}
+	if (contador == novo.size()) {
+		startTrip();
+	}
+	usersalterados = true;
+}
+
+
 
 User* SharedRides::login(const string &username, const string &password) {
 
@@ -1224,8 +1616,8 @@ User* SharedRides::login(const string &username, const string &password) {
 		}
 
 	throw LoginException<string>("\nInvalid combination of username/password. Please try again.\n");
+	return NULL;
 }
-
 
 void SharedRides::saveChanges() const {
 
@@ -1237,7 +1629,7 @@ void SharedRides::saveChanges() const {
 
 		for (size_t i = 0; i < cars.size(); i++)		
 		{
-			cars[i]->save(out_cars);  
+			cars.at(i).save(out_cars);  
 		}
 		out_cars.close();
 	}
@@ -1294,7 +1686,7 @@ unsigned int SharedRides::getCARHighID() const {
 
 	for (size_t i = 0; i < cars.size(); i++)		
 	{
-		unsigned int ID = cars.at(i)->getCarID();	
+		unsigned int ID = cars.at(i).getID();	
 																
 		if (ID > maiorID)								
 			maiorID = ID;						

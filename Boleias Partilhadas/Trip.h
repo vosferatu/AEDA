@@ -71,7 +71,6 @@ public:
 class waitingTrip { 
 	unsigned int ownerID;
 	vector<Stretch> Viagem;
-	bool full;
 	float pricePerStop;
 	int maxSeats;
 
@@ -81,13 +80,12 @@ public:
 
 	unsigned int getOwner() const;
 	vector<Stretch> getWay() const;
-	bool getFull() const;
 	float getpriceStop() const;
 	int getmaxSeats() const;
+	Time getTotalTime() const;
 
 	void setOwner(unsigned int id);
 	void setWay(vector<Stretch> way);
-	void setFull(bool change);
 	void setpriceStop(float price);
 	void setmaxSeats(int seats);
 
@@ -95,6 +93,7 @@ public:
 	void save(ofstream& out) const;
 
 	friend ofstream& operator<<(ofstream& out, const waitingTrip& trip);//save on file
+	friend ostream& operator<<(ostream& out, const waitingTrip& trip);
 };
 
 class Path {

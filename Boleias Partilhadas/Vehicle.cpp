@@ -17,16 +17,13 @@ Vehicle::Vehicle() {
 	this->numberSeats = 0;
 	this->year = 0;
 	this->idCar = 0;
-	this->rate = "A";
+	this->rate = " ";
 	vector<string> a{};
 	this->route = a;
 	this->idCar = carstatic;
 	carstatic++;
 }
 
-void Vehicle::setBrand(string brand) {
-	this->brand = brand;
-}
 
 void Vehicle::setYear(unsigned int year) {
 	this->year = year;
@@ -56,7 +53,7 @@ string Vehicle::getRate() const{
 	return rate;
 }
 
-unsigned int Vehicle::getCarID() const{
+unsigned int Vehicle::getID() const{
 	return idCar;
 }
 
@@ -68,11 +65,18 @@ void Vehicle::setId(unsigned int id)  {
 	this->idCar = id;
 }
 
+void Vehicle::setYear(unsigned int year){
+	this->year = year;
+}
+
 void Vehicle::setSeats(unsigned int seats){
 	this->numberSeats = seats;
 }
 
 
+void Vehicle::setRate(string rate){
+	this->rate = rate;
+}
 
 void Vehicle::setVehicle(Vehicle * v1){
 	this->brand = v1->brand;
@@ -96,6 +100,16 @@ Vehicle& Vehicle::operator=(Vehicle car){
 	this->year = car.year;
 	
 	return *this;
+}
+
+ofstream& operator<< (ofstream& os, const Vehicle car) {
+	os << car.getID() << endl << car.getBrand() << endl << car.getYear() << endl << car.getRate() << endl;
+
+	for (size_t i = 0; i < car.getRoute().size(); i++){
+		os << car.getRoute()[i] << endl;
+	}
+
+	return os;
 }
 
 void Vehicle::save(ofstream& out) const {

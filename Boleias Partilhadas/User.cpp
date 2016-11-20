@@ -47,9 +47,6 @@ string RegisteredUser::getpassword() const
 	return password;
 }
 
-float RegisteredUser::getmaintainenceTAX() const{
-	return maintainenceTAX;
-}
 
 vector<int> RegisteredUser::getTrips() const {
 	return Trips;
@@ -75,6 +72,10 @@ void RegisteredUser::setPassword(string password){
 	this->password = password;
 }
 
+void RegisteredUser::addTrip(unsigned int ID){
+	Trips.push_back(ID);
+}
+
 void RegisteredUser::showProfile(){
 	cout << "\n\tProfile of " << this->getusername() << ":" << endl;
 	cout << "Home City: " << this->getCity() << endl;
@@ -92,8 +93,8 @@ void User::setAccount(float account) {
 	this->account = account;
 }
 
-ostream& operator<<(ostream& os, const RegisteredUser* RU) {
-	os << "|" << (*RU).getID() << "|" << endl << (*RU).getusername() << "|" << endl << "|" << (*RU).getpassword() << "|" << endl << "|" << (*RU).getCity() << "|" << endl;
+ofstream& operator<<(ofstream& os, const RegisteredUser* RU) {
+	os << RU->getID() << endl << RU->getusername() << endl << RU->getpassword() << endl << RU->getCity() << endl;
 	return os;
 }
 

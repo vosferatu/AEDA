@@ -22,6 +22,7 @@ class Vehicle {
 public:
 	Vehicle(unsigned int noSeats, string brand, unsigned int year,string rate);
 	Vehicle();
+	~Vehicle() {};
 
 	//get functions
 	unsigned int getnumberSeats() const;

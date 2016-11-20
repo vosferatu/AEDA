@@ -35,7 +35,7 @@ class SharedRides
 	static const string citiesfile, usersfile, carsfile, takenfile, waitingfile;
 
 	static unsigned int numbercities;
-	static float TAX;
+	float TAX;
 
 	static bool usersalterados;
 	static bool carsalterados;
@@ -80,6 +80,9 @@ public:
 		{
 			delete users[i];
 		}
+		for (unsigned int i = 0; i < cars.size(); ++i) {
+			delete cars[i];
+		}
 	}
 
 	//helpers
@@ -87,6 +90,10 @@ public:
 	int getPositionCar(unsigned int id) const;
 	int getPositionUser(unsigned int id) const;
 	void recompensate(unsigned int id);
+	Time searchStretchTime(string one, string two);
+	string searchStretchCity(string one, Time t1);
+	int checkTrip(string a, string b, const vector<Stretch> & v) const;
+	bool checkBuddie(unsigned int user1);
 
 	//MENUS Functions
 	void showTrips() const;
@@ -106,8 +113,14 @@ public:
 	void buddiesMenu();
 	void addBuddie();
 	void removeBuddie();
-	void showBuddiesProfileToUser();
-	void myBuddies();
+	void myBuddies() const;
+
+	void VehicleTripMenu();
+	void addTrip();
+	void startTrip();
+	void enterTrip();
+
+	
 
 };
 
