@@ -66,6 +66,11 @@ public:
 		}
 	}
 
+	//helpers
+	int getPositionCar(unsigned int id);
+	int getPositionUser(unsigned int id);
+	void recompensate(unsigned int id);
+
 	//MENUS Functions
 	void showTrips();
 	void userWithVehicleMenu();

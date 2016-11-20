@@ -190,6 +190,26 @@ void SharedRides::CreateRegis()
 	cout << endl << "Now you have to Login to confirm your account.\n";
 }
 
+int SharedRides::getPositionCar(unsigned int id){
+	int position = -1;
+	for (size_t i; i < cars.size(); i++) {
+		if (cars[i]->getCarID() == id) {
+			position = i;
+			return position;
+		}	
+	}
+}
+
+int SharedRides::getPositionUser(unsigned int id){
+	int position = -1;
+	for (size_t i; i < users.size(); i++) {
+		if (users[i]->getid() == id) {
+			position = i;
+			return position;
+		}
+	}
+}
+
 void SharedRides::showTrips(){
 	if (dynamic_cast<RegisteredUser*>(currentUser) == NULL) {
 		cout << endl << "Not available!" << endl;
@@ -476,19 +496,37 @@ void SharedRides::deleteAccount(){
 		if (remaccount == "y") {
 			if (currentUser->getVehicle()->getYear() != 0) {
 				//delete of system!!!!!!!!!!!!
-				for (size_t i = 0; i < cars.size(); i++) {
-					if (cars[i]->getCarID() == currentUser->getid()) {
-						cars.erase(cars.begin() + i);
-						break;
+				for (size_t i = 0; i < tripsPrinter.size(); i++) {
+					if (currentUser->getusername() == tripsPrinter[i].getName())
+						tripsPrinter[i].setName("Deleted");
+				}
+				
+				//recompensate(currentUser->getid());
+				size_t pos = getPositionCar(currentUser->getid());
+				cars.erase(cars.begin() + pos);
+			}
+
+			for (size_t i = 0; i < users.size(); i++) {
+				if (dynamic_cast<RegisteredUser*>(users[i]) != NULL && users[i] != currentUser) {
+					for (size_t z = 0; z < users[i]->getFavs().size(); i++) {
+						if (users[i]->getFavs()[i] == currentUser->getid()) {
+							users[i]->getFavs().erase(users[i]->getFavs().begin() + z);
+							break;
+						}
 					}
 				}
 			}
-			//delete of system!!!!!!!!!!!!
-			size_t j;
-			for (j = 0; j < users.size(); j++) {
-				if (users[j]->getid() == currentUser->getid())
-					break;
+
+			vector<int> vec = currentUser->getFavs();
+			float splitMoney = currentUser->getAccount() / vec.size();
+			for (size_t i = 0; i < vec.size(); i++) {
+				size_t j = getPositionUser(vec[i]);
+				users[j]->chargeAccount(splitMoney);
 			}
+			cout << endl << "Your money has been distributed equally by your buddies!" << endl;
+
+			//delete of system!!!!!!!!!!!!
+			size_t j = getPositionUser(currentUser->getid());
 			currentUser = NULL;
 			cars.erase(cars.begin() + j);
 		}
