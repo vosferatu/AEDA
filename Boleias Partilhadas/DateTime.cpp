@@ -186,6 +186,14 @@ bool operator<(const Time &horas1, const Time &horas2) {
 	else return false;
 }
 
+Time operator+(const Time & t1, const Time & t2) {
+	Time sum;
+	sum.minutes = t1.minutes + t2.minutes;
+	sum.hours = t1.hours + t2.hours + sum.minutes / 60;
+	sum.minutes %= 60;
+	return sum;
+}
+
 ostream& operator<<(ostream& out, const Time & horas) {
 	string hora;
 	if (horas.minutes < 10) {

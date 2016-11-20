@@ -716,4 +716,3 @@ void SharedRides::run() {
 	//save(); //para guardar nos ficheiros as alterações
 	return;
 }
-

@@ -46,10 +46,6 @@ string RegisteredUser::getpassword() const
 	return password;
 }
 
-float RegisteredUser::getmaintainenceTAX() const{
-	return maintainenceTAX;
-}
-
 vector<int> RegisteredUser::getTrips() const {
 	return Trips;
 }

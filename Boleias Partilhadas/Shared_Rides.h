@@ -29,6 +29,7 @@ class SharedRides
 	static vector<string>cities;
 	static const string citiesfile;
 	static unsigned int numbercities;
+	static float TAX;
 
 
 public:

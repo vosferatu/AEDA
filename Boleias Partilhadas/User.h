@@ -27,7 +27,6 @@ public:
 	virtual string getpassword() const = 0;
 	virtual Vehicle* getVehicle() const = 0;
 	virtual void chargeAccount(float addition);
-	virtual float getmaintainenceTAX() const = 0;
 	virtual unsigned int getnumTrips() const = 0;
 	virtual string getCity() const = 0;
 	virtual vector<int> getTrips() const = 0;
@@ -43,7 +42,6 @@ class RegisteredUser : public User {
 	vector<int> Trips; //user may want to see trips his been in (tripID's)
 	string homeCity;
 	vector<int> favorites; //friends ID
-	float maintainenceTAX;
 	string password;
 	Vehicle* vehicle;
 
@@ -53,7 +51,6 @@ public:
 	RegisteredUser(string username, string password, Vehicle* car);
 
 	string getpassword() const;
-	float getmaintainenceTAX() const;
 	unsigned int getnumTrips() const;
 	string getCity() const;
 	vector<int> getTrips() const;
