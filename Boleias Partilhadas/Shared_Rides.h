@@ -11,7 +11,7 @@
 #include <vector>
 #include <limits>
 #include <sstream>
-#include <iostream>
+#include <ostream>
 
 #undef max // because of numeric_limits
 
@@ -75,15 +75,25 @@ public:
 
 	//MENUS Functions
 	void showTrips() const;
+
 	void userWithVehicleMenu();
 	void editVehicle();
 	void removeVehicle();
+
 	void addVehicle();
+
 	void creditAccount();
+
 	void changeProfile();
+
 	void deleteAccount();
 
-	
+	void buddiesMenu();
+	void addBuddie();
+	void removeBuddie();
+	void showBuddiesProfileToUser();
+	void myBuddies();
+
 };
 
 // tratamento de exceções

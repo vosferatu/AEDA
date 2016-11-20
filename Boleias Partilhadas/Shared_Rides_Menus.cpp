@@ -62,9 +62,8 @@ void SharedRides::manage_menu(){
 		"[2] App Vehicles" "\n"
 		"[3] End of Month" "\n"
 		"[4] Remove user" "\n"
-		"[5] Log Off");
-
-
+		"[5] Set Billings" "\n"
+		"[6] Log Off");
 
 	switch (choice) {
 	case 1:
@@ -102,6 +101,7 @@ void SharedRides::user_menu(){
 			case 2:
 				break;
 			case 3:
+				buddiesMenu();
 				break;
 			case 4:
 				creditAccount();
@@ -134,8 +134,6 @@ void SharedRides::user_menu(){
 				"[6] Log Off" "\n"
 				"[7] Delete Profile");
 
-
-
 			switch (choice) {
 			case 0:
 				showTrips();
@@ -146,6 +144,7 @@ void SharedRides::user_menu(){
 			case 2:
 				break;
 			case 3:
+				buddiesMenu();
 				break;
 			case 4:
 				creditAccount();
@@ -175,8 +174,6 @@ void SharedRides::user_menu(){
 			"[0] New Trip" "\n"     // look for a trip
 			"[1] Charge wallet" "\n"
 			"[2] Exit App");
-
-
 
 		switch (choice) {
 		case 0:

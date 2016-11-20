@@ -338,10 +338,10 @@ void SharedRides::userWithVehicleMenu() {
 		"[1] Remove my Vehicle" "\n");
 
 	switch (choice) {
-	case 1:
+	case 0:
 		editVehicle();
 		break;
-	case 2:
+	case 1:
 		removeVehicle();
 		break;
 	default:
@@ -540,7 +540,7 @@ void SharedRides::changeProfile(){
 		"[1] Edit my City" "\n");
 
 	switch (choice) {
-	case 1: {
+	case 0: {
 		string password1 = readPassword("Please enter password", true);
 		cout << endl;
 		string password2 = readPassword("Please re-enter password", true);
@@ -558,7 +558,7 @@ void SharedRides::changeProfile(){
 		cout << "\nPassword edited.\n";
 	}
 		break;
-	case 2: {
+	case 1: {
 		bool citybelong = false;
 		string city;
 		while (!citybelong) {
@@ -648,7 +648,9 @@ void SharedRides::deleteAccount(){
 			//delete of system!!!!!!!!!!!!
 			size_t j = getPositionUser(currentUser->getid());
 			currentUser = NULL;
-			cars.erase(cars.begin() + j);
+			users.erase(users.begin() + j);
+			cout << "Your account has been deleted. Sad to see you go, hope you enjoyed our App.\n";
+			break;
 		}
 
 		if (remaccount == "n") {
@@ -659,6 +661,116 @@ void SharedRides::deleteAccount(){
 	}
 
 	return;
+}
+
+void SharedRides::buddiesMenu(){
+	cout << endl << "You have: ";
+	cout << currentUser->getFavs().size() << " Buddies.";
+
+	int choice = get_input <int>(
+		"[0] Follow a Buddie" "\n"
+		"[1] Unfollow a Buddie" "\n"
+		"[2] See my Buddies" "\n"
+		);
+
+	switch (choice) {
+	case 1:
+		//addBuddie();
+		break;
+	case 2:
+		//removeBuddie();
+		break;
+	case 3:
+		//showBuddiesToUser();
+		break;
+	default:
+		cout << "Please, input an integer suitable to the options shown." << endl;
+		cin.ignore(numeric_limits <streamsize>::max(), '\n');
+		buddiesMenu();
+		break;
+	}
+}
+
+void SharedRides::addBuddie() {
+	int counter = 0;
+	for (size_t i = 0; users.size(); i++) {
+		if (users[i]->getCity() == currentUser->getCity())
+			counter++;
+	}
+	int number = 0;
+	if (counter != 0) {
+		cout << "Users near you:" << endl;
+		for (size_t i = 0; users.size(); i++) {
+			if ((users[i]->getCity() == currentUser->getCity()) && (users[i] != currentUser))
+				number = i + 1;
+				cout << "User number " << number << endl;
+				users[i]->showProfile();
+		}
+		cout << endl << "Other users:" << endl;
+		for (size_t i = 0; users.size(); i++) {
+			if ((users[i]->getCity() != currentUser->getCity()) && (users[i] != currentUser))
+				number = i + 1;
+				cout << "User number " << number << endl;
+				users[i]->showProfile();
+		}
+	}
+	else {
+		for (size_t i = 0; users.size(); i++) {
+			if (users[i] != currentUser) {
+				number = i + 1;
+				cout << "User number " << number << endl;
+				users[i]->showProfile();
+			}
+		}
+	}
+
+	int choice;
+	while (true) {
+		choice = get_input <int>(
+			"\tSelect one of your buddies, by their number identifier." "\n"
+			);
+		if ((choice > 0) && (choice < currentUser->getFavs().size() + 1))
+			break;
+		else cout << "Input a valid number!" << endl;
+		cin.ignore(numeric_limits <streamsize>::max(), '\n');
+	}
+
+	currentUser->getFavs().push_back(users[choice - 1]->getid());
+	cout << endl << users[choice - 1]->getusername() << " is now one of your buddies." << endl;
+}
+
+void SharedRides::removeBuddie() {
+	showBuddiesProfileToUser();
+	int choice;
+	while (true) {
+		 choice = get_input <int>(
+			"\tSelect on of your buddies, by their number identifier." "\n"
+			);
+		 if ((choice > 0) && (choice < currentUser->getFavs().size() + 1))
+			 break;
+		 else cout << "Input a valid number!" << endl;
+		 cin.ignore(numeric_limits <streamsize>::max(), '\n');
+	}
+
+	currentUser->getFavs().erase(currentUser->getFavs().begin() + (choice - 1));
+	size_t amigo = getPositionUser(currentUser->getFavs()[choice - 1]);
+	cout << endl << users[amigo]->getusername() << " is no longer one of your Buddies." << endl;
+}
+
+void SharedRides::myBuddies() {
+
+}
+
+void SharedRides::showBuddiesProfileToUser(){
+	size_t user = getPositionUser(currentUser->getid());
+	vector<int> fav = users[user]->getFavs();
+
+	for (size_t i = 0; i < fav.size(); i++) {
+		size_t j = getPositionUser(fav[i]);
+		cout << "Buddie number " << i + 1 << ":\n";
+		users[j]->showProfile();
+		cout << endl;
+	}
 }
 
 User* SharedRides::login(const string &username, const string &password) {
