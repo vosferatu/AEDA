@@ -65,18 +65,10 @@ void Vehicle::setId(unsigned int id)  {
 	this->idCar = id;
 }
 
-void Vehicle::setYear(unsigned int year){
-	this->year = year;
-}
-
 void Vehicle::setSeats(unsigned int seats){
 	this->numberSeats = seats;
 }
 
-
-void Vehicle::setRate(string rate){
-	this->rate = rate;
-}
 
 void Vehicle::setVehicle(Vehicle * v1){
 	this->brand = v1->brand;
@@ -113,7 +105,7 @@ ofstream& operator<< (ofstream& os, const Vehicle car) {
 }
 
 void Vehicle::save(ofstream& out) const {
-	out << this->getCarID() << ";" << this->getBrand() << ";" << this->getnumberSeats() << ";" << this->getYear() << ";" << this->getRate() << ";";
+	out << this->getID() << ";" << this->getBrand() << ";" << this->getnumberSeats() << ";" << this->getYear() << ";" << this->getRate() << ";";
 	
 	if (this->getRoute().size() == 0)
 		out << endl;

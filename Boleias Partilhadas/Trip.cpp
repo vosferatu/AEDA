@@ -96,7 +96,6 @@ waitingTrip::waitingTrip() {
 	this->ownerID = 0;
 	this->maxSeats = 0;
 	this->pricePerStop = 0;
-	this->full = false;
 
 }
 

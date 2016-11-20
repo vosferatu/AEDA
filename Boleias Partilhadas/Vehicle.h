@@ -29,7 +29,7 @@ public:
 	string getBrand() const;
 	unsigned int getYear() const;
 	string getRate() const;
-	unsigned int getCarID() const;
+	unsigned int getID() const;
 	vector<string> getRoute() const;
 	
 	//set functions

@@ -118,7 +118,7 @@ void SharedRides::loadUsers() {
 		Vehicle * nocar = new Vehicle();
 
 		for (size_t i = 0; i < cars.size(); i++) {
-				if (cars[i]->getCarID() == ID) {
+				if (cars[i]->getID() == ID) {
 					RegisteredUser* RU = new RegisteredUser(username, password, homecity, cars[i]);
 					RU->setAccount(account);
 					RU->setFavs(buddies);
@@ -216,7 +216,6 @@ void SharedRides::loadTakenTrips() {
 	}
 }
 
-
 void SharedRides::loadWaitingTrips() {
 
 	ifstream infile(waitingfile);
@@ -305,9 +304,6 @@ void SharedRides::loadWaitingTrips() {
 	}
 }
 
-
-
-
 void SharedRides::loadVehicles() {
 
 	ifstream infile(carsfile);
@@ -373,7 +369,6 @@ void SharedRides::loadVehicles() {
 		
 	}
 }
-
 
 void SharedRides::loadCities() {
 
@@ -704,7 +699,7 @@ void SharedRides::fillPaths(){
 int SharedRides::getPositionCar(unsigned int id) const{
 	int position = -1;
 	for (size_t i = 0; i < cars.size(); i++) {
-		if (cars[i]->getCarID() == id) {
+		if (cars[i]->getID() == id) {
 			position = i;
 			return position;
 		}	
@@ -1481,7 +1476,7 @@ void SharedRides::startTrip() {
 	}
 }
 
-void SharedRides::enterTrip(){
+void SharedRides::enterTrip() {
 	if (currentUser->getAccount() < 0) {
 		cout << "Your account is under 0. Please charge account to pay your taxes." << endl;
 		return;
@@ -1515,7 +1510,7 @@ void SharedRides::enterTrip(){
 		if (tripOffers[i].getOwner() != currentUser->getID()) {
 			stops = checkTrip(firstPoint, secondPoint, tripOffers[i].getWay());
 			if (stops > 0) {
-				if (currentUser->getAccount()> stops*tripOffers[i].getpriceStop()) {
+				if (currentUser->getAccount() > stops*tripOffers[i].getpriceStop()) {
 					AvailableTrips.push_back(i);
 					counter++;
 				}
@@ -1588,9 +1583,11 @@ void SharedRides::enterTrip(){
 			break;
 		}
 	}
+}
+
 
 void SharedRides::showBuddiesProfileToUser(){
-	size_t user = getPositionUser(currentUser->getid());
+	size_t user = getPositionUser(currentUser->getID());
 	vector<int> fav = users[user]->getFavs();
 
 	contador = 0;

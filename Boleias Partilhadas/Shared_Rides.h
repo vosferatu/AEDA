@@ -120,7 +120,7 @@ public:
 	void startTrip();
 	void enterTrip();
 
-	
+	void showBuddiesProfileToUser();
 
 };
 
