@@ -17,7 +17,7 @@ Vehicle::Vehicle() {
 	this->numberSeats = 0;
 	this->year = 0;
 	this->idCar = 0;
-	this->rate = 0;
+	this->rate = ' ';
 	vector<string> a{};
 	this->route = a;
 	this->idCar = carstatic;
@@ -79,7 +79,7 @@ void Vehicle::setBrand(string brand){
 	this->brand = brand;
 }
 
-void Vehicle::setRate(char rate){
+void Vehicle::setRate(string rate){
 	this->rate = rate;
 }
 
@@ -107,7 +107,7 @@ Vehicle& Vehicle::operator=(Vehicle car){
 	return *this;
 }
 
-ostream& operator<< (ostream& os, const Vehicle car) {
+ofstream& operator<< (ofstream& os, const Vehicle car) {
 	os << car.getID() << endl << car.getBrand() << endl << car.getYear() << endl << car.getRate() << endl;
 
 	for (size_t i = 0; i < car.getRoute().size(); i++){
@@ -132,7 +132,6 @@ void Vehicle::save(ofstream& out) const {
 		}
 
 	}
-}
 }
 
 ostream & operator<<(ostream & os, const Vehicle car){

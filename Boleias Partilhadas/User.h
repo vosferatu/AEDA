@@ -36,6 +36,7 @@ public:
 	virtual void setPassword(string password) = 0;
 	virtual void setHome(string city) = 0;
 	virtual void showProfile() = 0;
+	virtual void save(ofstream& out) const = 0;
 
 };
 
@@ -50,7 +51,7 @@ class RegisteredUser : public User {
 
 public:
 
-	RegisteredUser(string username, string password, Vehicle* car);
+	RegisteredUser(string username, string password, string city, Vehicle* car);
 
 	string getpassword() const;
 	unsigned int getnumTrips() const;
@@ -67,7 +68,6 @@ public:
 
 	void save(ofstream& out) const;
 
-	vector<int> getBuddies() const;
 	void showProfile();
 
 	friend ofstream& operator<<(ofstream& os, const RegisteredUser* RU); // for now, only for writing in file of users purpose
@@ -76,7 +76,6 @@ public:
 
 
 class GuestUser : public User {
-	float tripCosts;
 
 public:
 	GuestUser(string username);

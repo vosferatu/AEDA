@@ -107,7 +107,8 @@ void SharedRides::loadVehicles() {
 		}
 
 		car.setRoute(route);
-		cars.push_back(car);
+		Vehicle * v1 = &car;
+		cars.push_back(v1);
 
 		
 		
@@ -151,6 +152,7 @@ void SharedRides::load() {
 	//loadUsers();
 	loadVehicles();
 }
+
 void SharedRides::CreateRegis()
 {
 
@@ -310,7 +312,7 @@ void SharedRides::CreateRegis()
 					//		for (size_t j = 0; j < cities.size(); j++) { // vetor principal 
 					//			if (cities[j] == rout[i])
 					//				break;                           // se encontrou para 
-					//			else if (j = cities.size() - 1) {		   //se chegou ao fim sem encontrar, é porque
+					//			else if (j == cities.size() - 1) {		   //se chegou ao fim sem encontrar, é porque
 					//				total = true;					// o elemento nao foi encontrado
 					//				break;
 					//			}
@@ -342,9 +344,9 @@ void SharedRides::CreateRegis()
 			v1.setRoute(rout);
 			maxVehiclesID++;
 			Vehicle* v2 = &v1;
-			RegisteredUser* RU = new RegisteredUser(username, password1, v2);
+			RegisteredUser* RU = new RegisteredUser(username, password1, city, v2);
 			maxUsersID++;
-			RU->getVehicle()->setId(RU->getid());
+			RU->getVehicle()->setId(RU->getID());
 			
 
 			users.push_back(RU);
@@ -443,7 +445,7 @@ void SharedRides::fillPaths(){
 int SharedRides::getPositionCar(unsigned int id) const{
 	int position = -1;
 	for (size_t i = 0; i < cars.size(); i++) {
-		if (cars[i]->getCarID() == id) {
+		if (cars[i]->getID() == id) {
 			position = i;
 			return position;
 		}	
@@ -454,7 +456,7 @@ int SharedRides::getPositionCar(unsigned int id) const{
 int SharedRides::getPositionUser(unsigned int id) const{
 	int position = -1;
 	for (size_t i = 0; i < users.size(); i++) {
-		if (users[i]->getid() == id) {
+		if (users[i]->getID() == id) {
 			position = i;
 			return position;
 		}
@@ -546,13 +548,13 @@ void SharedRides::editVehicle(){
 
 		unsigned int year = get_input <unsigned int>("Please specify its year.");
 		unsigned int seats = get_input <unsigned int>("Please specify the number of seats of your car.");
-		char rate = get_input <char>("In a scale [F(worst) - A (best)], please specify your evaluation of your car conditions.");
+		string rate = get_input <string>("In a scale [F(worst) - A (best)], please specify your evaluation of your car conditions.");
 
 		currentUser->getVehicle()->setRate(rate);
 		currentUser->getVehicle()->setYear(year);
 		currentUser->getVehicle()->setSeats(seats);
 		currentUser->getVehicle()->setBrand(brand);
-		currentUser->getVehicle()->setId(currentUser->getid());
+		currentUser->getVehicle()->setId(currentUser->getID());
 		// adds route 
 		string cityroute;
 		vector<string> rout(0);
@@ -577,7 +579,7 @@ void SharedRides::editVehicle(){
 		currentUser->getVehicle()->setRoute(rout);
 
 		for (size_t i = 0; i < cars.size(); i++) {
-			if (cars[i]->getCarID() == currentUser->getid()) {
+			if (cars[i]->getID() == currentUser->getID()) {
 				cars[i] = currentUser->getVehicle();
 				break;
 			}
@@ -607,7 +609,7 @@ void SharedRides::editVehicle(){
 		currentUser->getVehicle()->setRoute(rout);
 
 		for (size_t i = 0; i < cars.size(); i++) {
-			if (cars[i]->getCarID() == currentUser->getid()) {
+			if (cars[i]->getID() == currentUser->getID()) {
 				cars[i] = currentUser->getVehicle();
 				break;
 			}
@@ -633,15 +635,15 @@ void SharedRides::removeVehicle(){
 			Vehicle* v1 = new Vehicle();
 			currentUser->getVehicle()->setVehicle(v1);
 			
-			recompensate(currentUser->getid());
+			recompensate(currentUser->getID());
 			for (size_t i = 0; i < tripOffers.size(); i++) {
-				if (tripOffers[i].getOwner() == currentUser->getid()) {
+				if (tripOffers[i].getOwner() == currentUser->getID()) {
 					tripOffers.erase(tripOffers.begin() + i);
 					i--;
 				}
 			}
 
-			size_t pos = getPositionCar(currentUser->getid());
+			size_t pos = getPositionCar(currentUser->getID());
 			cars.erase(cars.begin() + pos);
 
 			break;
@@ -663,13 +665,13 @@ void SharedRides::addVehicle() {
 
 	unsigned int year = get_input <unsigned int>("Please specify its year.");
 	unsigned int seats = get_input <unsigned int>("Please specify the number of seats of your car.");
-	char rate = get_input <char>("In a scale [F(worst) - A (best)], please specify your evaluation of your car conditions.");
+	string rate = get_input <string>("In a scale [F(worst) - A (best)], please specify your evaluation of your car conditions.");
 
 	currentUser->getVehicle()->setRate(rate);
 	currentUser->getVehicle()->setYear(year);
 	currentUser->getVehicle()->setSeats(seats);
 	currentUser->getVehicle()->setBrand(brand);
-	currentUser->getVehicle()->setId(currentUser->getid());
+	currentUser->getVehicle()->setId(currentUser->getID());
 	// adds route 
 	string cityroute;
 	vector<string> rout(0);
@@ -783,23 +785,23 @@ void SharedRides::deleteAccount(){
 					if (currentUser->getusername() == tripsPrinter[i].getName())
 						tripsPrinter[i].setName("Deleted");
 				}
-				recompensate(currentUser->getid());
+				recompensate(currentUser->getID());
 
 				for (size_t i = 0; i < tripOffers.size(); i++) {
-					if (tripOffers[i].getOwner() == currentUser->getid()) {
+					if (tripOffers[i].getOwner() == currentUser->getID()) {
 						tripOffers.erase(tripOffers.begin() + i);
 						i--;
 					}
 				}
 
-				size_t pos = getPositionCar(currentUser->getid());
+				size_t pos = getPositionCar(currentUser->getID());
 				cars.erase(cars.begin() + pos);
 			}
 
 			for (size_t i = 0; i < users.size(); i++) {
 				if (dynamic_cast<RegisteredUser*>(users[i]) != NULL && users[i] != currentUser) {
 					for (size_t z = 0; z < users[i]->getFavs().size(); i++) {
-						if (users[i]->getFavs()[i] == currentUser->getid()) {
+						if (users[i]->getFavs()[i] == currentUser->getID()) {
 							users[i]->getFavs().erase(users[i]->getFavs().begin() + z);
 							break;
 						}
@@ -818,7 +820,7 @@ void SharedRides::deleteAccount(){
 			for (size_t i = 0; i < tripOffers.size(); i++) {
 				for (size_t j = 0; j < tripOffers[i].getWay().size(); j++) {
 					for (size_t k = 0; k < tripOffers[i].getWay()[j].getusers().size(); k++) {
-						if (tripOffers[i].getWay()[j].getusers()[k] == currentUser->getid()) {
+						if (tripOffers[i].getWay()[j].getusers()[k] == currentUser->getID()) {
 							tripOffers[i].getWay()[j].getusers().erase(tripOffers[i].getWay()[j].getusers().begin() + k);
 							break;
 						}
@@ -827,7 +829,7 @@ void SharedRides::deleteAccount(){
 			}
 
 			//delete of system!!!!!!!!!!!!
-			size_t j = getPositionUser(currentUser->getid());
+			size_t j = getPositionUser(currentUser->getID());
 			currentUser = NULL;
 			users.erase(users.begin() + j);
 			cout << "Your account has been deleted. Sad to see you go, hope you enjoyed our App.\n";
@@ -905,9 +907,9 @@ void SharedRides::addBuddie() {
 		}
 	}
 
-	int choice;
+	unsigned int choice;
 	while (true) {
-		choice = get_input <int>(
+		choice = get_input <unsigned int>(
 			"\tSelect one of your buddies, by their number identifier." "\n"
 			);
 		if ((choice > 0) && (choice < currentUser->getFavs().size() + 1))
@@ -916,15 +918,15 @@ void SharedRides::addBuddie() {
 		cin.ignore(numeric_limits <streamsize>::max(), '\n');
 	}
 
-	currentUser->getFavs().push_back(users[choice - 1]->getid());
+	currentUser->getFavs().push_back(users[choice - 1]->getID());
 	cout << endl << users[choice - 1]->getusername() << " is now one of your buddies." << endl;
 }
 
 void SharedRides::removeBuddie() {
 	showBuddiesProfileToUser();
-	int choice;
+	unsigned int choice;
 	while (true) {
-		 choice = get_input <int>(
+		 choice = get_input <unsigned int>(
 			"\tSelect on of your buddies, by their number identifier." "\n"
 			);
 		 if ((choice > 0) && (choice < currentUser->getFavs().size() + 1))
@@ -943,7 +945,7 @@ void SharedRides::myBuddies() {
 }
 
 void SharedRides::showBuddiesProfileToUser(){
-	size_t user = getPositionUser(currentUser->getid());
+	size_t user = getPositionUser(currentUser->getID());
 	vector<int> fav = users[user]->getFavs();
 
 	for (size_t i = 0; i < fav.size(); i++) {
@@ -964,6 +966,7 @@ User* SharedRides::login(const string &username, const string &password) {
 		}
 
 	throw LoginException<string>("\nInvalid combination of username/password. Please try again.\n");
+	return NULL;
 }
 
 
@@ -977,7 +980,7 @@ void SharedRides::saveChanges() const {
 
 		for (size_t i = 0; i < cars.size(); i++)		
 		{
-			cars.at(i).save(out_cars);  
+			cars.at(i)->save(out_cars);  
 		}
 		out_cars.close();
 	}
@@ -1021,7 +1024,7 @@ unsigned int SharedRides::getCARHighID() const {
 
 	for (size_t i = 0; i < cars.size(); i++)		
 	{
-		unsigned int ID = cars.at(i).getID();	
+		unsigned int ID = cars.at(i)->getID();	
 																
 		if (ID > maiorID)								
 			maiorID = ID;						
