@@ -77,6 +77,9 @@ class Path {
 	string second;
 public:
 	Path(string first, string second, Time timeSpent);
+	Time getTime() const;
+	string getFirst() const;
+	string getSecond() const;
 };
 
 #endif

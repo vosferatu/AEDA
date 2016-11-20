@@ -22,7 +22,7 @@ class SharedRides
 	static vector<User*> users;
 	static vector<takenTrip> tripsPrinter;
 	static vector<Vehicle*> cars;//used to list cars in manage app
-	static vector<Path> caminhos;//saved in file
+	static vector<Path> caminhos;
 	static vector<waitingTrip> tripOffers;
 	User* currentUser = NULL;  //se não for pointer, slicing problem
 
@@ -67,12 +67,13 @@ public:
 	}
 
 	//helpers
-	int getPositionCar(unsigned int id);
-	int getPositionUser(unsigned int id);
+	void fillPaths();
+	int getPositionCar(unsigned int id) const;
+	int getPositionUser(unsigned int id) const;
 	void recompensate(unsigned int id);
 
 	//MENUS Functions
-	void showTrips();
+	void showTrips() const;
 	void userWithVehicleMenu();
 	void editVehicle();
 	void removeVehicle();

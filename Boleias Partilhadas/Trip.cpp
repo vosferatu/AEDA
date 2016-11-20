@@ -159,3 +159,15 @@ Path::Path(string first, string second, Time timeSpent){
 	this->second = second;
 	this->timeSpent = timeSpent;
 }
+
+Time Path::getTime() const{
+	return timeSpent;
+}
+
+string Path::getFirst() const{
+	return first;
+}
+
+string Path::getSecond() const{
+	return second;
+}
