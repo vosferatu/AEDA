@@ -344,7 +344,7 @@ void SharedRides::CreateRegis()
 			Vehicle* v2 = &v1;
 			RegisteredUser* RU = new RegisteredUser(username, password1, v2);
 			maxUsersID++;
-			(*RU).setVehicleID((*RU).getID());
+			RU->getVehicle()->setId(RU->getid());
 			
 
 			users.push_back(RU);
@@ -357,7 +357,7 @@ void SharedRides::CreateRegis()
 		else if (addvehicle == "n") {
 			Vehicle* nocar = new Vehicle();
 
-			RegisteredUser* RU = new RegisteredUser(username, password1,city, nocar);
+			RegisteredUser* RU = new RegisteredUser(username, password1, city, nocar);
 
 			users.push_back(RU);
 			usersalterados = true;
