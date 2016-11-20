@@ -50,7 +50,6 @@ public:
 class waitingTrip { 
 	unsigned int ownerID;
 	vector<Stretch> Viagem;
-	bool full;
 	float pricePerStop;
 	int maxSeats;
 
@@ -58,14 +57,12 @@ public:
 	waitingTrip(unsigned int owner, vector<Stretch> Viagem, int maxSeats, float price);
 	unsigned int getOwner() const;
 	vector<Stretch> getWay() const;
-	bool getFull() const;
 	float getpriceStop() const;
 	int getmaxSeats() const;
 	Time getTotalTime() const;
 
 	void setOwner(unsigned int id);
 	void setWay(vector<Stretch> way);
-	void setFull(bool change);
 	void setpriceStop(float price);
 	void setmaxSeats(int seats);
 

@@ -76,7 +76,7 @@ void SharedRides::manage_menu(){
 		"[3] End of Month" "\n"
 		"[4] Set Billings" "\n"
 		"[5] Log Off");
-
+	float choice1 = 0;
 	switch (choice) {
 	case 0:
 		ClearScreen();
@@ -117,14 +117,13 @@ void SharedRides::manage_menu(){
 		break;
 	case 4:
 		cout << "\tCurrent TAX is: " << this->TAX << endl;
-		float choice = 0;
 		while (true) {
-			choice = get_input <float>("\tNew TAX? ");
-			if (choice > 0)
+			choice1 = get_input <float>("\tNew TAX? ");
+			if (choice1 > 0)
 				break;
 			cout << "Please, input a positive TAX." << endl;
 		}
-		this->TAX = choice;
+		this->TAX = choice1;
 		cout << "\tThe new TAX is: " << this->TAX << endl;
 		_getch();
 		break;

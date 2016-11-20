@@ -35,7 +35,7 @@ class SharedRides
 	static const string citiesfile, usersfile, carsfile; 
 
 	static unsigned int numbercities;
-	static float TAX;
+	float TAX;
 
 	static bool usersalterados;
 	static bool carsalterados;

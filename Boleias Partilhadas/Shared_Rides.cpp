@@ -1334,7 +1334,7 @@ void SharedRides::enterTrip(){
 			contador++;
 	}
 	if (contador == novo.size()) {
-		tripOffers[choice].setFull(true);
+		startTrip();
 	}
 	usersalterados = true;
 }
