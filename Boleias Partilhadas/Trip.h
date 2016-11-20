@@ -61,6 +61,7 @@ public:
 	bool getFull() const;
 	float getpriceStop() const;
 	int getmaxSeats() const;
+	Time getTotalTime() const;
 
 	void setOwner(unsigned int id);
 	void setWay(vector<Stretch> way);
@@ -69,6 +70,7 @@ public:
 	void setmaxSeats(int seats);
 
 	friend ofstream& operator<<(ofstream& out, const waitingTrip& trip);//save on file
+	friend ostream& operator<<(ostream& out, const waitingTrip& trip);
 };
 
 class Path {

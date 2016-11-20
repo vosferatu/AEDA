@@ -80,6 +80,14 @@ int waitingTrip::getmaxSeats() const{
 	return maxSeats;
 }
 
+Time waitingTrip::getTotalTime() const{
+	Time t1(0, 0);
+	for (size_t i = 0; i < Viagem.size(); i++) {
+		t1 = t1 + Viagem[i].getTime();
+	}
+	return t1;
+}
+
 void waitingTrip::setOwner(unsigned int id){
 	this->ownerID = id;
 }
@@ -111,6 +119,12 @@ ofstream & operator<<(ofstream & out, const waitingTrip & trip){
 	}
 	
 	return out;
+}
+
+ostream & operator<<(ostream & out, const waitingTrip & trip){
+	out << "Dono: " << trip.ownerID << "; ";
+	out << "Preco por Paragem: " << trip.pricePerStop << "; ";
+	out << "MaxSeats: " << trip.maxSeats;
 }
 
 ///////////////////////////////////STRETCH//////////////////////////////

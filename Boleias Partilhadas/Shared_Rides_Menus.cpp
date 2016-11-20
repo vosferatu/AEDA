@@ -30,27 +30,32 @@ void SharedRides::main_menu() {
 		string pass = readPassword("Password:", true);
 
 		if (usern == "admin") 
-			if (pass == "admin")
+			if (pass == "admin") {
+				ClearScreen();
 				manage_menu();
-			
+				break;
+			}
 		try {
 			currentUser = login(usern, pass);
-			user_menu(); //chama o menu de user(Seja ele carro, sem carro)
 		}
 		catch (LoginException<string> err)
 		{
 			cout << err.info << endl;
-			Sleep(800);  //only in windows (?)
+			Sleep(2000);  //only in windows (?)
+			ClearScreen();
 			return main_menu();
 		}
+		ClearScreen();
+		user_menu(); //chama o menu de user(Seja ele carro, sem carro)
 		break;
 	}
 	case 2:
-		CreateRegis();		
+		CreateRegis();
+		Sleep(2000);
 		ClearScreen();
-		main_menu();
 		break;
 	case 3:
+		ClearScreen();
 		return;
 		break;
 	default:
@@ -58,6 +63,7 @@ void SharedRides::main_menu() {
 		cin.ignore(numeric_limits <streamsize>::max(), '\n');
 		break;
 	}
+	ClearScreen();
 	main_menu(); //always called. after done functions or bad inputs here, until exit app
 }
 
@@ -68,18 +74,72 @@ void SharedRides::manage_menu(){
 		"[1] App Users" "\n"	//algoritmos de ordenação para mostrar
 		"[2] App Vehicles" "\n"
 		"[3] End of Month" "\n"
-		"[4] Remove user" "\n"
-		"[5] Set Billings" "\n"
-		"[6] Log Off");
+		"[4] Set Billings" "\n"
+		"[5] Log Off");
 
 	switch (choice) {
+	case 0:
+		ClearScreen();
+		cout << "\tApp Trips:\n\n";
+		for (size_t i = 0; i < tripsPrinter.size(); i++) {
+			cout << "Trip " << i + 1 << endl;
+			cout << tripsPrinter[i] << endl << endl;
+		}
+		_getch();
+		break;
 	case 1:
-		//login();
+		ClearScreen();
+		cout << "\tApp Users:\n\n";
+		for (size_t i = 0; i < users.size(); i++) {
+			cout << "User " << i + 1 << endl;
+			users[i]->showProfile();
+			cout << endl << endl;
+		}
+		_getch();
 		break;
 	case 2:
-		//SharedRides::CreateRegis();
+		ClearScreen();
+		cout << "\tApp Cars:\n\n";
+		for (size_t i = 0; i < cars.size(); i++) {
+			cout << "Car " << i + 1 << endl;
+			cout << *(cars[i]) << endl << endl;
+		}
+		_getch();
 		break;
+	case 3:
+		for (size_t i = 0; i < users.size(); i++) {
+			if (users[i]->getVehicle()->getYear() == 0)
+				users[i]->chargeAccount(-(this->TAX + users[i]->getnumTrips()));
+			else users[i]->chargeAccount(-(this->TAX));
+		}
+		cout << "\n\t Billings Applied.\n\n" << endl;
+		_getch();
+		break;
+	case 4:
+		cout << "\tCurrent TAX is: " << this->TAX << endl;
+		float choice = 0;
+		while (true) {
+			choice = get_input <float>("\tNew TAX? ");
+			if (choice > 0)
+				break;
+			cout << "Please, input a positive TAX." << endl;
+		}
+		this->TAX = choice;
+		cout << "\tThe new TAX is: " << this->TAX << endl;
+		_getch();
+		break;
+	case 5:
+		currentUser = NULL;
+		return;
+		break;
+	default:
+		cout << "Please, input an integer suitable to the options shown." << endl;
+		cin.ignore(numeric_limits <streamsize>::max(), '\n');
+		break;
+
 	}
+	ClearScreen();
+	manage_menu();
 }
 
 void SharedRides::user_menu(){
@@ -100,28 +160,43 @@ void SharedRides::user_menu(){
 
 			switch (choice) {
 			case 0:
+				ClearScreen();
 				showTrips();
+				_getch();
 				break;
 			case 1:
+				ClearScreen();
 				userWithVehicleMenu();
+				Sleep(2000);
 				break;
 			case 2:
+				ClearScreen();
+				VehicleTripMenu();
+				_getch();
 				break;
 			case 3:
+				ClearScreen();
 				buddiesMenu();
+				_getch();
 				break;
 			case 4:
+				ClearScreen();
 				creditAccount();
+				Sleep(2000);
 				break;
 			case 5:
+				ClearScreen();
 				changeProfile();
+				Sleep(2000);
 				break;
 			case 6:
 				currentUser = NULL; //logs off
 				return; //returns to main_menu
 				break;
 			case 7:
+				ClearScreen();
 				deleteAccount();
+				_getch();
 				return;
 				break;
 			default:
@@ -143,28 +218,43 @@ void SharedRides::user_menu(){
 
 			switch (choice) {
 			case 0:
+				ClearScreen();
 				showTrips();
+				_getch();
 				break;
 			case 1:
+				ClearScreen();
 				addVehicle();
+				Sleep(2000);
 				break;
 			case 2:
+				ClearScreen();
+				enterTrip();
+				_getch();
 				break;
 			case 3:
+				ClearScreen();
 				buddiesMenu();
+				_getch();
 				break;
 			case 4:
+				ClearScreen();
 				creditAccount();
+				Sleep(2000);
 				break;
 			case 5:
+				ClearScreen();
 				changeProfile();
+				Sleep(2000);
 				break;
 			case 6:
 				currentUser = NULL; //logs off
 				return; //returns to main_menu
 				break;
 			case 7:
+				ClearScreen();
 				deleteAccount();
+				_getch();
 				return;
 				break;
 			default:
@@ -184,10 +274,14 @@ void SharedRides::user_menu(){
 
 		switch (choice) {
 		case 0:
-			//missing
+			ClearScreen();
+			enterTrip();
+			_getch();
 			break;
 		case 1:
+			ClearScreen();
 			creditAccount();
+			Sleep(2000);
 			break;
 		case 2:
 			currentUser = NULL; //resets currentUser,
@@ -199,6 +293,7 @@ void SharedRides::user_menu(){
 			break;
 		}
 	}
+	ClearScreen();
 	user_menu();//always called. after done functions or bad inputs here,
 				//until logoff/delete profile or exitApp in guest
 }

@@ -24,20 +24,6 @@ Vehicle::Vehicle() {
 	carstatic++;
 }
 
-void Vehicle::setBrand(string brand) {
-	this->brand = brand;
-}
-
-void Vehicle::setYear(unsigned int year) {
-	this->year = year;
-}
-void Vehicle::setRate(string rate) {
-	this->rate = rate;
-}
-
-
-
-
 
 unsigned int Vehicle::getnumberSeats() const{
 	return numberSeats;

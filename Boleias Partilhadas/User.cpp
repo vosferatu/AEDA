@@ -72,6 +72,10 @@ void RegisteredUser::setPassword(string password){
 	this->password = password;
 }
 
+void RegisteredUser::addTrip(unsigned int ID){
+	Trips.push_back(ID);
+}
+
 void RegisteredUser::showProfile(){
 	cout << "\n\tProfile of " << this->getusername() << ":" << endl;
 	cout << "Home City: " << this->getCity() << endl;

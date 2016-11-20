@@ -21,6 +21,7 @@ class User{
 
 public:
 	User() {};
+	~User() {};
 	User(string username);
 
 	unsigned int getID() const;
@@ -37,6 +38,7 @@ public:
 	virtual void setHome(string city) = 0;
 	virtual void showProfile() = 0;
 	virtual void save(ofstream& out) const = 0;
+	virtual void addTrip(unsigned int ID) = 0;
 
 };
 
@@ -63,6 +65,7 @@ public:
 	Vehicle* getVehicle() const;
 	void setHome(string city);
 	void setPassword(string password);
+	void addTrip(unsigned int ID);
 
 	void setVehicleID(unsigned int id);
 
