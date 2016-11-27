@@ -748,6 +748,7 @@ Time SharedRides::searchStretchTime(string one, string two) {
 		if ((caminhos[i].getFirst() == one) && (caminhos[i].getSecond() == two))
 			return caminhos[i].getTime();
 	}
+	return Time();
 }
 
 string SharedRides::searchStretchCity(string one, Time t1) {
@@ -755,6 +756,7 @@ string SharedRides::searchStretchCity(string one, Time t1) {
 		if ((caminhos[i].getFirst() == one) && (caminhos[i].getTime() == t1))
 			return caminhos[i].getSecond();
 	}
+	return "";
 }
 
 int SharedRides::checkTrip(string a, string b, const vector<Stretch> & v) const {
@@ -1549,11 +1551,11 @@ void SharedRides::enterTrip() {
 	}
 
 	int contador = 0;
-	int bancos = tripOffers[choice].getmaxSeats();
+	unsigned int bancos = tripOffers[choice].getmaxSeats();
 	vector<Stretch> novo = tripOffers[choice].getWay();
 	for (size_t i = 0; i < novo.size(); i++) {
 		if (novo[i].getCity() == firstPoint) {
-			if (novo[i].getusers().size() < bancos)
+			if (novo[i].getusers().size() <  bancos)
 				contador++;
 		}
 		if ((contador > 0) && (novo[i].getCity() != secondPoint)) {
@@ -1590,15 +1592,12 @@ void SharedRides::showBuddiesProfileToUser(){
 	size_t user = getPositionUser(currentUser->getID());
 	vector<int> fav = users[user]->getFavs();
 
-	contador = 0;
-	for (size_t i = 0; i < novo.size(); i++) {
-		if (novo[i].getusers().size() == bancos)
-			contador++;
+	for (size_t i = 0; i < fav.size(); i++) {
+		size_t j = getPositionUser(fav[i]);
+		cout << "Buddie number " << i + 1 << ":\n";
+		users[j]->showProfile();
+		cout << endl;
 	}
-	if (contador == novo.size()) {
-		startTrip();
-	}
-	usersalterados = true;
 }
 
 
@@ -1626,7 +1625,7 @@ void SharedRides::saveChanges() const {
 
 		for (size_t i = 0; i < cars.size(); i++)		
 		{
-			cars.at(i).save(out_cars);  
+			cars[i]->save(out_cars);  
 		}
 		out_cars.close();
 	}
@@ -1683,7 +1682,7 @@ unsigned int SharedRides::getCARHighID() const {
 
 	for (size_t i = 0; i < cars.size(); i++)		
 	{
-		unsigned int ID = cars.at(i).getID();	
+		unsigned int ID = cars[i]->getID();	
 																
 		if (ID > maiorID)								
 			maiorID = ID;						

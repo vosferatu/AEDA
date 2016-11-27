@@ -38,9 +38,9 @@ class SharedRides
 	vector<Path> caminhos;
 	/** @brief	The trip offers in the moment. */
 	static vector<waitingTrip> tripOffers;
-	/** @brief The user operating the system. */
-	User* currentUser = NULL;
-	/** @brief	The trips waiting. */
+	User* currentUser = NULL;  //se não for pointer, slicing problem
+	vector<waitingTrip> tripsWaiting;
+	static vector<string>cities;
 
 	/**********************************************************************************************//**
 	 * @property	static vector<string>cities
