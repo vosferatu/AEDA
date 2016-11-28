@@ -1680,26 +1680,50 @@ void SharedRides::enterTrip() {
 
 	string firstPoint;
 	string secondPoint;
+	bool citybelong = false;
 
 	cout << endl << TAB << "Where are you catching a ride?" << endl;
 	
-	cout << TAB << "It must belong to one of these : ";
-	for (size_t i = 0; i < cities.size(); i++) {
-		if (i < cities.size() - 1)
-			cout << cities[i] << ", ";
-		else cout << cities[i] << ".\n";
+	while (!citybelong) {
+
+		cout << TAB << "It must belong to one of these: ";
+
+		for (size_t i = 0; i < cities.size(); i++)
+		{
+			if (i < cities.size() - 1)
+				cout << cities[i] << ", ";
+			else cout << cities[i] << ".\n";
+		}
+
+		firstPoint = readLine();
+
+		for (size_t i = 0; i < cities.size(); i++) {
+			if (firstPoint == cities[i])
+				citybelong = true;
+		}
+
 	}
-	cin.ignore(numeric_limits <streamsize>::max(), '\n');
-	firstPoint = readLine();
-	
+	citybelong = false;
 	cout << endl << TAB << "Where are you dropping off?" << endl;
-	cout <<endl << "It must belong to one of these: ";
-	for (size_t i = 0; i < cities.size(); i++) {
-		if (i < cities.size() - 1)
-			cout << cities[i] << ", ";
-		else cout << cities[i] << ".\n";
+	while (!citybelong) {
+
+		cout << TAB << "It must belong to one of these: ";
+
+		for (size_t i = 0; i < cities.size(); i++)
+		{
+			if (i < cities.size() - 1)
+				cout << cities[i] << ", ";
+			else cout << cities[i] << ".\n";
+		}
+
+		secondPoint = readLine();
+
+		for (size_t i = 0; i < cities.size(); i++) {
+			if (secondPoint == cities[i])
+				citybelong = true;
+		}
+
 	}
-	secondPoint = readLine();
 	
 
 	int counter = 0;
@@ -1716,6 +1740,7 @@ void SharedRides::enterTrip() {
 			}
 		}
 	}
+
 	if (counter == 0) {
 		cout  <<endl<< TAB << "We are sorry, but there are no trips available in your conditions." << endl;
 		return;
@@ -1771,18 +1796,26 @@ void SharedRides::enterTrip() {
 		return;
 	}
 
+	contador = 0;
 	for (size_t i = 0; i < novo.size(); i++) {
 		if (novo[i].getCity() == firstPoint) {
 			novo[i].addUser(currentUser->getID());
+			contador++;
 		}
 		if ((contador > 0) && (novo[i].getCity() != secondPoint)) {
 			novo[i].addUser(currentUser->getID());
+			contador++;
 		}
 		if (novo[i].getCity() == secondPoint) {
 			novo[i].addUser(currentUser->getID());
 			break;
 		}
 	}
+
+	currentUser->chargeAccount(stops*tripOffers[choice].getpriceStop());
+
+	cout << endl << TAB << "You have been added to the trip and you have payed for it." << endl;
+
 }
 
 
