@@ -166,6 +166,11 @@ void Time::setMinutes(unsigned int minutos) {
 	minutes = minutos;
 }
 
+void Time::operator=(const Time & outro){
+	this->hours = outro.hours;
+	this->minutes = outro.minutes;
+}
+
 bool truetime(const Time & horas) {
 	return (((horas.hours < 24) && (horas.hours >= 0)) && ((horas.minutes < 60) && (horas.minutes >= 0)));
 }
@@ -202,7 +207,7 @@ ostream& operator<<(ostream& out, const Time & horas) {
 			hora = "0" + hora;
 	}
 	else {
-		hora = to_string(horas.hours) + ":" + to_string(horas.minutes);
+		hora = to_string(horas.hours) + ':' + to_string(horas.minutes);
 		if (horas.hours < 10)
 			hora = "0" + hora;
 	}
@@ -218,7 +223,7 @@ istream& operator >> (istream& in, const Time & horas) {
 			hora = "0" + hora;
 	}
 	else {
-		hora = to_string(horas.hours) + ":" + to_string(horas.minutes);
+		hora = to_string(horas.hours) + ':' + to_string(horas.minutes);
 		if (horas.hours < 10)
 			hora = "0" + hora;
 	}

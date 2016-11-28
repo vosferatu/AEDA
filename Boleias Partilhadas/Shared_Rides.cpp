@@ -92,16 +92,19 @@ void SharedRides::loadUsers() {
 
 		int IDtrip;
 		vector <int> trips(0);
-
-		while (i < numTrips) {
-			IDtrip = atoi(info.substr(0, findpos).c_str());
-			trips.push_back(IDtrip);
-			info = info.substr(findpos + 1, search);
-			findpos = info.find(';', 0);
-			i++;
+		if (numTrips > 0) {
+			while (i < numTrips) {
+				IDtrip = atoi(info.substr(0, findpos).c_str());
+				trips.push_back(IDtrip);
+				info = info.substr(findpos + 1, search);
+				findpos = info.find(';', 0);
+				i++;
+			}
 		}
 
 		numBuddies = atoi(info.substr(0, findpos).c_str());
+		info = info.substr(findpos + 1, search);
+		findpos = info.find(';', 0);
 
 		int IDBuddie;
 		vector <int> buddies(0);
@@ -794,7 +797,7 @@ string SharedRides::searchStretchCity(string one, Time t1) {
 int SharedRides::checkTrip(string a, string b, const vector<Stretch> & v) const {
 	int found1 = -1000;
 	int found2 = -100;
-	for (size_t i = 0; v.size(); i++) {
+	for (size_t i = 0; i < v.size(); i++) {
 		if (v[i].getCity() == a)
 			found1 = i;
 		if (v[i].getCity() == b)
@@ -838,6 +841,7 @@ void SharedRides::showTrips() const {
 		}
 	}
 }
+
 
 void SharedRides::userWithVehicleMenu() {
 	
@@ -1168,6 +1172,7 @@ void SharedRides::addVehicle() {
 	carsalterados = true;
 }
 
+
 void SharedRides::creditAccount() {
 	cout << endl << TAB << "Your current balance: $" << currentUser->getAccount() << endl << endl;
 	
@@ -1230,6 +1235,7 @@ void SharedRides::changeProfile() {
 					cout << cities[i] << ", ";
 				else cout << cities[i] << ".\n";
 			}
+			cin.ignore(numeric_limits <streamsize>::max(), '\n');
 			city = readLine();
 			for (size_t i = 0; i < cities.size(); i++)
 			{
@@ -1328,6 +1334,7 @@ void SharedRides::deleteAccount() {
 	return;
 }
 
+
 void SharedRides::buddiesMenu() {
 	cout << endl << TAB << "You have ";
 	cout << currentUser->getFavs().size() << " buddies." << endl << endl;
@@ -1367,7 +1374,7 @@ void SharedRides::addBuddie() {
 	int number = 0;
 	if (counter != 0) {
 		cout << "Users near you:" << endl;
-		for (size_t i = 0; users.size(); i++) {
+		for (size_t i = 0; i < users.size(); i++) {
 			if ((users[i]->getCity() == currentUser->getCity()) && (users[i] != currentUser)) {
 				number = i + 1;
 				cout << "User number " << number << endl;
@@ -1375,7 +1382,7 @@ void SharedRides::addBuddie() {
 		}
 		}
 		cout << endl << "Other users:" << endl;
-		for (size_t i = 0; users.size(); i++) {
+		for (size_t i = 0; i < users.size(); i++) {
 			if ((users[i]->getCity() != currentUser->getCity()) && (users[i] != currentUser)) {
 				number = i + 1;
 				cout << "User number " << number << endl;
@@ -1384,7 +1391,7 @@ void SharedRides::addBuddie() {
 		}
 	}
 	else {
-		for (size_t i = 0; users.size(); i++) {
+		for (size_t i = 0; i < users.size(); i++) {
 			if (users[i] != currentUser) {
 				number = i + 1;
 				cout << "User number " << number << endl;
@@ -1403,8 +1410,9 @@ void SharedRides::addBuddie() {
 		else cout << "Input a valid number!" << endl;
 		cin.ignore(numeric_limits <streamsize>::max(), '\n');
 	}
-
-	currentUser->getFavs().push_back(users[choice - 1]->getID());
+	vector<int> novo = currentUser->getFavs();
+	novo.push_back(users[choice - 1]->getID());
+	currentUser->setFavs(novo);
 	cout << endl << users[choice - 1]->getusername() << " is now one of your buddies." << endl;
 	usersalterados = true;
 }
@@ -1430,8 +1438,9 @@ void SharedRides::removeBuddie() {
 		else cout << "Input a valid number!" << endl;
 		cin.ignore(numeric_limits <streamsize>::max(), '\n');
 	}
-
-	currentUser->getFavs().erase(currentUser->getFavs().begin() + (choice - 1));
+	vector<int> novo = currentUser->getFavs();
+	novo.erase(novo.begin() + (choice - 1));
+	currentUser->setFavs(novo);
 	size_t amigo = getPositionUser(currentUser->getFavs()[choice - 1]);
 	cout << endl << users[amigo]->getusername() << " is no longer one of your Buddies." << endl;
 	usersalterados = true;
@@ -1507,6 +1516,7 @@ void SharedRides::myBuddies() const {
 	}
 }
 
+
 void SharedRides::VehicleTripMenu() {
 	cout << endl;
 	cin.ignore(numeric_limits <streamsize>::max(), '\n');
@@ -1519,14 +1529,17 @@ void SharedRides::VehicleTripMenu() {
 	switch (choice) {
 	case 0:
 		startTrip();
+		usersalterados = true;
 		return;
 		break;
 	case 1:
 		addTrip();
+		usersalterados = true;
 		return;
 		break;
 	case 2:
 		enterTrip();
+		usersalterados = true;
 		return;
 		break;
 	default:
@@ -1629,6 +1642,7 @@ void SharedRides::addTrip() {
 	default:
 		cout << endl << TAB << "Please, input an integer suitable to the options shown." << endl << endl;
 		cin.ignore(numeric_limits <streamsize>::max(), '\n');
+		addTrip();
 		break;
 	}
 }
@@ -1668,6 +1682,7 @@ void SharedRides::startTrip() {
 			size_t j = getPositionUser(gajos[i]);
 			users[j]->addTrip(codigo);
 		}
+		currentUser->addTrip(codigo);
 		usersalterados = true;
 	}
 }
@@ -1726,7 +1741,6 @@ void SharedRides::enterTrip() {
 	}
 	
 
-	int counter = 0;
 	int stops = 0;
 	vector<int> AvailableTrips{};
 	for (size_t i = 0; i < tripOffers.size(); i++) {
@@ -1735,13 +1749,12 @@ void SharedRides::enterTrip() {
 			if (stops > 0) {
 				if (currentUser->getAccount() > stops*tripOffers[i].getpriceStop()) {
 					AvailableTrips.push_back(i);
-					counter++;
 				}
 			}
 		}
 	}
 
-	if (counter == 0) {
+	if (AvailableTrips.size() == 0) {
 		cout  <<endl<< TAB << "We are sorry, but there are no trips available in your conditions." << endl;
 		return;
 	}
@@ -1812,6 +1825,8 @@ void SharedRides::enterTrip() {
 		}
 	}
 
+	tripOffers[choice].setWay(novo);
+
 	currentUser->chargeAccount(stops*tripOffers[choice].getpriceStop());
 
 	cout << endl << TAB << "You have been added to the trip and you have payed for it." << endl;
@@ -1874,9 +1889,10 @@ void SharedRides::guest_log(){
 	}
 	User* u1 = new GuestUser(username);
 	users.push_back(u1);
-
+	usersalterados = true;
 	currentUser = u1;
 }
+
 
 void SharedRides::saveChanges() const {
 
@@ -1922,7 +1938,7 @@ void SharedRides::saveChanges() const {
 
 	for (size_t i = 0; i < tripOffers.size(); i++)
 	{
-		tripOffers[i].save(out_taken);   //funcao save da classe
+		tripOffers[i].save(out_waiting);   //funcao save da classe
 	}
 	out_waiting.close();
 }

@@ -360,7 +360,7 @@ void SharedRides::user_menu(){
 
 	}
 	else { // guest user
-
+		ClearScreen();
 		cout << endl << TAB << "Welcome to Shared Rides V.1.0. Please put your seatbelts on and enjoy your travel." << endl;
 		cout << endl << TAB << " --- GUEST HOMEPAGE --- " << endl << endl;
 		cout << TAB << "-> You aren't logged to any account <- " << endl << endl;

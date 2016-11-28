@@ -447,6 +447,8 @@ public:
 	 **************************************************************************************************/
 
 	friend istream& operator>> (istream& in, const Time & horas); //escrever horas
+
+	void operator=(const Time &outro);
 };
 
 

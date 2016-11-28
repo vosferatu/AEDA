@@ -1,5 +1,6 @@
-4
-1;godzilla;manel;34;Braga;0;0;
-2;iol;manel;0;Viseu;0;0;
-3;jonas;manel;0;Porto;0;0;
-4;admin;manel;0;Lisboa;0;0;
+6
+1;godzilla;manel;34;Braga;0;1;2;
+2;iol;manel;200;Viseu;0;3;3;3;5;
+3;jonas;manel;50;Porto;0;2;2;1;
+4;admin;manel;95;Lisboa;0;2;2;2;
+5;jon;manel;56;Aveiro;0;2;2;3;
