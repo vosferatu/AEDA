@@ -48,19 +48,18 @@ void SharedRides::loadUsers() {
 
 	getline(infile, strnumber);
 	maxUsersID = stoi(strnumber);
-	
+
 	unsigned int ID;
 	string username;
 	string password;
 	string homecity;
-	float account; 
+	float account;
 	unsigned int numTrips;
 	unsigned int numBuddies;
 
 	while (getline(infile, info))
 	{
 		unsigned int search = 1000;
-
 
 		size_t findpos = info.find(';', 0);			//inteiro que tem a posicao do primeiro ';'
 
@@ -76,13 +75,14 @@ void SharedRides::loadUsers() {
 		info = info.substr(findpos + 1, search);
 		findpos = info.find(';', 0);
 
-		account = stof(info.substr(0, findpos).c_str());  
+		account = stof(info.substr(0, findpos).c_str());
 		info = info.substr(findpos + 1, search);
 		findpos = info.find(';', 0);
 
 		homecity = info.substr(0, findpos);
 		info = info.substr(findpos + 1, search);
 		findpos = info.find(';', 0);
+
 
 		numTrips = atoi(info.substr(0, findpos).c_str());
 		info = info.substr(findpos + 1, search);
@@ -105,30 +105,33 @@ void SharedRides::loadUsers() {
 
 		int IDBuddie;
 		vector <int> buddies(0);
+		unsigned int j = 0;
 
-		while (i < numBuddies) {
+		while (j < numBuddies) {
 			IDBuddie = atoi(info.substr(0, findpos).c_str());
 			buddies.push_back(IDBuddie);
 			info = info.substr(findpos + 1, search);
 			findpos = info.find(';', 0);
-			i++;
+			j++;
 		}
 
 		bool usernocar = false;
 		Vehicle * nocar = new Vehicle();
 
 		for (size_t i = 0; i < cars.size(); i++) {
-				if (cars[i]->getID() == ID) {
-					RegisteredUser* RU = new RegisteredUser(username, password, homecity, cars[i]);
-					RU->setAccount(account);
-					RU->setFavs(buddies);
-					RU->setTrips(trips);
-					users.push_back(RU);
-				}
-				else usernocar = true;
+			if (cars[i]->getID() == ID) {
+				RegisteredUser* RU = new RegisteredUser(username, password, homecity, cars[i]);
+				RU->setAccount(account);
+				RU->setFavs(buddies);
+				RU->setTrips(trips);
+				users.push_back(RU);
+				usernocar = true;
+			}
 		}
 
-		if (usernocar || cars.size() == 0) {
+
+
+		if (!usernocar || cars.size() == 0) {
 			RegisteredUser* RU = new RegisteredUser(username, password, homecity, nocar);
 			RU->setAccount(account);
 			RU->setFavs(buddies);
@@ -195,7 +198,7 @@ void SharedRides::loadTakenTrips() {
 		findpos = info.find(';', 0);
 
 		startime = Time(startimehora, startimeminuto);
-		
+
 		endtimehora = atoi(info.substr(0, findpos).c_str());
 		info = info.substr(findpos + 1, search);
 		findpos = info.find(':', 0);
@@ -204,10 +207,10 @@ void SharedRides::loadTakenTrips() {
 		info = info.substr(findpos + 1, search);
 		findpos = info.find(';', 0);
 
-		endtime = Time(endtimehora,endtimeminuto);
+		endtime = Time(endtimehora, endtimeminuto);
 
 		tripcode = stoi(info.substr(0, findpos).c_str());
-	
+
 		takenTrip v1(name, start, end, endtime);
 		v1.setStartime(startime);
 		v1.setTripCode(tripcode);
@@ -215,6 +218,7 @@ void SharedRides::loadTakenTrips() {
 		tripsPrinter.push_back(v1);
 	}
 }
+
 
 void SharedRides::loadWaitingTrips() {
 
@@ -224,7 +228,7 @@ void SharedRides::loadWaitingTrips() {
 		return;
 
 	string info;					//string que ira conter a informacao de cada linha do ficheiro
-	
+
 	if (!infile.is_open())
 	{
 		throw FileException<string>("ERROR! The waiting file could not be opened.");
@@ -255,10 +259,10 @@ void SharedRides::loadWaitingTrips() {
 		viagemsize = atoi(info.substr(0, findpos).c_str());
 		info = info.substr(findpos + 1, search);			//string = desde primeiro ';' até ao segundo
 		findpos = info.find(';', 0);
-		
+
 		unsigned int i = 0;
-		
-		
+
+
 		while (i < viagemsize) {
 			stop = info.substr(0, findpos);
 			info = info.substr(findpos + 1, search);			//string = desde primeiro ';' até ao segundo
@@ -279,30 +283,31 @@ void SharedRides::loadWaitingTrips() {
 			findpos = info.find(';', 0);
 			unsigned int j = 0;
 			vector<int> vectID;
-				while (j < numIDs)	{
-					ID = atoi(info.substr(0, findpos).c_str());
-					vectID.push_back(ID);
-					info = info.substr(findpos + 1, search);			//string = desde primeiro ';' até ao segundo
-					findpos = info.find(';', 0);
-					j++;
-				}
-				Stretch str(stop, tonext);
-				str.setvectID(vectID);
-				viagem.push_back(str);
+			while (j < numIDs) {
+				ID = atoi(info.substr(0, findpos).c_str());
+				vectID.push_back(ID);
+				info = info.substr(findpos + 1, search);			//string = desde primeiro ';' até ao segundo
+				findpos = info.find(';', 0);
+				j++;
+			}
+			Stretch str(stop, tonext);
+			str.setvectID(vectID);
+			viagem.push_back(str);
 			i++;
 
-			pricestop = stof (info.substr(0, findpos).c_str());
+			pricestop = stof(info.substr(0, findpos).c_str());
 			info = info.substr(findpos + 1, search);			//string = desde primeiro ';' até ao segundo
 			findpos = info.find(';', 0);
 
 			maxseats = atoi(info.substr(0, findpos).c_str());
 		}
 
-		
+
 		waitingTrip waiting(owner, viagem, maxseats, pricestop);
 		tripOffers.push_back(waiting);
 	}
 }
+
 
 void SharedRides::loadVehicles() {
 
@@ -310,7 +315,7 @@ void SharedRides::loadVehicles() {
 
 	if (infile.peek() == std::ifstream::traits_type::eof())
 		return;
-	
+
 	string info;					//string que ira conter a informacao de cada linha do ficheiro
 	string strnumber;					//string que ira remover o numero no inicio do ficheiro
 
@@ -321,15 +326,17 @@ void SharedRides::loadVehicles() {
 
 	getline(infile, strnumber);
 	maxVehiclesID = stoi(strnumber);
-	unsigned int ID; 
+
+	unsigned int ID;
 	string brand;
 	unsigned int year;
 	string rate;
 	unsigned int seats;
+
 	while (getline(infile, info))
 	{
 		unsigned int search = 1000;
-		
+
 
 		size_t findpos = info.find(';', 0);			//inteiro que tem a posicao do primeiro ';'
 
@@ -355,20 +362,20 @@ void SharedRides::loadVehicles() {
 
 		vector<string> route;
 
-		
+
 		while (findpos != -1) {
 			route.push_back(info.substr(0, findpos));
 			info = info.substr(findpos + 1, search);			//string = desde findpos até ao resto da  string
 			findpos = info.find(';', 0);
 		}
-		
-		
-		Vehicle* v1 = new Vehicle(seats, brand, year, rate);
+
+		Vehicle* v1 = new Vehicle(ID, seats, brand, year, rate);
 		v1->setRoute(route);
-		cars.push_back(v1);	
-		
+		cars.push_back(v1);
+
 	}
 }
+
 
 void SharedRides::loadCities() {
 
@@ -376,10 +383,10 @@ void SharedRides::loadCities() {
 
 	string info;					//string que ira conter a informacao de cada linha do ficheiro
 	string strnumber;					//string que ira remover o numero no inicio do ficheiro
-	
-	
+
+
 	file.open(citiesfile);
-	
+
 	if (!file.is_open())
 	{
 		throw FileException<string>("Erro ao abrir o ficheiro de cidades.");
@@ -387,7 +394,7 @@ void SharedRides::loadCities() {
 
 	getline(file, strnumber);
 	numbercities = stoi(strnumber);
-	unsigned int i=0;
+	unsigned int i = 0;
 
 	while (i < numbercities)
 	{
@@ -396,15 +403,19 @@ void SharedRides::loadCities() {
 		i++;
 	}
 
-	
+
 }
+
 
 void SharedRides::load() {
 	loadCities();
 	loadVehicles();
 	loadUsers();
-	
+	loadWaitingTrips();
+	loadTakenTrips();
 }
+
+
 
 void SharedRides::CreateRegis()
 {
@@ -412,40 +423,43 @@ void SharedRides::CreateRegis()
 	// gets username
 	bool userexists = true;
 	string username;
-	
+
 	while (userexists) {
-		username = get_input <string>("Please enter a username.");
-		cout << "Username: " << username << "\n";
-		
+		cout << endl;
+		username = get_input <string>(TAB"Please enter a username.");
+		cout << endl << TAB << "Username: " << username << "\n" << endl;
+
 		if (users.size() == 0)
 			userexists = false;
-		
-		bool uservec = false; 
+
+		bool uservec = false;
 
 		for (size_t i = 0; i < users.size(); i++) {
-			if (users[i]->getusername() == username) 
+			if (users[i]->getusername() == username)
 				uservec = true;
 		}
 
 		if (uservec == true)
 		{
-			cout << "Username already exists!\n";
+			cout << TAB << "[ERROR!] Username already exists!\n";
 			userexists = true;
 		}
 		else userexists = false;
 
-		
+
 	}
 
 	// gets password
+	cout << TAB;
 	string password1 = readPassword("Please enter password", true);
-	cout << endl;
+	cout << endl << endl << TAB;
 	string password2 = readPassword("Please re-enter password", true);
 
 	while (password1 != password2) {
-		cout << "\nError! Passwords do not match." "\n\n";
+		cout << TAB << "\nError! Passwords do not match." "\n\n";
+		cout << TAB;
 		password1 = readPassword("Please enter password", true);
-		cout << endl;
+		cout << endl << endl << TAB;
 		password2 = readPassword("Please re-enter password", true);
 
 	}
@@ -455,10 +469,9 @@ void SharedRides::CreateRegis()
 	bool citybelong = false;
 	string city;
 
-	while(!citybelong) {
-		cout << endl;
-		
-		cout << "Please specify your home city." << endl << "It must belong to one of these: ";
+	while (!citybelong) {
+
+		cout << endl << endl << TAB << "Please specify your home city." << endl << TAB << "It must belong to one of these: ";
 
 		for (size_t i = 0; i < cities.size(); i++)
 		{
@@ -469,12 +482,12 @@ void SharedRides::CreateRegis()
 
 		city = readLine();
 
-		for (size_t i = 0; i < cities.size(); i++){
+		for (size_t i = 0; i < cities.size(); i++) {
 			if (city == cities[i])
 				citybelong = true;
 		}
 
-}
+	}
 	// gets vehicle
 	bool vehiclebool = false;
 	string addvehicle;
@@ -482,10 +495,12 @@ void SharedRides::CreateRegis()
 
 	while (!vehiclebool)
 	{
+		cout << endl << TAB;
 		addvehicle = get_input <string>("Do you want to add a vehicle? [y|n]");
 
 		if (addvehicle == "y") {
 			cin.ignore(numeric_limits <streamsize>::max(), '\n');
+			cout << endl << TAB;
 			cout << "Please specify its brand and model." << endl;
 			string brand = readLine();
 
@@ -493,23 +508,25 @@ void SharedRides::CreateRegis()
 			unsigned int year;
 
 			while (!goodyear) {
+				cout << endl << TAB;
 				year = get_input <unsigned int>("Please specify its year.");
 
 				if (year < 1901 || year > 2017) {
 					goodyear = false;
-					cout << "\nError! Invalid year. \n\n";
+					cout << endl << TAB << "[Error!] Invalid year. \n";
 				}
 
 				else goodyear = true;
 			}
 
-			bool goodseats=false;
+			bool goodseats = false;
 			unsigned int seats;
 			while (!goodseats) {
+				cout << endl << TAB;
 				seats = get_input <unsigned int>("Please specify the number of seats of your car, including yours. [2|5|9]");
 				if (seats != 2 && seats != 5 && seats != 9)
 				{
-					cout << "\nError! The number of seats you provided is not valid.\n";
+					cout << endl << TAB << "[Error!] The number of seats you provided is not valid.\n";
 					goodseats = false;
 				}
 				else goodseats = true;
@@ -518,11 +535,12 @@ void SharedRides::CreateRegis()
 			bool goodrate = false;
 			string rate;
 			while (!goodrate) {
+				cout << endl << TAB;
 				rate = get_input <char>("In a scale [F(worst) - A (best)], please specify your evaluation of your car conditions.");
-			
+
 				if (rate != "A" && rate != "B" && rate != "C" && rate != "D" && rate != "E" && rate != "F")
 				{
-					cout << "\nError! Please give an evaluation in the provided scale.\n";
+					cout << endl << TAB << "[Error!] Please give an evaluation in the provided scale.\n";
 					goodrate = false;
 				}
 				else goodrate = true;
@@ -534,15 +552,16 @@ void SharedRides::CreateRegis()
 			vector<string> rout(0);
 
 			while (!routebool) {
+				cout << endl << TAB;
 				addroute = get_input <string>("Do you want do add a common route you do? [y|n]");
-				
+
 				cin.ignore(numeric_limits <streamsize>::max(), '\n');
-				
+
 				if (addroute == "y") {
 
-					cout << "Please specify the cities of your route, separared by slash";
-					cout << endl << "Example: Porto-Lisboa-Vila Real" << endl;
-					cout << "It must belong to one of these : ";
+					cout << TAB << "Please specify the cities of your route, separared by slash" << endl;
+					cout << TAB << "Example: Porto-Lisboa-Vila Real" << endl;
+					cout << TAB << "It must belong to one of these : ";
 
 					for (size_t i = 0; i < cities.size(); i++) {
 						if (i < cities.size() - 1)
@@ -553,7 +572,7 @@ void SharedRides::CreateRegis()
 					cityroute = readLine();
 					stringstream ss(cityroute);
 
-					while (ss.good()){
+					while (ss.good()) {
 						string substr;
 						getline(ss, substr, '-');
 						rout.push_back(substr);
@@ -580,26 +599,26 @@ void SharedRides::CreateRegis()
 
 					routebool = true;
 					break;
-					
-					 
+
+
 				}
 				else if (addroute == "n") {
 					routebool = true;
-					break; 
+					break;
 				}
 				else
-					cout << "\nPlease insert \"y\" or \"n.\" \n";
-					routebool = false;
+					cout << endl << TAB << "Please insert \"y\" or \"n.\" \n";
+				routebool = false;
 			}
 
-			
+
 			Vehicle* v1 = new Vehicle(seats, brand, year, rate);
 			v1->setRoute(rout);
 			maxVehiclesID++;
 			RegisteredUser* RU = new RegisteredUser(username, password1, city, v1);
 			maxUsersID++;
 			(*RU).setVehicleID((*RU).getID());
-			
+
 
 			users.push_back(RU);
 			cars.push_back((*RU).getVehicle());
@@ -619,17 +638,18 @@ void SharedRides::CreateRegis()
 		}
 		else
 		{
-			cout << "Error! Please enter y or n." << endl;
+			cout << endl << TAB << "[Error!] Please enter y or n." << endl;
 			vehiclebool = false;
 		}
 
 	}
-	cout << endl << "Now you have to Login to confirm your account.\n";
+
+	cout << endl << TAB << "SUCCESS! Your account has been created. Now you have to Login to confirm your account.\n";
 }
 
 
 //Helper Functions
-void SharedRides::fillPaths(){
+void SharedRides::fillPaths() {
 	//Braga Porto Vila Real Aveiro Viseu Lisboa Faro Beja
 	Path p1("Braga", "Porto", Time(0, 40)); caminhos.push_back(p1);
 	Path p2("Braga", "Vila Real", Time(1, 10)); caminhos.push_back(p2);
@@ -662,7 +682,7 @@ void SharedRides::fillPaths(){
 	Path p26("Aveiro", "Lisboa", Time(2, 28)); caminhos.push_back(p26);
 	Path p27("Aveiro", "Faro", Time(4, 16)); caminhos.push_back(p27);
 	Path p28("Aveiro", "Beja", Time(3, 39)); caminhos.push_back(p28);
-	
+
 	Path p29("Viseu", "Porto", Time(1, 18)); caminhos.push_back(p29);
 	Path p30("Viseu", "Vila Real", Time(1, 6)); caminhos.push_back(p30);
 	Path p31("Viseu", "Aveiro", Time(0, 57)); caminhos.push_back(p31);
@@ -696,18 +716,18 @@ void SharedRides::fillPaths(){
 	Path p56("Beja", "Faro", Time(1, 35)); caminhos.push_back(p56);
 }
 
-int SharedRides::getPositionCar(unsigned int id) const{
+int SharedRides::getPositionCar(unsigned int id) const {
 	int position = -1;
 	for (size_t i = 0; i < cars.size(); i++) {
 		if (cars[i]->getID() == id) {
 			position = i;
 			return position;
-		}	
+		}
 	}
 	return position;
 }
 
-int SharedRides::getPositionUser(unsigned int id) const{
+int SharedRides::getPositionUser(unsigned int id) const {
 	int position = -1;
 	for (size_t i = 0; i < users.size(); i++) {
 		if (users[i]->getID() == id) {
@@ -718,7 +738,7 @@ int SharedRides::getPositionUser(unsigned int id) const{
 	return position;
 }
 
-void SharedRides::recompensate(unsigned int id){
+void SharedRides::recompensate(unsigned int id) {
 	vector<int> afetados{};
 	for (size_t i = 0; i < tripOffers.size(); i++) {
 		if (tripOffers[i].getOwner() == id) {
@@ -780,23 +800,27 @@ bool SharedRides::checkBuddie(unsigned int user1) {
 }
 
 //Functions called by Menus
-void SharedRides::showTrips() const{
+void SharedRides::showTrips() const {
 	if (dynamic_cast<RegisteredUser*>(currentUser) == NULL) {
-		cout << endl << "Not available!" << endl;
+		cout << endl << TAB << "Not available!" << endl;
 		return;
 	}
 
 	if (currentUser->getnumTrips() == 0) {
-		cout << endl << "You have no taken trips in your history!" << endl;
+		cout << endl << TAB << "You have no taken trips in your history!" << endl;
+		return;
 	}
 
 	vector<int> vec = currentUser->getTrips();
-	cout << "\tYour Trip History:" << endl << endl;
-	for (size_t i = 0; i < vec.size(); i++){
+
+	cout << endl << TAB << "Your trip history:" << endl << endl;
+	cout << endl << "-------------------------------------------------------------------------" << endl << endl;
+	for (size_t i = 0; i < vec.size(); i++) {
 		for (size_t j = 0; j < tripsPrinter.size(); j++) {
 			if (tripsPrinter[j].getTripCode() == vec[i]) {
-				cout << "Trip number " << i+1 << endl;
+				cout << "Trip number " << i + 1 << endl;
 				cout << tripsPrinter[j] << endl;
+				cout << "----------------------------------------------------" << endl << endl;
 				break;
 			}
 		}
@@ -804,12 +828,10 @@ void SharedRides::showTrips() const{
 }
 
 void SharedRides::userWithVehicleMenu() {
-	cout << endl << "Your Vehicle:" << endl;
-	cout << currentUser->getVehicle() << endl;
-
+	
 	int choice = get_input <int>(
-		"[0] Edit my Vehicle" "\n"
-		"[1] Remove my Vehicle" "\n");
+		TAB_BIG"[0] Edit my Vehicle" "\n" "\n"
+		TAB_BIG"[1] Remove my Vehicle" "\n" "\n");
 
 	switch (choice) {
 	case 0:
@@ -826,20 +848,63 @@ void SharedRides::userWithVehicleMenu() {
 	}
 }
 
-void SharedRides::editVehicle(){
+void SharedRides::editVehicle() {
+	
+	cout << endl;
+	cin.ignore(numeric_limits <streamsize>::max(), '\n');
+
 	int choice = get_input <int>(
-		"[0] Change whole Vehicle" "\n"
-		"[1] Change Route" "\n");
+		TAB_BIG"[0] Change my vehicle to another vechile" "\n" "\n"
+		TAB_BIG"[1] Change route" "\n" "\n" );
 
 	switch (choice) {
-	case 1: {
+	case 0: {
 		cin.ignore(numeric_limits <streamsize>::max(), '\n');
+		cout << endl << TAB;
 		cout << "Please specify its brand and model." << endl;
 		string brand = readLine();
 
-		unsigned int year = get_input <unsigned int>("Please specify its year.");
-		unsigned int seats = get_input <unsigned int>("Please specify the number of seats of your car.");
-		string rate = get_input <string>("In a scale [F(worst) - A (best)], please specify your evaluation of your car conditions.");
+		bool goodyear = false;
+		unsigned int year;
+
+		while (!goodyear) {
+			cout << endl << TAB;
+			year = get_input <unsigned int>("Please specify its year.");
+
+			if (year < 1901 || year > 2017) {
+				goodyear = false;
+				cout << endl << TAB << "[Error!] Invalid year. \n";
+			}
+
+			else goodyear = true;
+		}
+
+		bool goodseats = false;
+		unsigned int seats;
+		while (!goodseats) {
+			cout << endl << TAB;
+			seats = get_input <unsigned int>("Please specify the number of seats of your car, including yours. [2|5|9]");
+			if (seats != 2 && seats != 5 && seats != 9)
+			{
+				cout << endl << TAB << "[Error!] The number of seats you provided is not valid.\n";
+				goodseats = false;
+			}
+			else goodseats = true;
+		}
+
+		bool goodrate = false;
+		string rate;
+		while (!goodrate) {
+			cout << endl << TAB;
+			rate = get_input <char>("In a scale [F(worst) - A (best)], please specify your evaluation of your car conditions.");
+
+			if (rate != "A" && rate != "B" && rate != "C" && rate != "D" && rate != "E" && rate != "F")
+			{
+				cout << endl << TAB << "[Error!] Please give an evaluation in the provided scale.\n";
+				goodrate = false;
+			}
+			else goodrate = true;
+		}
 
 		currentUser->getVehicle()->setRate(rate);
 		currentUser->getVehicle()->setYear(year);
@@ -847,26 +912,51 @@ void SharedRides::editVehicle(){
 		currentUser->getVehicle()->setBrand(brand);
 		currentUser->getVehicle()->setId(currentUser->getID());
 		// adds route 
+		bool routebool = false;
 		string cityroute;
+		string addroute;
 		vector<string> rout(0);
 
-		cout << "Now, enter your new route." << endl;
-		cout << "Please specify the cities of your route, separared by slash";
-		cout << endl << "Example: Porto-Lisboa-Vila Real" << endl;
-		cout << "It must belong to one of these : ";
-		for (size_t i = 0; i < cities.size(); i++) {
-			if (i < cities.size() - 1)
-				cout << cities[i] << ", ";
-			else cout << cities[i] << ".\n";
-		}
-		cityroute = readLine();
-		stringstream ss(cityroute);
+		while (!routebool) {
+			cout << endl << TAB;
+			addroute = get_input <string>("Do you want to add a common route you do? [y|n]");
 
-		while (ss.good()) {
-			string substr;
-			getline(ss, substr, '-');
-			rout.push_back(substr);
+			cin.ignore(numeric_limits <streamsize>::max(), '\n');
+
+			if (addroute == "y") {
+
+				cout << TAB << "Please specify the cities of your route, separared by slash" << endl;
+				cout << TAB << "Example: Porto-Lisboa-Vila Real" << endl;
+				cout << TAB << "It must belong to one of these : ";
+
+				for (size_t i = 0; i < cities.size(); i++) {
+					if (i < cities.size() - 1)
+						cout << cities[i] << ", ";
+					else cout << cities[i] << ".\n";
+				}
+
+				cityroute = readLine();
+				stringstream ss(cityroute);
+
+				while (ss.good()) {
+					string substr;
+					getline(ss, substr, '-');
+					rout.push_back(substr);
+				}
+
+				routebool = true;
+				break;
+
+			}
+			else if (addroute == "n") {
+				routebool = true;
+				break;
+			}
+			else
+				cout << endl << TAB << "Please insert \"y\" or \"n.\" \n";
+			routebool = false;
 		}
+
 		currentUser->getVehicle()->setRoute(rout);
 
 		for (size_t i = 0; i < cars.size(); i++) {
@@ -875,15 +965,14 @@ void SharedRides::editVehicle(){
 				break;
 			}
 		}
-
-	}		
-		break;
-	case 2: {
+	}
+			break;
+	case 1: {
 		string cityroute;
 		vector<string> rout(0);
-		cout << "Please specify the cities of your route, separared by slash";
-		cout << endl << "Example: Porto-Lisboa-Vila Real" << endl;
-		cout << "It must belong to one of these : ";
+		cout << TAB << "Please specify the cities of your route, separared by slash" << endl;
+		cout << TAB << "Example: Porto-Lisboa-Vila Real" << endl;
+		cout << TAB << "It must belong to one of these : ";
 		for (size_t i = 0; i < cities.size(); i++) {
 			if (i < cities.size() - 1)
 				cout << cities[i] << ", ";
@@ -906,9 +995,9 @@ void SharedRides::editVehicle(){
 			}
 		}
 	}
-		break;
+			break;
 	default:
-		cout << "Please, input an integer suitable to the options shown." << endl;
+		cout <<TAB<< "Please, input an integer suitable to the options shown." << endl;
 		cin.ignore(numeric_limits <streamsize>::max(), '\n');
 		editVehicle();
 		break;
@@ -917,18 +1006,20 @@ void SharedRides::editVehicle(){
 	carsalterados = true;
 }
 
-void SharedRides::removeVehicle(){
+void SharedRides::removeVehicle() {
 	string remvehicle;
 
-	while (true){
-		remvehicle = get_input <string>("Do you want to remove your vehicle? [y|n]");
+	while (true) {
+		cout << endl << TAB;
+		remvehicle = get_input <string>("Do you really want to remove your vehicle? [y|n]");
 		cin.ignore(numeric_limits <streamsize>::max(), '\n');
 
 		if (remvehicle == "y") {
 			Vehicle* v1 = new Vehicle();
 			currentUser->getVehicle()->setVehicle(v1);
-			
+
 			recompensate(currentUser->getID());
+
 			for (size_t i = 0; i < tripOffers.size(); i++) {
 				if (tripOffers[i].getOwner() == currentUser->getID()) {
 					tripOffers.erase(tripOffers.begin() + i);
@@ -943,10 +1034,10 @@ void SharedRides::removeVehicle(){
 		}
 
 		if (remvehicle == "n") {
-			cout << "Getting back..." << endl;
+			cout << TAB << "Your vehicle was not removed." << endl;
 			break;
 		}
-		else cout << "Error! Please enter y or n." << endl;
+		else cout << TAB << "Error! Please enter y or n." << endl;
 	}
 	usersalterados = true;
 	carsalterados = true;
@@ -954,12 +1045,53 @@ void SharedRides::removeVehicle(){
 }
 
 void SharedRides::addVehicle() {
+
+	cin.ignore(numeric_limits <streamsize>::max(), '\n');
+	cout << endl << TAB;
 	cout << "Please specify its brand and model." << endl;
 	string brand = readLine();
 
-	unsigned int year = get_input <unsigned int>("Please specify its year.");
-	unsigned int seats = get_input <unsigned int>("Please specify the number of seats of your car.");
-	string rate = get_input <string>("In a scale [F(worst) - A (best)], please specify your evaluation of your car conditions.");
+	bool goodyear = false;
+	unsigned int year;
+
+	while (!goodyear) {
+		cout << endl << TAB;
+		year = get_input <unsigned int>("Please specify its year.");
+
+		if (year < 1901 || year > 2017) {
+			goodyear = false;
+			cout << endl << TAB << "[Error!] Invalid year. \n";
+		}
+
+		else goodyear = true;
+	}
+
+	bool goodseats = false;
+	unsigned int seats;
+	while (!goodseats) {
+		cout << endl << TAB;
+		seats = get_input <unsigned int>("Please specify the number of seats of your car, including yours. [2|5|9]");
+		if (seats != 2 && seats != 5 && seats != 9)
+		{
+			cout << endl << TAB << "[Error!] The number of seats you provided is not valid.\n";
+			goodseats = false;
+		}
+		else goodseats = true;
+	}
+
+	bool goodrate = false;
+	string rate;
+	while (!goodrate) {
+		cout << endl << TAB;
+		rate = get_input <char>("In a scale [F(worst) - A (best)], please specify your evaluation of your car conditions.");
+
+		if (rate != "A" && rate != "B" && rate != "C" && rate != "D" && rate != "E" && rate != "F")
+		{
+			cout << endl << TAB << "[Error!] Please give an evaluation in the provided scale.\n";
+			goodrate = false;
+		}
+		else goodrate = true;
+	}
 
 	currentUser->getVehicle()->setRate(rate);
 	currentUser->getVehicle()->setYear(year);
@@ -967,26 +1099,51 @@ void SharedRides::addVehicle() {
 	currentUser->getVehicle()->setBrand(brand);
 	currentUser->getVehicle()->setId(currentUser->getID());
 	// adds route 
+	bool routebool = false;
 	string cityroute;
+	string addroute;
 	vector<string> rout(0);
 
-	cout << "Now, enter your new route." << endl;
-	cout << "Please specify the cities of your route, separared by slash";
-	cout << endl << "Example: Porto-Lisboa-Vila Real" << endl;
-	cout << "It must belong to one of these : ";
-	for (size_t i = 0; i < cities.size(); i++) {
-		if (i < cities.size() - 1)
-			cout << cities[i] << ", ";
-		else cout << cities[i] << ".\n";
-	}
-	cityroute = readLine();
-	stringstream ss(cityroute);
+	while (!routebool) {
+		cout << endl << TAB;
+		addroute = get_input <string>("Do you want do add a common route you do? [y|n]");
 
-	while (ss.good()) {
-		string substr;
-		getline(ss, substr, '-');
-		rout.push_back(substr);
+		cin.ignore(numeric_limits <streamsize>::max(), '\n');
+
+		if (addroute == "y") {
+
+			cout << TAB << "Please specify the cities of your route, separared by slash" << endl;
+			cout << TAB << "Example: Porto-Lisboa-Vila Real" << endl;
+			cout << TAB << "It must belong to one of these : ";
+
+			for (size_t i = 0; i < cities.size(); i++) {
+				if (i < cities.size() - 1)
+					cout << cities[i] << ", ";
+				else cout << cities[i] << ".\n";
+			}
+
+			cityroute = readLine();
+			stringstream ss(cityroute);
+
+			while (ss.good()) {
+				string substr;
+				getline(ss, substr, '-');
+				rout.push_back(substr);
+			}
+
+			routebool = true;
+			break;
+
+		}
+		else if (addroute == "n") {
+			routebool = true;
+			break;
+		}
+		else
+			cout << endl << TAB << "Please insert \"y\" or \"n.\" \n";
+		routebool = false;
 	}
+
 	currentUser->getVehicle()->setRoute(rout);
 
 	cars.push_back(currentUser->getVehicle());
@@ -994,57 +1151,64 @@ void SharedRides::addVehicle() {
 	carsalterados = true;
 }
 
-void SharedRides::creditAccount(){
-	cout << endl << "Your current balance: " << currentUser->getAccount() << "$" << endl;
-	cout << "(Input 0 if you selected the wrong menu)" << endl;
+void SharedRides::creditAccount() {
+	cout << endl << TAB << "Your current balance: $" << currentUser->getAccount() << endl << endl;
+	
 	float novo = 0.0;
 	while (true) {
-		novo = get_input <float>("How much do you want to credit your acount?(X.Y)");
+		novo = get_input <float>(TAB "How much do you want to credit your acount? (X.Y)" "\n" TAB "(Input 0 if you selected the wrong menu and want to go back)");
 		if (novo < 0) {
-			cout << "Cannot charge negative values" << endl;
+			cout <<endl<<TAB<< "Cannot charge negative values" << endl;
 			continue;
 		}
 		if (novo == 0)
 			return;
+
 		currentUser->chargeAccount(novo);
+
 		break;
 	}
-	cout << endl << "Your new balance: " << currentUser->getAccount() << "$" << endl;
+	cout << endl << TAB << "SUCCESS! Your new balance is $" << currentUser->getAccount() << endl;
 	usersalterados = true;
 }
 
-void SharedRides::changeProfile(){
+void SharedRides::changeProfile() {
+	cout << endl;
 	currentUser->showProfile();
+	cout << endl;
 	int choice = get_input <int>(
-		"[0] Edit my Password" "\n"
-		"[1] Edit my City" "\n");
+		TAB_BIG"[0] Edit my password" "\n""\n"
+		TAB_BIG"[1] Edit my city" "\n");
 
 	switch (choice) {
 	case 0: {
-		string password1 = readPassword("Please enter password", true);
-		cout << endl;
-		string password2 = readPassword("Please re-enter password", true);
+		cout << TAB;
+		string password1 = readPassword("Please enter the new password", true);
+		cout << endl << TAB;
+		string password2 = readPassword("Please re-enter the new password", true);
 
 		while (password1 != password2) {
-			cout << "Error! Passwords do not match." "\n\n";
+			cout <<TAB<<  "Error! Passwords do not match." "\n\n";
 			cin.clear();
 			cin.ignore(10000, '\n');
+			cout << TAB;
+
 			password1 = readPassword("Please enter password", true);
-			cout << endl;
+			cout << endl<<TAB;
 			password2 = readPassword("Please re-enter password", true);
 
 		}
 		currentUser->setPassword(password1);
-		cout << "\nPassword edited.\n";
+		cout<< endl <<TAB<< "SUCCESS! Your password was edited.\n";
 	}
-		break;
+			break;
 	case 1: {
 		bool citybelong = false;
 		string city;
 		while (!citybelong) {
-			cout << "\nPlease specify your home city." << endl << "It must belong to one of these: ";
+			cout <<endl<<TAB<< "Please specify your home city." << endl << TAB<< "It must belong to one of these: ";
 
-			for (size_t i = 0; i < cities.size(); i++){
+			for (size_t i = 0; i < cities.size(); i++) {
 				if (i < cities.size() - 1)
 					cout << cities[i] << ", ";
 				else cout << cities[i] << ".\n";
@@ -1057,11 +1221,11 @@ void SharedRides::changeProfile(){
 			}
 		}
 		currentUser->setHome(city);
-		cout << "\nHome city edited: " << city << endl;
+		cout << endl << TAB << "SUCCESS! Your home city was edited.\n";
 	}
-		break;
+			break;
 	default:
-		cout << "Please, input an integer suitable to the options shown." << endl;
+		cout << endl<< TAB << "Please, input an integer suitable to the options shown." << endl;
 		cin.ignore(numeric_limits <streamsize>::max(), '\n');
 		changeProfile();
 		break;
@@ -1069,11 +1233,12 @@ void SharedRides::changeProfile(){
 	usersalterados = true;
 }
 
-void SharedRides::deleteAccount(){
+void SharedRides::deleteAccount() {
 	string remaccount;
 
 	while (true) {
-		remaccount = get_input <string>("Do you want to remove your account? [y|n]");
+		cout << endl;
+		remaccount = get_input <string>(TAB"Do you want to remove your account? [y|n]");
 		cin.ignore(numeric_limits <streamsize>::max(), '\n');
 
 		if (remaccount == "y") {
@@ -1146,14 +1311,14 @@ void SharedRides::deleteAccount(){
 	return;
 }
 
-void SharedRides::buddiesMenu(){
-	cout << endl << "You have: ";
-	cout << currentUser->getFavs().size() << " Buddies.";
+void SharedRides::buddiesMenu() {
+	cout << endl << TAB << "You have ";
+	cout << currentUser->getFavs().size() << " buddies." << endl << endl;
 
 	int choice = get_input <int>(
-		"[0] Follow a Buddie" "\n"
-		"[1] Unfollow a Buddie" "\n"
-		"[2] See my Buddies" "\n"
+		TAB_BIG"[0] Follow a Buddie" "\n""\n"
+		TAB_BIG"[1] Unfollow a Buddie" "\n""\n"
+		TAB_BIG"[2] See my Buddies" "\n""\n"
 		);
 
 	switch (choice) {
@@ -1167,7 +1332,7 @@ void SharedRides::buddiesMenu(){
 		myBuddies();
 		break;
 	default:
-		cout << "Please, input an integer suitable to the options shown." << endl;
+		cout << endl << TAB << "Please, input an integer suitable to the options shown." << endl;
 		cin.ignore(numeric_limits <streamsize>::max(), '\n');
 		buddiesMenu();
 		break;
@@ -1186,15 +1351,15 @@ void SharedRides::addBuddie() {
 		for (size_t i = 0; users.size(); i++) {
 			if ((users[i]->getCity() == currentUser->getCity()) && (users[i] != currentUser))
 				number = i + 1;
-				cout << "User number " << number << endl;
-				users[i]->showProfile();
+			cout << "User number " << number << endl;
+			users[i]->showProfile();
 		}
 		cout << endl << "Other users:" << endl;
 		for (size_t i = 0; users.size(); i++) {
 			if ((users[i]->getCity() != currentUser->getCity()) && (users[i] != currentUser))
 				number = i + 1;
-				cout << "User number " << number << endl;
-				users[i]->showProfile();
+			cout << "User number " << number << endl;
+			users[i]->showProfile();
 		}
 	}
 	else {
@@ -1236,13 +1401,13 @@ void SharedRides::removeBuddie() {
 
 	unsigned int choice;
 	while (true) {
-		 choice = get_input <unsigned int>(
+		choice = get_input <unsigned int>(
 			"\tSelect one of your buddies, by their number identifier." "\n"
 			);
-		 if ((choice > 0) && (choice < currentUser->getFavs().size() + 1))
-			 break;
-		 else cout << "Input a valid number!" << endl;
-		 cin.ignore(numeric_limits <streamsize>::max(), '\n');
+		if ((choice > 0) && (choice < currentUser->getFavs().size() + 1))
+			break;
+		else cout << "Input a valid number!" << endl;
+		cin.ignore(numeric_limits <streamsize>::max(), '\n');
 	}
 
 	currentUser->getFavs().erase(currentUser->getFavs().begin() + (choice - 1));
@@ -1251,7 +1416,7 @@ void SharedRides::removeBuddie() {
 	usersalterados = true;
 }
 
-void SharedRides::myBuddies() const{
+void SharedRides::myBuddies() const {
 	size_t user = getPositionUser(currentUser->getID());
 	vector<int> fav = users[user]->getFavs();
 	vector<int> nearfav{};
@@ -1265,7 +1430,7 @@ void SharedRides::myBuddies() const{
 	nearfav.insert(nearfav.end(), farfav.begin(), farfav.end());
 
 	for (size_t i = 0; i < nearfav.size(); i++) {
-		cout << "Buddie number " << nearfav[i]+1 << ":\n";
+		cout << "Buddie number " << nearfav[i] + 1 << ":\n";
 		users[nearfav[i]]->showProfile();
 		cout << endl;
 	}
@@ -1303,12 +1468,12 @@ void SharedRides::myBuddies() const{
 		else cout << "Input a valid number!" << endl;
 		cin.ignore(numeric_limits <streamsize>::max(), '\n');
 	}
-	
+
 	if (users[choice - 1]->getnumTrips() == 0) {
 		cout << endl << "\t" << users[choice - 1]->getusername() << " has no trips in his history!" << endl;
 	}
 
-	vector<int> vec = users[choice-1]->getTrips();
+	vector<int> vec = users[choice - 1]->getTrips();
 	cout << endl << "\tViagens de " << users[choice - 1]->getusername() << " :\n";
 	for (size_t i = 0; i < vec.size(); i++) {
 		for (size_t j = 0; j < tripsPrinter.size(); j++) {
@@ -1321,11 +1486,13 @@ void SharedRides::myBuddies() const{
 	}
 }
 
-void SharedRides::VehicleTripMenu(){
+void SharedRides::VehicleTripMenu() {
+	cout << endl;
+	cin.ignore(numeric_limits <streamsize>::max(), '\n');
 	int choice = get_input <int>(
-		"[0] Start Trip" "\n"
-		"[1] Add a Trip" "\n"
-		"[2] Enter a Trip" "\n"
+		TAB_BIG"[0] Start Trip" "\n""\n"
+		TAB_BIG"[1] Add a Trip" "\n""\n"
+		TAB_BIG"[2] Enter a Trip" "\n""\n"
 		);
 
 	switch (choice) {
@@ -1339,28 +1506,28 @@ void SharedRides::VehicleTripMenu(){
 		//enterTrip();
 		break;
 	default:
-		cout << "Please, input an integer suitable to the options shown." << endl;
+		cout << TAB << "Please, input an integer suitable to the options shown." << endl;
 		cin.ignore(numeric_limits <streamsize>::max(), '\n');
-		buddiesMenu();
 		break;
 	}
 }
 
-void SharedRides::addTrip(){
+void SharedRides::addTrip() {
 	if (currentUser->getAccount() < 0) {
-		cout << "Your account is under 0. Please charge account to pay your taxes." << endl;
+		cout << endl << TAB << "Your account is under 0. Please charge account to pay your taxes." << endl;
 		return;
 	}
 	for (size_t i = 0; i < tripOffers.size(); i++) {
 		if (tripOffers[i].getOwner() == currentUser->getID()) {
-			cout << "You already have an active Trip." << endl;
+			cout << endl << TAB << "You already have an active Trip." << endl;
 			return;
 		}
 	}
 
+	cin.ignore(numeric_limits <streamsize>::max(), '\n');
 	int choice = get_input <int>(
-		"[0] Normal Trip" "\n"
-		"[1] Different Rout" "\n"
+		TAB_BIG"[0] Normal Rout" "\n""\n"
+		TAB_BIG"[1] Different Trip" "\n""\n"
 		);
 
 	switch (choice) {
@@ -1374,27 +1541,30 @@ void SharedRides::addTrip(){
 		}
 		float pps = 0;
 		while (true) {
-			 pps = get_input <float>(
-				"Input a Price per Stop: "
+			cin.ignore(numeric_limits <streamsize>::max(), '\n');
+			pps = get_input <float>(
+				TAB"Please input a price per Stop: "
 				);
-			 if (pps > 0)
-				 break;
-			 else cout << endl << "No negatives!" << endl;
-			 cin.ignore(numeric_limits <streamsize>::max(), '\n');
+			if (pps > 0)
+				break;
+			else cout << endl<<TAB << "Please input no negative numbers!" << endl;
+			cin.ignore(numeric_limits <streamsize>::max(), '\n');
 		}
 		novo.push_back(Stretch(rota[rota.size() - 1], Time(0, 0)));
 		waitingTrip nova(currentUser->getID(), novo, currentUser->getVehicle()->getnumberSeats() - 1, pps);
 		tripOffers.push_back(nova);
-		cout << "New Trip Added." << endl;
+		cout << endl << TAB << "SUCCESS! New Trip Added." << endl;
 		break;
 	}
 	case 1:
 	{//---------------------------------------------------------------------------------
 		string cityroute;
 		vector<string> rota;
-		cout << "Please specify the cities of your route, separared by slash";
-		cout << endl << "Example: Porto-Lisboa-Vila Real" << endl;
-		cout << "It must belong to one of these : ";
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+		cout << TAB << "Please specify the cities of your route, separared by slash" << endl;
+		cout << TAB << "Example: Porto-Lisboa-Vila Real" << endl;
+		cout << TAB << "It must belong to one of these : ";
 		for (size_t i = 0; i < cities.size(); i++) {
 			if (i < cities.size() - 1)
 				cout << cities[i] << ", ";
@@ -1408,7 +1578,7 @@ void SharedRides::addTrip(){
 			getline(ss, substr, '-');
 			rota.push_back(substr);
 		}
-//_-----------------------------------------------------------------------------------
+		//_-----------------------------------------------------------------------------------
 		vector<Stretch> novo{};
 		for (size_t i = 0; i < rota.size() - 1; i++) {
 			Time t1 = searchStretchTime(rota[i], rota[i + 1]);
@@ -1418,23 +1588,22 @@ void SharedRides::addTrip(){
 		float pps = 0;
 		while (true) {
 			pps = get_input <float>(
-				"Input a Price per Stop: "
+				TAB "Input a price per Stop: "
 				);
 			if (pps > 0)
 				break;
-			else cout << endl << "No negatives!" << endl;
+			else cout << endl  <<	TAB<< "Please no negative numbers.!" << endl;
 			cin.ignore(numeric_limits <streamsize>::max(), '\n');
 		}
 		novo.push_back(Stretch(rota[rota.size() - 1], Time(0, 0)));
 		waitingTrip nova(currentUser->getID(), novo, currentUser->getVehicle()->getnumberSeats() - 1, pps);
 		tripOffers.push_back(nova);
-		cout << "New Trip Added." << endl;
+		cout << endl << TAB << "SUCCESS! New Trip Added." << endl;
 	}
-		break;
+	break;
 	default:
-		cout << "Please, input an integer suitable to the options shown." << endl;
+		cout << endl << TAB << "Please, input an integer suitable to the options shown." << endl << endl;
 		cin.ignore(numeric_limits <streamsize>::max(), '\n');
-		buddiesMenu();
 		break;
 	}
 }
@@ -1458,9 +1627,9 @@ void SharedRides::startTrip() {
 	}
 
 	if (noTrip == false)
-		cout << endl << "You have no pending Trips!" << endl;
+		cout << endl  << TAB << "You have no pending trips!" << endl;
 	else {
-		cout << endl << "Your trip has been started!" << endl;
+		cout << endl << TAB << "Your trip has been started!" << endl;
 		vector<int> gajos{};
 		for (size_t i = 0; i < s1.size(); i++) {
 			for (size_t j = 0; j < s1[i].getusers().size(); j++)
@@ -1480,30 +1649,33 @@ void SharedRides::startTrip() {
 
 void SharedRides::enterTrip() {
 	if (currentUser->getAccount() < 0) {
-		cout << "Your account is under 0. Please charge account to pay your taxes." << endl;
+		cout << TAB << "Your account is under 0. Please charge account to pay your taxes." << endl;
 		return;
 	}
 
 	string firstPoint;
 	string secondPoint;
-	cout << "\t Where are you catching a ride?" << endl;
-	cout << "It must belong to one of these : ";
+
+	cout << endl << TAB << "Where are you catching a ride?" << endl;
+	
+	cout << TAB << "It must belong to one of these : ";
 	for (size_t i = 0; i < cities.size(); i++) {
 		if (i < cities.size() - 1)
 			cout << cities[i] << ", ";
 		else cout << cities[i] << ".\n";
 	}
+	cin.ignore(numeric_limits <streamsize>::max(), '\n');
 	firstPoint = readLine();
-	ClearScreen();
-	cout << "\t Where are you dropping off?" << endl;
-	cout << "It must belong to one of these : ";
+	
+	cout << endl << TAB << "Where are you dropping off?" << endl;
+	cout <<endl << "It must belong to one of these: ";
 	for (size_t i = 0; i < cities.size(); i++) {
 		if (i < cities.size() - 1)
 			cout << cities[i] << ", ";
 		else cout << cities[i] << ".\n";
 	}
 	secondPoint = readLine();
-	ClearScreen();
+	
 
 	int counter = 0;
 	int stops = 0;
@@ -1520,28 +1692,29 @@ void SharedRides::enterTrip() {
 		}
 	}
 	if (counter == 0) {
-		cout << "There are no trips available in your conditions." << endl;
+		cout  <<endl<< TAB << "We are sorry, but there are no trips available in your conditions." << endl;
+		return;
 	}
 
 	if (dynamic_cast<RegisteredUser*>(currentUser) != NULL) {//REGISTERED
 		for (size_t i = 0; i < AvailableTrips.size(); i++) {
 			if (checkBuddie(tripOffers[AvailableTrips[i]].getOwner()))
-				cout << "Buddie Trip!" << endl;
-			cout << "Trip number: " << AvailableTrips[i];
-			cout << tripOffers[AvailableTrips[i]] << endl;
+				cout << endl << TAB << "Buddie Trip!" << endl;
+			cout << TAB<<"Trip number: " << AvailableTrips[i];
+			cout << tripOffers[AvailableTrips[i]] << endl << endl;
 		}
 	}
 	else {//GUEST
 		for (size_t i = 0; i < AvailableTrips.size(); i++) {
-			cout << "Trip number: " << AvailableTrips[i];
-			cout << tripOffers[AvailableTrips[i]] << endl;
+			cout <<TAB<< "Trip number: " << AvailableTrips[i];
+			cout << tripOffers[AvailableTrips[i]] << endl<<endl;
 		}
 	}
 
 	unsigned int choice;
 	while (true) {
 		choice = get_input <unsigned int>(
-			"\tSelect one of the Trips, by their number identifier." "\n"
+			TAB"Select one of the Trips, by their number identifier." "\n"
 			);
 		if ((choice >= 0) && (choice < tripOffers.size() + 1))
 			break;
@@ -1555,7 +1728,7 @@ void SharedRides::enterTrip() {
 	vector<Stretch> novo = tripOffers[choice].getWay();
 	for (size_t i = 0; i < novo.size(); i++) {
 		if (novo[i].getCity() == firstPoint) {
-			if (novo[i].getusers().size() <  bancos)
+			if (novo[i].getusers().size() < bancos)
 				contador++;
 		}
 		if ((contador > 0) && (novo[i].getCity() != secondPoint)) {
@@ -1569,7 +1742,7 @@ void SharedRides::enterTrip() {
 		}
 	}
 	if (contador != stops) {
-		cout << "Not enough seats available! We're sorry." << endl;
+		cout <<endl<<TAB<< "Not enough seats available! We're sorry." << endl;
 		return;
 	}
 
@@ -1588,13 +1761,13 @@ void SharedRides::enterTrip() {
 }
 
 
-void SharedRides::showBuddiesProfileToUser(){
+void SharedRides::showBuddiesProfileToUser() {
 	size_t user = getPositionUser(currentUser->getID());
 	vector<int> fav = users[user]->getFavs();
 
 	for (size_t i = 0; i < fav.size(); i++) {
 		size_t j = getPositionUser(fav[i]);
-		cout << "Buddie number " << i + 1 << ":\n";
+		cout << "Buddie number: " << i + 1 << "\n";
 		users[j]->showProfile();
 		cout << endl;
 	}
@@ -1605,11 +1778,11 @@ void SharedRides::showBuddiesProfileToUser(){
 User* SharedRides::login(const string &username, const string &password) {
 
 	for (size_t i = 0; i < users.size(); ++i) {
-			if (users[i]->getusername() == username) {
-				if (users[i]->getpassword() == password) 
-					return users[i];
-			}
+		if (users[i]->getusername() == username) {
+			if (users[i]->getpassword() == password)
+				return users[i];
 		}
+	}
 
 	throw LoginException<string>("\nInvalid combination of username/password. Please try again.\n");
 	return NULL;
@@ -1623,9 +1796,9 @@ void SharedRides::saveChanges() const {
 
 		out_cars << getCARHighID() << endl;
 
-		for (size_t i = 0; i < cars.size(); i++)		
+		for (size_t i = 0; i < cars.size(); i++)
 		{
-			cars[i]->save(out_cars);  
+			cars[i]->save(out_cars);
 		}
 		out_cars.close();
 	}
@@ -1636,7 +1809,7 @@ void SharedRides::saveChanges() const {
 
 		out_users << getUSERHighID() << endl;
 
-		for (size_t i = 0; i < users.size(); i++)    
+		for (size_t i = 0; i < users.size(); i++)
 		{
 			users[i]->save(out_users);   //funcao save da classe
 		}
@@ -1670,8 +1843,8 @@ void SharedRides::run() {
 		main_menu();
 		saveChanges();
 	}
-	catch (FileException<string> err){
-		cout << "Erro: " << err.info << endl;
+	catch (FileException<string> err) {
+		cout << endl << TAB << "Erro: " << err.info << endl;
 	}
 }
 
@@ -1680,12 +1853,12 @@ unsigned int SharedRides::getCARHighID() const {
 
 	unsigned int maiorID = 0;
 
-	for (size_t i = 0; i < cars.size(); i++)		
+	for (size_t i = 0; i < cars.size(); i++)
 	{
-		unsigned int ID = cars[i]->getID();	
-																
-		if (ID > maiorID)								
-			maiorID = ID;						
+		unsigned int ID = cars[i]->getID();
+
+		if (ID > maiorID)
+			maiorID = ID;
 	}
 
 	return maiorID;

@@ -129,3 +129,10 @@ string rtrim(string& s)
 	//s.erase(0, s.find_first_of(' ') + 1);
 	return s;
 }
+
+void loading() {
+	cout << endl << TAB << "Welcome to Shared Rides V.1.0. Please put your seatbelts on and enjoy your travel." << endl;
+	cout << endl << TAB << " ...loading... " << endl;
+	Sleep(600);
+	ClearScreen();
+}

@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 #include <fstream>
+#include "Helper.h"
 
 #undef max // because of numeric_limits
 
@@ -36,6 +37,11 @@ class Vehicle {
 	vector<string> route;
 	
 public:
+
+	
+		
+	
+	Vehicle(unsigned int id, unsigned int noSeats, string brand, unsigned int year, string rate);
 
 	/**********************************************************************************************//**
 	 * @fn	Vehicle::Vehicle(unsigned int noSeats, string brand, unsigned int year,string rate);
@@ -277,7 +283,7 @@ public:
 	 * @return	The shifted result.
 	 **************************************************************************************************/
 
-	friend ofstream& operator<<(ofstream& os, const Vehicle car); // for now, only for writing in file of users purpose
+	friend ostream& operator<<(ostream& os, const Vehicle car); // for now, only for writing in file of users purpose
 
 	/**********************************************************************************************//**
 	 * @fn	friend ostream& Vehicle::operator<<(ostream& os, const Vehicle car);

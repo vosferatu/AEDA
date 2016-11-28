@@ -77,13 +77,14 @@ void RegisteredUser::addTrip(unsigned int ID){
 }
 
 void RegisteredUser::showProfile(){
-	cout << "\n\tProfile of " << this->getusername() << ":" << endl;
-	cout << "Home City: " << this->getCity() << endl;
-	cout << "Number of Trips: " << this->getnumTrips() << endl;
-	cout << "Number of Buddies: " << this->getFavs().size() << endl;
+	cout << endl;
+	cout <<TAB<< "Name: " << this->getusername()<< endl;
+	cout <<TAB<< "Home City: " << this->getCity() << endl;
+	cout <<TAB<< "Number of Trips: " << this->getnumTrips() << endl;
+	cout <<TAB << "Number of Buddies: " << this->getFavs().size() << endl;
 	if (this->getVehicle()->getYear() == 0)
-		cout << "Car: No." << endl;
-	else cout << "Car: Yes." << endl;
+		cout <<TAB<< "This user does not have a car associated to his account." << endl;
+	else cout <<TAB<< "This user has a " << this->getVehicle()->getBrand() << " associated to his account." << endl;
 }
 
 vector<int> RegisteredUser::getFavs() const{
@@ -126,12 +127,14 @@ void RegisteredUser::save(ofstream& out) const {
 	}
 
 	if (favorites.size() == 0)
-		out << this->favorites.size() << ";";
+		out << this->favorites.size() << ";" << endl;
 
 	for (size_t i = 0; i < this->favorites.size(); i++)
 	{
 		out << this->favorites.size() << ";";
-		out << this->favorites[i] << ";";
+		
+		if (i == this->favorites.size()-1)
+		out << this->favorites[i] << ";" << endl;
 	}
 }
 

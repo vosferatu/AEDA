@@ -9,9 +9,12 @@
 #include <windows.h>
 #include <fstream>
 #include <conio.h>
-
 #undef max // because of numeric_limits
 
+#define TAB_BIG "          "
+#define TAB    "   "
+#define SPACE " "
+#define TAB_SUPER "                                 "
 
 using namespace std;
 
@@ -139,4 +142,14 @@ string rtrim(string& s);
  **************************************************************************************************/
 
 bool is_empty(ifstream& pFile);
+
+/**********************************************************************************************//**
+* @fn	void ClearScreen();
+*
+* @brief simple loading function.
+*
+* @author	João
+* @date	20-11-2016
+**************************************************************************************************/
+void loading();
 #endif /* HELPER_H_ */

@@ -4,16 +4,13 @@
 
 
 void SharedRides::main_menu() {
-
-	cout << endl << "Welcome to Shared Rides, please put your seatbelts on and enjoy your travel." << endl;
-
+	cout << endl << TAB << "Welcome to Shared Rides V.1.0. Please put your seatbelts on and enjoy your travel." << endl;
+	cout << endl;
 	int choice = get_input <int>(
-		"[0] Enter as guest" "\n"
-		"[1] Login" "\n"
-		"[2] Register" "\n"
-		"[3] Exit");
-
-
+		TAB_BIG "[0] Enter as guest" "\n" "\n"
+		TAB_BIG "[1] Login" "\n""\n"
+		TAB_BIG "[2] Register" "\n""\n"
+		TAB_BIG "[3] Exit""\n");
 
 	switch (choice) {
 	case 0:
@@ -22,15 +19,20 @@ void SharedRides::main_menu() {
 		break;
 	case 1:
 	{
+		ClearScreen();
+		cout << endl << TAB << "Welcome to Shared Rides V.1.0. Please put your seatbelts on and enjoy your travel." << endl;
+		cout << endl << TAB << " --- LOGIN MENU  --- " << endl;
 		cin.clear();
 		cin.ignore(numeric_limits <streamsize>::max(), '\n');
-		cout << "Username: \n";
+		cout << endl << TAB << "Please enter your username: \n";
 		string usern = readLine();
-		string pass = readPassword("Password:", true);
+		cout << endl <<  TAB;
+		string pass = readPassword("Please enter your password:", true);
 
 		if (usern == "admin") 
 			if (pass == "admin") {
 				ClearScreen();
+				loading();
 				manage_menu();
 				break;
 			}
@@ -49,6 +51,10 @@ void SharedRides::main_menu() {
 		break;
 	}
 	case 2:
+		ClearScreen();
+		loading();
+		cout << endl << TAB << "Welcome to Shared Rides V.1.0. Please put your seatbelts on and enjoy your travel." << endl;
+		cout << endl << TAB << " --- REGISTRATION  --- " << endl;
 		CreateRegis();
 		Sleep(2000);
 		ClearScreen();
@@ -58,7 +64,7 @@ void SharedRides::main_menu() {
 		return;
 		break;
 	default:
-		cout << "Please, input an integer suitable to the options shown." << endl;
+		cout << TAB << "Please, input an integer suitable to the options shown." << endl;
 		cin.ignore(numeric_limits <streamsize>::max(), '\n');
 		break;
 	}
@@ -67,41 +73,52 @@ void SharedRides::main_menu() {
 }
 
 void SharedRides::manage_menu(){
-	//por aqui função que pede login com username admin e password admin
+	cout << endl << TAB << "Welcome to Shared Rides V.1.0. Please put your seatbelts on and enjoy your travel." << endl;
+	cout << endl << TAB << " --- ADMIN HOMEPAGE --- " << endl << endl;
+	cout << TAB << "-> You are currently logged as admin <- "<< endl << endl;
+	
 	int choice = get_input <int>(
-		"[0] App Trips" "\n"   //nestes 3 podemos usar os algoritmos de pesquisa para ver um x 
-		"[1] App Users" "\n"	//algoritmos de ordenação para mostrar
-		"[2] App Vehicles" "\n"
-		"[3] End of Month" "\n"
-		"[4] Set Billings" "\n"
-		"[5] Log Off");
+		TAB_BIG "[0] App Trips" "\n"  "\n"//nestes 3 podemos usar os algoritmos de pesquisa para ver um x 
+		TAB_BIG"[1] App Users" "\n""\n"	//algoritmos de ordenação para mostrar
+		TAB_BIG"[2] App Vehicles" "\n""\n"
+		TAB_BIG"[3] End of Month" "\n""\n"
+		TAB_BIG"[4] Set new tax" "\n""\n"
+		TAB_BIG"[5] Log Off");
 	float choice1 = 0;
 	switch (choice) {
 	case 0:
 		ClearScreen();
-		cout << "\tApp Trips:\n\n";
+		cout << endl << TAB << "Welcome to Shared Rides V.1.0. Please put your seatbelts on and enjoy your travel." << endl;
+		cout << endl << TAB << " --- APP TRIPS --- " << endl << endl;
+		cout << endl << "-------------------------------------------------------------------------" << endl << endl;
 		for (size_t i = 0; i < tripsPrinter.size(); i++) {
-			cout << "Trip " << i + 1 << endl;
+			cout << "Trip number " << i + 1 << endl << endl;
 			cout << tripsPrinter[i] << endl << endl;
+			cout << "----------------------------------------------------" << endl << endl;
 		}
 		_getch();
 		break;
 	case 1:
 		ClearScreen();
-		cout << "\tApp Users:\n\n";
+		cout << endl << TAB << "Welcome to Shared Rides V.1.0. Please put your seatbelts on and enjoy your travel." << endl;
+		cout << endl << TAB << " --- APP USERS --- " << endl << endl;
+		cout << endl << "-------------------------------------------------------------------------" << endl << endl;
 		for (size_t i = 0; i < users.size(); i++) {
-			cout << "User " << i + 1 << endl;
+			cout<< TAB << "User with ID " << i + 1 << endl;
 			users[i]->showProfile();
-			cout << endl << endl;
+			cout << endl << "-------------------------------------------------------------------------" << endl << endl;
 		}
 		_getch();
 		break;
 	case 2:
 		ClearScreen();
-		cout << "\tApp Cars:\n\n";
+		cout << endl << TAB << "Welcome to Shared Rides V.1.0. Please put your seatbelts on and enjoy your travel." << endl;
+		cout << endl << TAB << " --- APP CARS --- " << endl << endl;
+		cout << endl << "-------------------------------------------------------------------------" << endl << endl;
 		for (size_t i = 0; i < cars.size(); i++) {
-			cout << "Car " << i + 1 << endl;
+			cout <<TAB<<  "Car number " << i + 1 << endl<<endl;
 			cout << *(cars[i]) << endl << endl;
+			cout << endl << "-------------------------------------------------------------------------" << endl << endl;
 		}
 		_getch();
 		break;
@@ -111,19 +128,31 @@ void SharedRides::manage_menu(){
 				users[i]->chargeAccount(-(this->TAX + users[i]->getnumTrips()));
 			else users[i]->chargeAccount(-(this->TAX));
 		}
-		cout << "\n\t Billings Applied.\n\n" << endl;
+		ClearScreen();
+		cout << endl << TAB << "Welcome to Shared Rides V.1.0. Please put your seatbelts on and enjoy your travel." << endl;
+		cout << endl << TAB << " --- END OF MONTH --- " << endl << endl;
+
+		cout << TAB << "SUCCESS! The billings were applied to all users.\n\n" << endl;
 		_getch();
 		break;
 	case 4:
-		cout << "\tCurrent TAX is: " << this->TAX << endl;
+		ClearScreen();
+		cout << endl << TAB << "Welcome to Shared Rides V.1.0. Please put your seatbelts on and enjoy your travel." << endl;
+		cout << endl << TAB << " --- TAX --- " << endl << endl;
+		
+		cout <<TAB<< "The current TAX is: " << this->TAX << endl<<endl;
+		
 		while (true) {
-			choice1 = get_input <float>("\tNew TAX? ");
+
+			choice1 = get_input <float>(TAB"Please define the new TAX.");
 			if (choice1 > 0)
 				break;
-			cout << "Please, input a positive TAX." << endl;
+			cout <<endl<<TAB<< "[ERROR!] Please, input a positive TAX." << endl;
 		}
+
 		this->TAX = choice1;
-		cout << "\tThe new TAX is: " << this->TAX << endl;
+
+		cout << endl <<TAB<< "SUCCESS! The new TAX is: " << this->TAX << endl;
 		_getch();
 		break;
 	case 5:
@@ -131,7 +160,7 @@ void SharedRides::manage_menu(){
 		return;
 		break;
 	default:
-		cout << "Please, input an integer suitable to the options shown." << endl;
+		cout <<TAB<< "Please, input an integer suitable to the options shown." << endl;
 		cin.ignore(numeric_limits <streamsize>::max(), '\n');
 		break;
 
@@ -142,48 +171,76 @@ void SharedRides::manage_menu(){
 
 void SharedRides::user_menu(){
 	if (dynamic_cast<RegisteredUser*>(currentUser) != NULL) { //isto da erro porque nao temos uma
-		//função virtual em user, mas vamos ter, por isso deixa assim
+
+		cout << endl << TAB << "Welcome to Shared Rides V.1.0. Please put your seatbelts on and enjoy your travel." << endl;
+		cout << endl << TAB << " --- USER HOMEPAGE --- " << endl << endl;
+		cout << TAB << "-> You are currently logged as " << currentUser->getusername() << " <-" << endl << endl;
+		
+
 
 		if (currentUser->getVehicle()->getID() != 0) { //currentUser has a CAR			
 		
-			int choice = get_input <int>(
-				"[0] My Trips" "\n"
-				"[1] Vehicle" "\n"  //remove/edit vehicle inside
-				"[2] New Trip" "\n"     // add/start/enter trip (start begins an added trip) inside
-				"[3] Buddies" "\n"   //add/remove/see(profile/trips) buddies inside
-				"[4] Charge wallet" "\n"
-				"[5] Change profile" "\n"
-				"[6] Log Off" "\n"
-				"[7] Delete Profile");
+				int choice = get_input <int>(
+				TAB_BIG"[0] My Trips" "\n""\n"
+				TAB_BIG"[1] Vehicle" "\n""\n"  //remove/edit vehicle inside
+				TAB_BIG"[2] New Trip" "\n""\n"     // add/start/enter trip (start begins an added trip) inside
+				TAB_BIG"[3] Buddies" "\n" "\n"  //add/remove/see(profile/trips) buddies inside
+				TAB_BIG"[4] Charge wallet" "\n""\n"
+				TAB_BIG"[5] Change profile" "\n""\n"
+				TAB_BIG"[6] Log Off" "\n""\n"
+				TAB_BIG"[7] Delete Profile");
 
 			switch (choice) {
 			case 0:
 				ClearScreen();
+				cout << endl << TAB << "Welcome to Shared Rides V.1.0. Please put your seatbelts on and enjoy your travel." << endl;
+				cout << endl << TAB << " --- TRIPS --- " << endl << endl;
+				cout << TAB << "-> You are currently logged as " << currentUser->getusername() << " <-" << endl;
+
 				showTrips();
 				_getch();
 				break;
 			case 1:
 				ClearScreen();
+				cout << endl << TAB << "Welcome to Shared Rides V.1.0. Please put your seatbelts on and enjoy your travel." << endl;
+				cout << endl << TAB << " --- VEHICLE --- " << endl << endl;
+				cout << TAB << "-> You are currently logged as " << currentUser->getusername() << " <-" << endl;
+				cout <<endl<< TAB << "Right now you have " << currentUser->getVehicle()->getBrand() << " associated to your account." << endl << endl;
+
 				userWithVehicleMenu();
-				Sleep(2000);
+				Sleep(3000);
 				break;
 			case 2:
 				ClearScreen();
+				cout << endl << TAB << "Welcome to Shared Rides V.1.0. Please put your seatbelts on and enjoy your travel." << endl;
+				cout << endl << TAB << " --- NEW TRIP --- " << endl << endl;
+				cout << TAB << "-> You are currently logged as " << currentUser->getusername() << " <-" << endl;
+
 				VehicleTripMenu();
 				_getch();
 				break;
 			case 3:
 				ClearScreen();
+				cout << endl << TAB << "Welcome to Shared Rides V.1.0. Please put your seatbelts on and enjoy your travel." << endl;
+				cout << endl << TAB << " --- BUDDIES --- " << endl << endl;
+				cout << TAB << "-> You are currently logged as " << currentUser->getusername() << " <-" << endl;
+
 				buddiesMenu();
 				_getch();
 				break;
 			case 4:
 				ClearScreen();
+				cout << endl << TAB << "Welcome to Shared Rides V.1.0. Please put your seatbelts on and enjoy your travel." << endl;
+				cout << endl << TAB << " --- CREDDIT ACCOUNT --- " << endl << endl;
+				cout << TAB << "-> You are currently logged as " << currentUser->getusername() << " <-" << endl;
 				creditAccount();
 				Sleep(2000);
 				break;
 			case 5:
 				ClearScreen();
+				cout << endl << TAB << "Welcome to Shared Rides V.1.0. Please put your seatbelts on and enjoy your travel." << endl;
+				cout << endl << TAB << " --- CHANGE PROFILE --- " << endl << endl;
+				cout << TAB << "-> You are currently logged as " << currentUser->getusername() << " <-" << endl;
 				changeProfile();
 				Sleep(2000);
 				break;
@@ -193,55 +250,76 @@ void SharedRides::user_menu(){
 				break;
 			case 7:
 				ClearScreen();
+				cout << endl << TAB << "Welcome to Shared Rides V.1.0. Please put your seatbelts on and enjoy your travel." << endl;
+				cout << endl << TAB << " --- DELETE ACCOUNT --- " << endl << endl;
+				cout << TAB << "-> You are currently logged as " << currentUser->getusername() << " <-" << endl;
 				deleteAccount();
 				_getch();
 				return;
 				break;
 			default:
-				cout << "Please, input an integer suitable to the options shown." << endl;
+				cout <<TAB<< "Please, input an integer suitable to the options shown." << endl;
 				cin.ignore(numeric_limits <streamsize>::max(), '\n');
 				break;
 			}
 		}
 		else { //currentUSER does not have a car
+			cout << TAB << "You don't have any car associated to your account." << endl << endl;
 			int choice = get_input <int>(
-				"[0] My Trips" "\n"
-				"[1] Add Vehicle" "\n"  //add vehicle inside
-				"[2] New Trip" "\n"     // enter trip (start begins an added trip) inside
-				"[3] Buddies" "\n"   //add/remove/see(profile/trips) buddies inside
-				"[4] Charge wallet" "\n"
-				"[5] Change profile" "\n"
-				"[6] Log Off" "\n"
-				"[7] Delete Profile");
-
+				TAB_BIG"[0] My Trips" "\n""\n"
+				TAB_BIG"[1] Add Vehicle" "\n" "\n" //add vehicle inside
+				TAB_BIG"[2] New Trip" "\n" "\n"    // enter trip (start begins an added trip) inside
+				TAB_BIG"[3] Buddies" "\n" "\n"  //add/remove/see(profile/trips) buddies inside
+				TAB_BIG"[4] Charge wallet" "\n""\n"
+				TAB_BIG"[5] Change profile" "\n""\n"
+				TAB_BIG"[6] Log Off" "\n""\n"
+				TAB_BIG"[7] Delete Profile");
 			switch (choice) {
 			case 0:
 				ClearScreen();
+				cout << endl << TAB << "Welcome to Shared Rides V.1.0. Please put your seatbelts on and enjoy your travel." << endl;
+				cout << endl << TAB << " --- TRIPS --- " << endl << endl;
+				cout << TAB << "-> You are currently logged as " << currentUser->getusername() << " <-" << endl;
 				showTrips();
 				_getch();
 				break;
 			case 1:
 				ClearScreen();
+				cout << endl << TAB << "Welcome to Shared Rides V.1.0. Please put your seatbelts on and enjoy your travel." << endl;
+				cout << endl << TAB << " --- ADD VEHICLE --- " << endl << endl;
+				cout << TAB << "-> You are currently logged as " << currentUser->getusername() << " <-" << endl;
 				addVehicle();
 				Sleep(2000);
 				break;
 			case 2:
 				ClearScreen();
+				cout << endl << TAB << "Welcome to Shared Rides V.1.0. Please put your seatbelts on and enjoy your travel." << endl;
+				cout << endl << TAB << " --- ENTER TRIP --- " << endl << endl;
+				cout << TAB << "-> You are currently logged as " << currentUser->getusername() << " <-" << endl;
 				enterTrip();
 				_getch();
 				break;
 			case 3:
 				ClearScreen();
+				cout << endl << TAB << "Welcome to Shared Rides V.1.0. Please put your seatbelts on and enjoy your travel." << endl;
+				cout << endl << TAB << " --- BUDDIES --- " << endl << endl;
+				cout << TAB << "-> You are currently logged as " << currentUser->getusername() << " <-" << endl;
 				buddiesMenu();
 				_getch();
 				break;
 			case 4:
 				ClearScreen();
+				cout << endl << TAB << "Welcome to Shared Rides V.1.0. Please put your seatbelts on and enjoy your travel." << endl;
+				cout << endl << TAB << " --- CREDIT ACCOUNT --- " << endl << endl;
+				cout << TAB << "-> You are currently logged as " << currentUser->getusername() << " <-" << endl;
 				creditAccount();
 				Sleep(2000);
 				break;
 			case 5:
 				ClearScreen();
+				cout << endl << TAB << "Welcome to Shared Rides V.1.0. Please put your seatbelts on and enjoy your travel." << endl;
+				cout << endl << TAB << " --- CHANGE PROFILE --- " << endl << endl;
+				cout << TAB << "-> You are currently logged as " << currentUser->getusername() << " <-" << endl;
 				changeProfile();
 				Sleep(2000);
 				break;
@@ -251,12 +329,15 @@ void SharedRides::user_menu(){
 				break;
 			case 7:
 				ClearScreen();
+				cout << endl << TAB << "Welcome to Shared Rides V.1.0. Please put your seatbelts on and enjoy your travel." << endl;
+				cout << endl << TAB << " --- DELETE ACCOUNT --- " << endl << endl;
+				cout << TAB << "-> You are currently logged as " << currentUser->getusername() << " <-" << endl;
 				deleteAccount();
 				_getch();
 				return;
 				break;
 			default:
-				cout << "Please, input an integer suitable to the options shown." << endl;
+				cout <<TAB<< "Please, input an integer suitable to the options shown." << endl;
 				cin.ignore(numeric_limits <streamsize>::max(), '\n');
 				break;
 			}
@@ -265,10 +346,15 @@ void SharedRides::user_menu(){
 	}
 	else { // guest user
 
+		cout << endl << TAB << "Welcome to Shared Rides V.1.0. Please put your seatbelts on and enjoy your travel." << endl;
+		cout << endl << TAB << " --- GUEST HOMEPAGE --- " << endl << endl;
+		cout << TAB << "-> You aren't logged to any account <- " << endl << endl;
+
 		int choice = get_input <int>(
-			"[0] New Trip" "\n"     // look for a trip
-			"[1] Charge wallet" "\n"
-			"[2] Exit App");
+
+			TAB_BIG"[0] New Trip" "\n"   "\n"  // look for a trip
+			TAB_BIG"[1] Charge wallet" "\n""\n"
+			TAB_BIG"[2] Exit App");
 
 		switch (choice) {
 		case 0:
@@ -286,7 +372,7 @@ void SharedRides::user_menu(){
 			return; //returns to main_menu
 			break;
 		default:
-			cout << "Please, input an integer suitable to the options shown." << endl;
+			cout <<TAB<< "Please, input an integer suitable to the options shown." << endl;
 			cin.ignore(numeric_limits <streamsize>::max(), '\n');
 			break;
 		}

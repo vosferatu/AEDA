@@ -13,6 +13,8 @@
 #include <sstream>
 #include <ostream>
 
+
+
 #undef max // because of numeric_limits
 
 using namespace std;
@@ -52,7 +54,6 @@ class SharedRides
 	 * @value	.
 	 **************************************************************************************************/
 
-	static vector<string> cities;
 
 	/** @brief	Identifier for the maximum users. */
 	static unsigned int maxUsersID;
