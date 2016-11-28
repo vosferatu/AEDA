@@ -14,8 +14,8 @@ void SharedRides::main_menu() {
 
 	switch (choice) {
 	case 0:
-		//criar um menu de login sem password para guest
-		//user_menu();//chama o menu de user (la dentro escolhe automaticamente menu de guest)
+		guest_log();
+		user_menu();//chama o menu de user (la dentro escolhe automaticamente menu de guest)
 		break;
 	case 1:
 	{
@@ -88,6 +88,11 @@ void SharedRides::manage_menu(){
 	switch (choice) {
 	case 0:
 		ClearScreen();
+		if (tripsPrinter.size() == 0) {
+			cout << endl << TAB << "No trips to show.\n" << endl;
+			_getch();
+			break;
+		}
 		cout << endl << TAB << "Welcome to Shared Rides V.1.0. Please put your seatbelts on and enjoy your travel." << endl;
 		cout << endl << TAB << " --- APP TRIPS --- " << endl << endl;
 		cout << endl << "-------------------------------------------------------------------------" << endl << endl;
@@ -100,17 +105,27 @@ void SharedRides::manage_menu(){
 		break;
 	case 1:
 		ClearScreen();
+		if (users.size() == 0) {
+			cout << endl << TAB << "No trips to show.\n" << endl;
+			_getch();
+			break;
+		}
 		cout << endl << TAB << "Welcome to Shared Rides V.1.0. Please put your seatbelts on and enjoy your travel." << endl;
 		cout << endl << TAB << " --- APP USERS --- " << endl << endl;
 		cout << endl << "-------------------------------------------------------------------------" << endl << endl;
 		for (size_t i = 0; i < users.size(); i++) {
-			cout<< TAB << "User with ID " << i + 1 << endl;
+			cout<< TAB << "User with ID " << users[i]->getID() << endl;
 			users[i]->showProfile();
 			cout << endl << "-------------------------------------------------------------------------" << endl << endl;
 		}
 		_getch();
 		break;
 	case 2:
+		if (cars.size() == 0) {
+			cout << endl << TAB << "No trips to show.\n" << endl;
+			_getch();
+			break;
+		}
 		ClearScreen();
 		cout << endl << TAB << "Welcome to Shared Rides V.1.0. Please put your seatbelts on and enjoy your travel." << endl;
 		cout << endl << TAB << " --- APP CARS --- " << endl << endl;
@@ -178,7 +193,7 @@ void SharedRides::user_menu(){
 		
 
 
-		if (currentUser->getVehicle()->getID() != 0) { //currentUser has a CAR			
+		if (currentUser->getVehicle()->getnumberSeats() != 0) { //currentUser has a CAR			
 		
 				int choice = get_input <int>(
 				TAB_BIG"[0] My Trips" "\n""\n"

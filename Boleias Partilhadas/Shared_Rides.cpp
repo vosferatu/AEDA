@@ -260,7 +260,7 @@ void SharedRides::loadWaitingTrips() {
 		info = info.substr(findpos + 1, search);			//string = desde primeiro ';' até ao segundo
 		findpos = info.find(';', 0);
 
-		unsigned int i = 0;
+		int i = 0;
 
 
 		while (i < viagemsize) {
@@ -281,7 +281,7 @@ void SharedRides::loadWaitingTrips() {
 			numIDs = atoi(info.substr(0, findpos).c_str());
 			info = info.substr(findpos + 1, search);			//string = desde primeiro ';' até ao segundo
 			findpos = info.find(';', 0);
-			unsigned int j = 0;
+			int j = 0;
 			vector<int> vectID;
 			while (j < numIDs) {
 				ID = atoi(info.substr(0, findpos).c_str());
@@ -373,6 +373,14 @@ void SharedRides::loadVehicles() {
 		v1->setRoute(route);
 		cars.push_back(v1);
 
+	}
+
+	for (size_t i = 0; i < cars.size(); i++) {
+		for (size_t j = 0; j < users.size(); j++) {
+			if (users[j]->getID() == cars[i]->getID()) {
+				users[j]->setVehicle(cars[i]);
+			}
+		}
 	}
 }
 
@@ -740,6 +748,10 @@ int SharedRides::getPositionUser(unsigned int id) const {
 
 void SharedRides::recompensate(unsigned int id) {
 	vector<int> afetados{};
+
+	if (tripOffers.size() == 0)
+		return;
+
 	for (size_t i = 0; i < tripOffers.size(); i++) {
 		if (tripOffers[i].getOwner() == id) {
 			for (size_t j = 0; j < tripOffers[i].getWay().size(); j++) {
@@ -836,9 +848,11 @@ void SharedRides::userWithVehicleMenu() {
 	switch (choice) {
 	case 0:
 		editVehicle();
+		carsalterados = true;
 		break;
 	case 1:
 		removeVehicle();
+		carsalterados = true;
 		break;
 	default:
 		cout << "Please, input an integer suitable to the options shown." << endl;
@@ -854,7 +868,7 @@ void SharedRides::editVehicle() {
 	cin.ignore(numeric_limits <streamsize>::max(), '\n');
 
 	int choice = get_input <int>(
-		TAB_BIG"[0] Change my vehicle to another vechile" "\n" "\n"
+		TAB_BIG"[0] Change my vehicle to another vehicle" "\n" "\n"
 		TAB_BIG"[1] Change route" "\n" "\n" );
 
 	switch (choice) {
@@ -925,7 +939,7 @@ void SharedRides::editVehicle() {
 
 			if (addroute == "y") {
 
-				cout << TAB << "Please specify the cities of your route, separared by slash" << endl;
+				cout << TAB << "Please specify the cities of your route, separated by slash" << endl;
 				cout << TAB << "Example: Porto-Lisboa-Vila Real" << endl;
 				cout << TAB << "It must belong to one of these : ";
 
@@ -965,6 +979,7 @@ void SharedRides::editVehicle() {
 				break;
 			}
 		}
+		carsalterados = true;
 	}
 			break;
 	case 1: {
@@ -978,6 +993,7 @@ void SharedRides::editVehicle() {
 				cout << cities[i] << ", ";
 			else cout << cities[i] << ".\n";
 		}
+		cin.ignore(numeric_limits <streamsize>::max(), '\n');
 		cityroute = readLine();
 		stringstream ss(cityroute);
 
@@ -994,6 +1010,7 @@ void SharedRides::editVehicle() {
 				break;
 			}
 		}
+		carsalterados = true;
 	}
 			break;
 	default:
@@ -1016,7 +1033,6 @@ void SharedRides::removeVehicle() {
 
 		if (remvehicle == "y") {
 			Vehicle* v1 = new Vehicle();
-			currentUser->getVehicle()->setVehicle(v1);
 
 			recompensate(currentUser->getID());
 
@@ -1029,6 +1045,7 @@ void SharedRides::removeVehicle() {
 
 			size_t pos = getPositionCar(currentUser->getID());
 			cars.erase(cars.begin() + pos);
+			currentUser->getVehicle()->setVehicle(v1);
 
 			break;
 		}
@@ -1324,9 +1341,11 @@ void SharedRides::buddiesMenu() {
 	switch (choice) {
 	case 0:
 		addBuddie();
+		usersalterados = true;
 		break;
 	case 1:
 		removeBuddie();
+		usersalterados = true;
 		break;
 	case 2:
 		myBuddies();
@@ -1341,7 +1360,7 @@ void SharedRides::buddiesMenu() {
 
 void SharedRides::addBuddie() {
 	int counter = 0;
-	for (size_t i = 0; users.size(); i++) {
+	for (size_t i = 0; i < users.size(); i++) {
 		if (users[i]->getCity() == currentUser->getCity())
 			counter++;
 	}
@@ -1349,17 +1368,19 @@ void SharedRides::addBuddie() {
 	if (counter != 0) {
 		cout << "Users near you:" << endl;
 		for (size_t i = 0; users.size(); i++) {
-			if ((users[i]->getCity() == currentUser->getCity()) && (users[i] != currentUser))
+			if ((users[i]->getCity() == currentUser->getCity()) && (users[i] != currentUser)) {
 				number = i + 1;
-			cout << "User number " << number << endl;
-			users[i]->showProfile();
+				cout << "User number " << number << endl;
+				users[i]->showProfile();
+		}
 		}
 		cout << endl << "Other users:" << endl;
 		for (size_t i = 0; users.size(); i++) {
-			if ((users[i]->getCity() != currentUser->getCity()) && (users[i] != currentUser))
+			if ((users[i]->getCity() != currentUser->getCity()) && (users[i] != currentUser)) {
 				number = i + 1;
-			cout << "User number " << number << endl;
-			users[i]->showProfile();
+				cout << "User number " << number << endl;
+				users[i]->showProfile();
+			}
 		}
 	}
 	else {
@@ -1377,7 +1398,7 @@ void SharedRides::addBuddie() {
 		choice = get_input <unsigned int>(
 			"\tSelect one of the users, by their number identifier." "\n"
 			);
-		if ((choice > 0) && (choice < users.size() + 1))
+		if ((choice > 0) && (choice < users.size() + 1) && (choice - 1 != currentUser->getID()))
 			break;
 		else cout << "Input a valid number!" << endl;
 		cin.ignore(numeric_limits <streamsize>::max(), '\n');
@@ -1498,18 +1519,22 @@ void SharedRides::VehicleTripMenu() {
 	switch (choice) {
 	case 0:
 		startTrip();
+		return;
 		break;
 	case 1:
 		addTrip();
+		return;
 		break;
 	case 2:
-		//enterTrip();
+		enterTrip();
+		return;
 		break;
 	default:
 		cout << TAB << "Please, input an integer suitable to the options shown." << endl;
 		cin.ignore(numeric_limits <streamsize>::max(), '\n');
 		break;
 	}
+	VehicleTripMenu();
 }
 
 void SharedRides::addTrip() {
@@ -1615,7 +1640,7 @@ void SharedRides::startTrip() {
 	for (size_t i = 0; i < tripOffers.size(); i++) {
 		if (tripOffers[i].getOwner() == currentUser->getID()) {
 			s1 = tripOffers[i].getWay();
-			string end = searchStretchCity(s1[s1.size() - 1].getCity(), s1[s1.size() - 1].getTime());
+			string end = s1[s1.size() - 1].getCity();
 			Time tfim = Time() + tripOffers[i].getTotalTime();
 
 			takenTrip t1(currentUser->getusername(), s1[0].getCity(), end, tfim);
@@ -1786,6 +1811,38 @@ User* SharedRides::login(const string &username, const string &password) {
 
 	throw LoginException<string>("\nInvalid combination of username/password. Please try again.\n");
 	return NULL;
+}
+
+void SharedRides::guest_log(){
+	bool userexists = true;
+	string username;
+
+	while (userexists) {
+		cout << endl;
+		username = get_input <string>(TAB"Please enter a username.");
+		cout << endl << TAB << "Username: " << username << "\n" << endl;
+
+		if (users.size() == 0)
+			userexists = false;
+
+		bool uservec = false;
+
+		for (size_t i = 0; i < users.size(); i++) {
+			if (users[i]->getusername() == username)
+				uservec = true;
+		}
+
+		if (uservec == true)
+		{
+			cout << TAB << "[ERROR!] Username already exists!\n";
+			userexists = true;
+		}
+		else userexists = false;
+	}
+	User* u1 = new GuestUser(username);
+	users.push_back(u1);
+
+	currentUser = u1;
 }
 
 void SharedRides::saveChanges() const {

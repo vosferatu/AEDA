@@ -300,6 +300,8 @@ public:
 	 **************************************************************************************************/
 
 	virtual void addTrip(unsigned int ID) = 0;
+
+	virtual void setVehicle(Vehicle* car) = 0;
 };
 
 /**********************************************************************************************//**
@@ -579,6 +581,22 @@ public:
 	 **************************************************************************************************/
 
 	GuestUser(string username);
+
+	string getpassword() const {return ""; };
+	Vehicle* getVehicle() const { return nullptr;};
+	void chargeAccount(float addition) {};
+	unsigned int getnumTrips() const { return 0;};
+	string getCity() const { return ""; };
+	vector<int> getTrips() const { return vector<int> {}; };
+	vector<int> getFavs() const { return vector<int> {}; };
+	void setPassword(string password) {};
+	void setHome(string city) {};
+	void showProfile() {};
+	void save(ofstream& out) const {};
+	void setTrips(vector<int> trips) {};
+	void setFavs(vector<int> favs) {};
+	void addTrip(unsigned int ID) {};
+	void setVehicle(Vehicle* car) {};
 };
 
 

@@ -74,7 +74,7 @@ class SharedRides
 	static unsigned int numbercities;
 	
 	/** @brief	The tax to operate the money system. */
-	float TAX;
+	float TAX = 0;
 
 	/** @brief	True if vect of users changed. */
 	static bool usersalterados;
@@ -241,6 +241,8 @@ public:
 	 **************************************************************************************************/
 
 	User* login(const string &username, const string &password);
+
+	void guest_log();
 
 	/**********************************************************************************************//**
 	 * @fn	static void SharedRides::CreateRegis();

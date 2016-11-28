@@ -1,3 +1,2 @@
-3
-2;Tesla Model S;5;2016;A;
-3;Porsche Canamera;2;2016;A;Braga;Porto;
+1
+1;Seat Ibiza;5;2005;C;Porto;Vila Real;Viseu;
