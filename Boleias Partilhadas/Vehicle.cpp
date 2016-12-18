@@ -4,13 +4,26 @@ using namespace std;
 
 unsigned int Vehicle::carstatic = 0;
 
-Vehicle::Vehicle(unsigned int noSeats, string brand, unsigned int year, string rate) : numberSeats(noSeats){
+
+
+Vehicle::Vehicle(unsigned int id,unsigned int noSeats, string brand, unsigned int year, string rate) : numberSeats(noSeats) {
+	this->brand = brand;
+	this->numberSeats = noSeats;
+	this->year = year;
+	this->idCar = id;
+	this->rate = rate;
+}
+
+
+Vehicle::Vehicle(unsigned int noSeats, string brand, unsigned int year, string rate) : numberSeats(noSeats) {
 	this->brand = brand;
 	this->numberSeats = noSeats;
 	this->year = year;
 	this->idCar = 0;
 	this->rate = rate;
 }
+
+
 
 Vehicle::Vehicle() {
 	this->brand = "nobrand";
@@ -33,7 +46,9 @@ void Vehicle::setRate(string rate) {
 	this->rate = rate;
 }
 
-
+void Vehicle::setBrand(string brand) {
+	this->brand = brand;
+}
 
 
 
@@ -94,15 +109,28 @@ Vehicle& Vehicle::operator=(Vehicle car){
 	return *this;
 }
 
-ofstream& operator<< (ofstream& os, const Vehicle car) {
-	os << car.getID() << endl << car.getBrand() << endl << car.getYear() << endl << car.getRate() << endl;
-
+ostream& operator<< (ostream& os, const Vehicle car) {
+	os << TAB << "Owner ID: "  << car.getID() << endl;
+	os << TAB << "Brand: " << car.getBrand() << endl;
+	os << TAB << "Year: " << car.getYear() << endl;
+	os << TAB << "Number of Seats: " << car.getnumberSeats()<<endl;
+	os << TAB << "Rate: " << car.getRate() << endl;
+	os << TAB << "Owner predefined route: ";
+	
 	for (size_t i = 0; i < car.getRoute().size(); i++){
-		os << car.getRoute()[i] << endl;
+		if (i == car.getRoute().size() - 1)
+			os << car.getRoute()[i];
+		else
+		os << car.getRoute()[i] << "-";
+
+		
+		
+		
 	}
 
 	return os;
 }
+
 
 void Vehicle::save(ofstream& out) const {
 	out << this->getID() << ";" << this->getBrand() << ";" << this->getnumberSeats() << ";" << this->getYear() << ";" << this->getRate() << ";";
