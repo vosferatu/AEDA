@@ -55,9 +55,6 @@ void takenTrip::setTripCode(unsigned int tripcode) {
 
 
 
-
-
-
 ofstream & operator<<(ofstream & out, const takenTrip & trip){
 	out << trip.owner << ";";
 	out << trip.tripCode << ";";
@@ -161,9 +158,22 @@ ofstream & operator<<(ofstream & out, const waitingTrip & trip){
 }
 
 ostream & operator<<(ostream & out, const waitingTrip & trip){
-	out << "Dono: " << trip.ownerID << "; ";
-	out << "Preco por Paragem: " << trip.pricePerStop << "; ";
-	out << "MaxSeats: " << trip.maxSeats;
+	
+	out << "No. of stops: " << trip.getWay().size() << endl << endl;
+	
+	vector<Stretch> viagem = trip.getWay();
+	
+	for (size_t i = 0; i < viagem.size(); i++)
+	{
+		if (i == 0)out << "- Starting point - " << endl;
+		if (i == viagem.size() - 1) out << "- End Point - " << endl;
+		out << viagem[i] << endl << endl;
+				
+	}
+	
+	out << "Price per stop: " << trip.pricePerStop << endl;
+	out << "Max seats per stop:  " << trip.maxSeats;
+	
 	return out;
 }
 
@@ -228,6 +238,28 @@ ofstream & operator<<(ofstream & out, const Stretch & way) {
 		out << way.usersID[i] << ";";
 	}
 
+	return out;
+}
+
+ostream & operator<<(ostream & out, const Stretch & way) {
+
+	out << "Stop: " << way.stop;
+	
+	if (way.toNext == Time(0, 0)) out << " | This is the final point in the journey" << endl;
+	else out << " | Time to next stop: " << way.toNext << endl;
+
+	if (!(way.toNext == Time(0, 0))) {
+		if (way.usersID.size() == 0) out << "There are no users waiting to enter in this stop" << endl;
+		else {
+			out << "There are " << way.usersID.size() << " users entering in this stop, being the Users with the IDs ";
+
+			for (size_t i = 0; i < way.usersID.size(); i++) {
+				if (i < way.usersID.size() - 1) out << way.usersID[i] << ", ";
+				else out << way.usersID[i] << "." << endl;
+			}
+
+		}
+	}
 	return out;
 }
 

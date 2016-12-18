@@ -12,7 +12,7 @@
 #include <limits>
 #include <sstream>
 #include <ostream>
-
+#include <algorithm>
 
 
 #undef max // because of numeric_limits

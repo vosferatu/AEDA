@@ -7,7 +7,6 @@
 #include "DateTime.h"
 #include "Vehicle.h"
 
-//teste
 
 /**********************************************************************************************//**
  * @class	takenTrip
@@ -389,6 +388,20 @@ public:
 	 **************************************************************************************************/
 
 	friend ofstream& operator<<(ofstream& out, const Stretch& way);//save on file
+	/**********************************************************************************************//**
+	 * @fn	friend ostream& Stretch::operator<<(ostream& out, const Stretch& way);
+	 *
+	 * @brief	Stream insertion operator to show in screen
+	 *
+	 * @author	João
+	 * @date	18-12-2016
+	 *
+	 * @param [in,out]	out	The out.
+	 * @param 		  	way	The way.
+	 *
+	 * @return	The shifted result.
+	 **************************************************************************************************/
+	friend ostream & operator<<(ostream & out, const Stretch & way);
 };
 
 /**********************************************************************************************//**
