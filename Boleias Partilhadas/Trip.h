@@ -1,91 +1,57 @@
+// because of numeric_limits
 #pragma once
-#ifndef SHARED_RIDES_H_
-#define SHARED_RIDES_H_
+#ifndef TRIP_H_
+#define TRIP_H_
 
 #include "User.h"
-#include "Helper.h"
+#include "DateTime.h"
 #include "Vehicle.h"
 
-#include <iostream>
-#include <fstream>
-#include <vector>
-#include <limits>
-#include <sstream>
-#include <ostream>
-
-
-
-#undef max // because of numeric_limits
-
-using namespace std;
-
 /**********************************************************************************************//**
- * @class	SharedRides
+ * @class	takenTrip
  *
- * @brief	The masterclass of our program.
+ * @brief	The  taken trip class.
  *
  * @author	João
  * @date	20-11-2016
  **************************************************************************************************/
 
-class SharedRides
-{
-	/** @brief	The users. */
-	static vector<User*> users;
-	/** @brief	The trips that were taken. */
-	static vector<takenTrip> tripsPrinter;
-	/** @brief	used to list cars in manage app. */
-	static vector<Vehicle*> cars;
-	/** @brief	The paths. */
-	vector<Path> caminhos;
-	/** @brief	The trip offers in the moment. */
-	static vector<waitingTrip> tripOffers;
-	User* currentUser = NULL;  //se não for pointer, slicing problem
-	vector<waitingTrip> tripsWaiting;
-	static vector<string>cities;
-
-	/**********************************************************************************************//**
-	 * @property	static vector<string>cities
-	 *
-	 * @brief	static vector of the cities.
-	 *
-	 * @tparam	string	Type of the string.
-	 *
-	 * @value	.
-	 **************************************************************************************************/
-
-
-	/** @brief	Identifier for the maximum users. */
-	static unsigned int maxUsersID;
-	/** @brief	Identifier for the maximum vehicles. */
-	static unsigned int maxVehiclesID;
-	/** @brief	The maximum taken code. */
-	static unsigned int maxTakenCode;
-
-	/**********************************************************************************************//**
-	 * @property	static const string citiesfile, usersfile, carsfile, takenfile, waitingfile
-	 *
-	 * @brief	defitions of files 
-	 **************************************************************************************************/
-
-	static const string citiesfile, usersfile, carsfile, takenfile, waitingfile;
-
-	/** @brief	The number of cities. */
-	static unsigned int numbercities;
-	
-	/** @brief	The tax to operate the money system. */
-	float TAX = 0;
-
-	/** @brief	True if vect of users changed. */
-	static bool usersalterados;
-	/** @brief	True if vect of cars changed. */
-	static bool carsalterados;
-
+class takenTrip { //usada para mostrar e gravar viagens dos owners
+	/** @brief	The ownser of the trip. */
+	string owner;
+	/** @brief	The start point of the trip. */
+	string startPoint;
+	/** @brief	The end point of the trip. */
+	string endPoint;
+	/** @brief	The end time of the trip. */
+	Time endTime;
+	/** @brief	The start time of the trip. */
+	Time startTime;
+	/** @brief	The day of the trip. */
+	Date day;
+	/** @brief	The trip code of the trip. */
+	static unsigned int tripCode;
 
 public:
 
 	/**********************************************************************************************//**
-	 * @fn	SharedRides::SharedRides()
+	 * @fn	takenTrip::takenTrip(string owns, string start, string finish, Time end);
+	 *
+	 * @brief	Constructor.
+	 *
+	 * @author	João
+	 * @date	20-11-2016
+	 *
+	 * @param	owns  	The owner.
+	 * @param	start 	The start.
+	 * @param	finish	The finish.
+	 * @param	end   	The endtime.
+	 **************************************************************************************************/
+
+	takenTrip(string owns, string start, string finish, Time end);
+
+	/**********************************************************************************************//**
+	 * @fn	takenTrip::takenTrip()
 	 *
 	 * @brief	Default constructor.
 	 *
@@ -93,273 +59,284 @@ public:
 	 * @date	20-11-2016
 	 **************************************************************************************************/
 
-	SharedRides() {}; //podemos fazer os loads todos no construtor
+	takenTrip(){}
 
 	/**********************************************************************************************//**
-	 * @fn	void SharedRides::run();
+	 * @fn	unsigned int takenTrip::getTripCode() const;
 	 *
-	 * @brief	Runs the program.
+	 * @brief	Gets trip code.
+	 *
+	 * @author	João
+	 * @date	20-11-2016
+	 *
+	 * @return	The trip code.
+	 **************************************************************************************************/
+
+	unsigned int getTripCode() const;
+
+	/**********************************************************************************************//**
+	 * @fn	string takenTrip::getName() const;
+	 *
+	 * @brief	Gets the owner name.
+	 *
+	 * @author	João
+	 * @date	20-11-2016
+	 *
+	 * @return	The ownerr name.
+	 **************************************************************************************************/
+
+	string getName() const;
+
+	/**********************************************************************************************//**
+	 * @fn	string takenTrip::getStart() const;
+	 *
+	 * @brief	Gets the start point.
+	 *
+	 * @author	João
+	 * @date	20-11-2016
+	 *
+	 * @return	The start.
+	 **************************************************************************************************/
+
+	string getStart() const;
+
+	/**********************************************************************************************//**
+	 * @fn	string takenTrip::getEnd() const;
+	 *
+	 * @brief	Gets the end point.
+	 *
+	 * @author	João
+	 * @date	20-11-2016
+	 *
+	 * @return	The end.
+	 **************************************************************************************************/
+
+	string getEnd() const;
+
+	/**********************************************************************************************//**
+	 * @fn	Time takenTrip::getEndTime() const;
+	 *
+	 * @brief	Gets end time.
+	 *
+	 * @author	João
+	 * @date	20-11-2016
+	 *
+	 * @return	The end time.
+	 **************************************************************************************************/
+
+	Time getEndTime() const;
+
+	/**********************************************************************************************//**
+	 * @fn	Time takenTrip::getStartTime() const;
+	 *
+	 * @brief	Gets start time.
+	 *
+	 * @author	João
+	 * @date	20-11-2016
+	 *
+	 * @return	The start time.
+	 **************************************************************************************************/
+
+	Time getStartTime() const;
+
+	/**********************************************************************************************//**
+	 * @fn	Date takenTrip::getDay() const;
+	 *
+	 * @brief	Gets the day.
+	 *
+	 * @author	João
+	 * @date	20-11-2016
+	 *
+	 * @return	The day.
+	 **************************************************************************************************/
+
+	Date getDay() const;
+
+	/**********************************************************************************************//**
+	 * @fn	void takenTrip::setStartime(Time start);
+	 *
+	 * @brief	Sets a start time.
+	 *
+	 * @author	João
+	 * @date	20-11-2016
+	 *
+	 * @param	start	The start.
+	 **************************************************************************************************/
+
+	void setStartime(Time start);
+
+	/**********************************************************************************************//**
+	 * @fn	void takenTrip::setTripCode(unsigned int tripcode);
+	 *
+	 * @brief	Sets trip code.
+	 *
+	 * @author	João
+	 * @date	20-11-2016
+	 *
+	 * @param	tripcode	The tripcode.
+	 **************************************************************************************************/
+
+	void setTripCode(unsigned int tripcode);
+
+	/**********************************************************************************************//**
+	 * @fn	void takenTrip::save(ofstream& out) const;
+	 *
+	 * @brief	Saves the given trip [out] to file.
+	 *
+	 * @author	João
+	 * @date	20-11-2016
+	 *
+	 * @param [in,out]	out	The out to save.
+	 **************************************************************************************************/
+
+	void save(ofstream& out) const;
+
+	/**********************************************************************************************//**
+	 * @fn	void takenTrip::setName(string nome);
+	 *
+	 * @brief	Sets the name of owner.
+	 *
+	 * @author	João
+	 * @date	20-11-2016
+	 *
+	 * @param	nome	The nanme.
+	 **************************************************************************************************/
+
+	void setName(string nome);
+
+	/**********************************************************************************************//**
+	 * @fn	friend ofstream& takenTrip::operator<<(ofstream& out, const takenTrip& trip);
+	 *
+	 * @brief	Stream insertion operator to save in file.
+	 *
+	 * @author	João
+	 * @date	20-11-2016
+	 *
+	 * @param [in,out]	out 	The out.
+	 * @param 		  	trip	The trip.
+	 *
+	 * @return	The shifted result.
+	 **************************************************************************************************/
+
+	friend ofstream& operator<<(ofstream& out, const takenTrip& trip);//save in file
+
+	/**********************************************************************************************//**
+	 * @fn	friend ostream& takenTrip::operator<<(ostream& out, const takenTrip& trip);
+	 *
+	 * @brief	Stream insertion operator to show the trip in the screen.
+	 *
+	 * @author	João
+	 * @date	20-11-2016
+	 *
+	 * @param [in,out]	out 	The out.
+	 * @param 		  	trip	The trip.
+	 *
+	 * @return	The shifted result.
+	 **************************************************************************************************/
+
+	friend ostream& operator<<(ostream& out, const takenTrip& trip); //mostrar no ecrã
+
+};
+
+/**********************************************************************************************//**
+ * @class	Stretch
+ *
+ * @brief	A stretch of a trip.
+ *
+ * @author	João
+ * @date	20-11-2016
+ **************************************************************************************************/
+
+class Stretch {
+	/** @brief	The stop. */
+	string stop;
+	/** @brief	Vector of users. */
+	vector<int> usersID;
+	/** @brief	Time to next stop. */
+	Time toNext;
+public:
+
+	/**********************************************************************************************//**
+	 * @fn	Stretch::Stretch(string city, Time next);
+	 *
+	 * @brief	Constructor.
+	 *
+	 * @author	João
+	 * @date	20-11-2016
+	 *
+	 * @param	city	The city.
+	 * @param	next	The next city.
+	 **************************************************************************************************/
+
+	Stretch(string city, Time next);
+
+	/**********************************************************************************************//**
+	 * @fn	Stretch::Stretch()
+	 *
+	 * @brief	Default constructor.
 	 *
 	 * @author	João
 	 * @date	20-11-2016
 	 **************************************************************************************************/
 
-	void run();
-
-
-	// MENUS
+	Stretch() {}
 
 	/**********************************************************************************************//**
-	 * @fn	void SharedRides::main_menu();
+	 * @fn	string Stretch::getCity() const;
 	 *
-	 * @brief	Main menu.
-	 *
-	 * @author	João
-	 * @date	20-11-2016
-	 **************************************************************************************************/
-
-	void main_menu();
-
-	/**********************************************************************************************//**
-	 * @fn	void SharedRides::manage_menu();
-	 *
-	 * @brief	Admin's menu.
-	 *
-	 * @author	João
-	 * @date	20-11-2016
-	 **************************************************************************************************/
-
-	void manage_menu();
-
-	/**********************************************************************************************//**
-	 * @fn	void SharedRides::user_menu();
-	 *
-	 * @brief	User menu.
-	 *
-	 * @author	João
-	 * @date	20-11-2016
-	 **************************************************************************************************/
-
-	void user_menu();
-
-	// SAVE
-
-	/**********************************************************************************************//**
-	 * @fn	void SharedRides::saveChanges() const;
-	 *
-	 * @brief	Saves the changes to users, cars or trips in the files.
-	 *
-	 * @author	João
-	 * @date	20-11-2016
-	 **************************************************************************************************/
-
-	void saveChanges() const;
-	
-	// LOAD
-
-	/**********************************************************************************************//**
-	 * @fn	static void SharedRides::load();
-	 *
-	 * @brief	Loads all the things.
-	 *
-	 * @author	João
-	 * @date	20-11-2016
-	 **************************************************************************************************/
-
-	static void load();
-
-	/**********************************************************************************************//**
-	 * @fn	static void SharedRides::loadCities();
-	 *
-	 * @brief	Loads the cities.
-	 *
-	 * @author	João
-	 * @date	20-11-2016
-	 **************************************************************************************************/
-
-	static void loadCities();
-
-	/**********************************************************************************************//**
-	 * @fn	static void SharedRides::loadUsers();
-	 *
-	 * @brief	Loads the users.
-	 *
-	 * @author	João
-	 * @date	20-11-2016
-	 **************************************************************************************************/
-
-	static void loadUsers();
-
-	/**********************************************************************************************//**
-	 * @fn	static void SharedRides::loadVehicles();
-	 *
-	 * @brief	Loads the vehicles.
-	 *
-	 * @author	João
-	 * @date	20-11-2016
-	 **************************************************************************************************/
-
-	static void loadVehicles();
-
-	/**********************************************************************************************//**
-	 * @fn	static void SharedRides::loadTakenTrips();
-	 *
-	 * @brief	Loads taken trips.
-	 *
-	 * @author	João
-	 * @date	20-11-2016
-	 **************************************************************************************************/
-
-	static void loadTakenTrips();
-
-	/**********************************************************************************************//**
-	 * @fn	static void SharedRides::loadWaitingTrips();
-	 *
-	 * @brief	Loads waiting trips.
-	 *
-	 * @author	João
-	 * @date	20-11-2016
-	 **************************************************************************************************/
-
-	static void loadWaitingTrips();
-
-
-	//LOGIN & REGISTRATION
-
-	/**********************************************************************************************//**
-	 * @fn	User* SharedRides::login(const string &username, const string &password);
-	 *
-	 * @brief	Login system.
+	 * @brief	Gets the city.
 	 *
 	 * @author	João
 	 * @date	20-11-2016
 	 *
-	 * @param	username	The username.
-	 * @param	password	The password.
-	 *
-	 * @return	Null if it fails, else a pointer to a User.
+	 * @return	The city.
 	 **************************************************************************************************/
 
-	User* login(const string &username, const string &password);
-
-	void guest_log();
+	string getCity() const;
 
 	/**********************************************************************************************//**
-	 * @fn	static void SharedRides::CreateRegis();
+	 * @fn	vector<int> Stretch::getusers() const;
 	 *
-	 * @brief	Creates a user in the system.
-	 *
-	 * @author	João
-	 * @date	20-11-2016
-	 **************************************************************************************************/
-
-	static void CreateRegis();
-
-	/**********************************************************************************************//**
-	 * @fn	unsigned int SharedRides::getCARHighID() const;
-	 *
-	 * @brief	Gets car high identifier.
+	 * @brief	Gets the users.
 	 *
 	 * @author	João
 	 * @date	20-11-2016
 	 *
-	 * @return	The car high identifier.
+	 * @return	A vector of users ID.
 	 **************************************************************************************************/
 
-	unsigned int getCARHighID() const;
+	vector<int> getusers() const;
 
 	/**********************************************************************************************//**
-	 * @fn	unsigned int SharedRides::getUSERHighID() const;
+	 * @fn	Time Stretch::getTime() const;
 	 *
-	 * @brief	Gets user high identifier.
+	 * @brief	Gets the time.
 	 *
 	 * @author	João
 	 * @date	20-11-2016
 	 *
-	 * @return	The user high identifier.
+	 * @return	The time.
 	 **************************************************************************************************/
 
-	unsigned int getUSERHighID() const;
+	Time getTime() const;
 
 	/**********************************************************************************************//**
-	 * @fn	unsigned int SharedRides::getTAKENHighID() const;
+	 * @fn	void Stretch::setCity(string city);
 	 *
-	 * @brief	Gets taken trips high identifier.
+	 * @brief	Sets a city.
 	 *
 	 * @author	João
 	 * @date	20-11-2016
 	 *
-	 * @return	The taken high identifier.
+	 * @param	city	The city.
 	 **************************************************************************************************/
 
-	unsigned int getTAKENHighID() const;
+	void setCity(string city);
 
 	/**********************************************************************************************//**
-	 * @fn	SharedRides::~SharedRides()
+	 * @fn	void Stretch::addUser(int id);
 	 *
-	 * @brief	Destructor.
-	 *
-	 * @author	João
-	 * @date	20-11-2016
-	 **************************************************************************************************/
-
-	~SharedRides(){
-		for (unsigned int i = 0; i < users.size(); ++i)
-		{
-			delete users[i];
-		}
-		for (unsigned int i = 0; i < cars.size(); ++i) {
-			delete cars[i];
-		}
-	}
-
-	//helpers
-
-	/**********************************************************************************************//**
-	 * @fn	void SharedRides::fillPaths();
-	 *
-	 * @brief	Fill paths.
-	 *
-	 * @author	João
-	 * @date	20-11-2016
-	 **************************************************************************************************/
-
-	void fillPaths();
-
-	/**********************************************************************************************//**
-	 * @fn	int SharedRides::getPositionCar(unsigned int id) const;
-	 *
-	 * @brief	Gets position of the car in the vector.
-	 
-	 * @author	João
-	 * @date	20-11-2016
-	 *
-	 * @param	id	The identifier.
-	 *
-	 * @return	The car position.
-	 **************************************************************************************************/
-
-	int getPositionCar(unsigned int id) const;
-
-	/**********************************************************************************************//**
-	 * @fn	int SharedRides::getPositionUser(unsigned int id) const;
-	 *
-	 * @brief	Gets position of a  user in the vector.
-	 *
-	 * @author	João
-	 * @date	20-11-2016
-	 *
-	 * @param	id	The identifier.
-	 *
-	 * @return	The user position.
-	 **************************************************************************************************/
-
-	int getPositionUser(unsigned int id) const;
-
-	/**********************************************************************************************//**
-	 * @fn	void SharedRides::recompensate(unsigned int id);
-	 *
-	 * @brief	Recompensates the given user .
+	 * @brief	Adds a user.
 	 *
 	 * @author	João
 	 * @date	20-11-2016
@@ -367,322 +344,344 @@ public:
 	 * @param	id	The identifier of the user.
 	 **************************************************************************************************/
 
-	void recompensate(unsigned int id);
+	void addUser(int id);
 
 	/**********************************************************************************************//**
-	 * @fn	Time SharedRides::searchStretchTime(string one, string two);
+	 * @fn	void Stretch::setTime(Time newTime);
 	 *
-	 * @brief	if a user and his vehicle and trips are removed, the others users recover their money
+	 * @brief	Sets a time.
 	 *
 	 * @author	João
 	 * @date	20-11-2016
 	 *
-	 * @param	one	The first location
-	 * @param	two	The segond location.
-	 *
-	 * @return	The found stretch time.
+	 * @param	newTime	The new time.
 	 **************************************************************************************************/
 
-	Time searchStretchTime(string one, string two);
+	void setTime(Time newTime);
 
 	/**********************************************************************************************//**
-	 * @fn	string SharedRides::searchStretchCity(string one, Time t1);
+	 * @fn	void Stretch::setvectID(vector<int> usersID);
 	 *
-	 * @brief	Searches for city, given the time and the start city.
+	 * @brief	Set vect of users.
 	 *
 	 * @author	João
 	 * @date	20-11-2016
 	 *
-	 * @param	one	The city
-	 * @param	t1 	The time to get to the city.
-	 *
-	 * @return	The found stretch between cities.
+	 * @param	usersID	the vector of ids of the users.
 	 **************************************************************************************************/
 
-	string searchStretchCity(string one, Time t1);
+	void setvectID(vector<int> usersID);
 
 	/**********************************************************************************************//**
-	 * @fn	int SharedRides::checkTrip(string a, string b, const vector<Stretch> & v) const;
+	 * @fn	friend ofstream& Stretch::operator<<(ofstream& out, const Stretch& way);
 	 *
-	 * @brief	Check if a trip is doable.
+	 * @brief	Stream insertion operator to save in file.
 	 *
 	 * @author	João
 	 * @date	20-11-2016
 	 *
-	 * @param	a	place A
-	 * @param	b	place B 
-	 * @param	v	the stretch between A and B, if it exists
+	 * @param [in,out]	out	The out.
+	 * @param 		  	way	The way.
 	 *
-	 * @return	An int number of stops, negative if doesn't have any.
+	 * @return	The shifted result.
 	 **************************************************************************************************/
 
-	int checkTrip(string a, string b, const vector<Stretch> & v) const;
-
-	/**********************************************************************************************//**
-	 * @fn	bool SharedRides::checkBuddie(unsigned int user1);
-	 *
-	 * @brief	Check if a given user its a friend/favorite of currentuser.
-	 *
-	 * @author	João
-	 * @date	20-11-2016
-	 *
-	 * @param	user1	The user to test.
-	 *
-	 * @return	True if it succeeds, false if it fails.
-	 **************************************************************************************************/
-
-	bool checkBuddie(unsigned int user1);
-
-	//MENUS Functions
-	void showTrips() const;
-
-	/**********************************************************************************************//**
-	 * @fn	void SharedRides::userWithVehicleMenu();
-	 *
-	 * @brief	User with vehicle menu.
-	 *
-	 * @author	João
-	 * @date	20-11-2016
-	 **************************************************************************************************/
-
-	void userWithVehicleMenu();
-
-	/**********************************************************************************************//**
-	 * @fn	void SharedRides::editVehicle();
-	 *
-	 * @brief	Edits the current user vehicle.
-	 *
-	 * @author	João
-	 * @date	20-11-2016
-	 **************************************************************************************************/
-
-	void editVehicle();
-
-	/**********************************************************************************************//**
-	 * @fn	void SharedRides::removeVehicle();
-	 *
-	 * @brief	Removes current user  vehicle.
-	 *
-	 * @author	João
-	 * @date	20-11-2016
-	 **************************************************************************************************/
-
-	void removeVehicle();
-
-	/**********************************************************************************************//**
-	 * @fn	void SharedRides::addVehicle();
-	 *
-	 * @brief	Adds vehicle to the current user.
-	 *
-	 * @author	João
-	 * @date	20-11-2016
-	 **************************************************************************************************/
-
-	void addVehicle();
-
-	/**********************************************************************************************//**
-	 * @fn	void SharedRides::creditAccount();
-	 *
-	 * @brief	Credits the  account of current user.
-	 *
-	 * @author	João
-	 * @date	20-11-2016
-	 **************************************************************************************************/
-
-	void creditAccount();
-
-	/**********************************************************************************************//**
-	 * @fn	void SharedRides::changeProfile();
-	 *
-	 * @brief	Change profile of current user.
-	 *
-	 * @author	João
-	 * @date	20-11-2016
-	 **************************************************************************************************/
-
-	void changeProfile();
-
-	/**********************************************************************************************//**
-	 * @fn	void SharedRides::deleteAccount();
-	 *
-	 * @brief	Deletes the account of current user.
-	 *
-	 * @author	João
-	 * @date	20-11-2016
-	 **************************************************************************************************/
-
-	void deleteAccount();
-
-	/**********************************************************************************************//**
-	 * @fn	void SharedRides::buddiesMenu();
-	 *
-	 * @brief	The Buddies menu to a current user.
-	 *
-	 * @author	João
-	 * @date	20-11-2016
-	 **************************************************************************************************/
-
-	void buddiesMenu();
-
-	/**********************************************************************************************//**
-	 * @fn	void SharedRides::addBuddie();
-	 *
-	 * @brief	Adds a  buddie to current user.
-	 *
-	 * @author	João
-	 * @date	20-11-2016
-	 **************************************************************************************************/
-
-	void addBuddie();
-
-	/**********************************************************************************************//**
-	 * @fn	void SharedRides::removeBuddie();
-	 *
-	 * @brief	Removes a buddie of current user.
-	 *
-	 * @author	João
-	 * @date	20-11-2016
-	 **************************************************************************************************/
-
-	void removeBuddie();
-
-	/**********************************************************************************************//**
-	 * @fn	void SharedRides::myBuddies() const;
-	 *
-	 * @brief	Show buddies of current user.
-	 *
-	 * @author	João
-	 * @date	20-11-2016
-	 **************************************************************************************************/
-
-	void myBuddies() const;
-
-	/**********************************************************************************************//**
-	 * @fn	void SharedRides::VehicleTripMenu();
-	 *
-	 * @brief	Vehicle trip menu.
-	 *
-	 * @author	João
-	 * @date	20-11-2016
-	 **************************************************************************************************/
-
-	void VehicleTripMenu();
-
-	/**********************************************************************************************//**
-	 * @fn	void SharedRides::addTrip();
-	 *
-	 * @brief	Adds trip to current user.
-	 *
-	 * @author	João
-	 * @date	20-11-2016
-	 **************************************************************************************************/
-
-	void addTrip();
-
-	/**********************************************************************************************//**
-	 * @fn	void SharedRides::startTrip();
-	 *
-	 * @brief	Starts a desired trip.
-	 *
-	 * @author	João
-	 * @date	20-11-2016
-	 **************************************************************************************************/
-
-	void startTrip();
-
-	/**********************************************************************************************//**
-	 * @fn	void SharedRides::enterTrip();
-	 *
-	 * @brief	Enters a  trip.
-	 *
-	 * @author	João
-	 * @date	20-11-2016
-	 **************************************************************************************************/
-
-	void enterTrip();
-
-	/**********************************************************************************************//**
-	 * @fn	void SharedRides::showBuddiesProfileToUser();
-	 *
-	 * @brief	Shows the buddies profile to user.
-	 *
-	 * @author	João
-	 * @date	20-11-2016
-	 **************************************************************************************************/
-
-	void showBuddiesProfileToUser();
-
+	friend ofstream& operator<<(ofstream& out, const Stretch& way);//save on file
 };
 
-// tratamento de exceções
-
-
-
-template<class T>
-
 /**********************************************************************************************//**
- * @class	FileException
+ * @class	waitingTrip
  *
- * @brief	Exception for signalling file errors.
+ * @brief	A waiting trip class.
  *
  * @author	João
  * @date	20-11-2016
  **************************************************************************************************/
 
-class FileException
-{
+class waitingTrip { 
+	/** @brief	The identifier that owns the trip. */
+	unsigned int ownerID;
+	/** @brief	The trip, composed by stretchs. */
+	vector<Stretch> Viagem;
+	/** @brief	The price per stop. */
+	float pricePerStop;
+	/** @brief	The maximum seats. */
+	int maxSeats;
+
 public:
-	T info;
-	FileException(T info)
-	{
-		this->info = info;
-	}
+
+	/**********************************************************************************************//**
+	 * @fn	waitingTrip::waitingTrip(unsigned int owner, vector<Stretch> Viagem, int maxSeats, float price);
+	 *
+	 * @brief	Constructor.
+	 *
+	 * @author	João
+	 * @date	20-11-2016
+	 *
+	 * @param	owner   	The owner.
+	 * @param	Viagem  	The viagem.
+	 * @param	maxSeats	The maximum seats.
+	 * @param	price   	The price.
+	 **************************************************************************************************/
+
+	waitingTrip(unsigned int owner, vector<Stretch> Viagem, int maxSeats, float price);
+
+	/**********************************************************************************************//**
+	 * @fn	waitingTrip::waitingTrip();
+	 *
+	 * @brief	Default constructor.
+	 *
+	 * @author	João
+	 * @date	20-11-2016
+	 **************************************************************************************************/
+
+	waitingTrip();
+
+	/**********************************************************************************************//**
+	 * @fn	unsigned int waitingTrip::getOwner() const;
+	 *
+	 * @brief	Gets the owner of the trip.
+	 *
+	 * @author	João
+	 * @date	20-11-2016
+	 *
+	 * @return	The owner.
+	 **************************************************************************************************/
+
+	unsigned int getOwner() const;
+
+	/**********************************************************************************************//**
+	 * @fn	vector<Stretch> waitingTrip::getWay() const;
+	 *
+	 * @brief	Gets the way.
+	 *
+	 * @author	João
+	 * @date	20-11-2016
+	 *
+	 * @return	The way.
+	 **************************************************************************************************/
+
+	vector<Stretch> getWay() const;
+
+	/**********************************************************************************************//**
+	 * @fn	float waitingTrip::getpriceStop() const;
+	 *
+	 * @brief	Gets the price per stop.
+	 *
+	 * @author	João
+	 * @date	20-11-2016
+	 *
+	 * @return	A float, the price. 
+	 **************************************************************************************************/
+
+	float getpriceStop() const;
+
+	/**********************************************************************************************//**
+	 * @fn	int waitingTrip::getmaxSeats() const;
+	 *
+	 * @brief	Gets the maximum number of  seats.
+	 *
+	 * @author	João
+	 * @date	20-11-2016
+	 *
+	 * @return	An int, the maxium number of seats. 
+	 **************************************************************************************************/
+
+	int getmaxSeats() const;
+
+	/**********************************************************************************************//**
+	 * @fn	Time waitingTrip::getTotalTime() const;
+	 *
+	 * @brief	Gets total time of the trip.
+	 *
+	 * @author	João
+	 * @date	20-11-2016
+	 *
+	 * @return	The total time.
+	 **************************************************************************************************/
+
+	Time getTotalTime() const;
+
+	/**********************************************************************************************//**
+	 * @fn	void waitingTrip::setOwner(unsigned int id);
+	 *
+	 * @brief	Sets an owner to the trip.
+	 *
+	 * @author	João
+	 * @date	20-11-2016
+	 *
+	 * @param	id	The identifier of the ownser.
+	 **************************************************************************************************/
+
+	void setOwner(unsigned int id);
+
+	/**********************************************************************************************//**
+	 * @fn	void waitingTrip::setWay(vector<Stretch> way);
+	 *
+	 * @brief	Sets a way to the trip.
+	 *
+	 * @author	João
+	 * @date	20-11-2016
+	 *
+	 * @param	way	The way.
+	 **************************************************************************************************/
+
+	void setWay(vector<Stretch> way);
+
+	/**********************************************************************************************//**
+	 * @fn	void waitingTrip::setpriceStop(float price);
+	 *
+	 * @brief	Sets the price per stop.
+	 *
+	 * @author	João
+	 * @date	20-11-2016
+	 *
+	 * @param	price	The price.
+	 **************************************************************************************************/
+
+	void setpriceStop(float price);
+
+	/**********************************************************************************************//**
+	 * @fn	void waitingTrip::setmaxSeats(int seats);
+	 *
+	 * @brief	Sets the maxium number of  seats.
+	 *
+	 * @author	João
+	 * @date	20-11-2016
+	 *
+	 * @param	seats	The seats.
+	 **************************************************************************************************/
+
+	void setmaxSeats(int seats);
+
+	/**********************************************************************************************//**
+	 * @fn	void waitingTrip::save(ofstream& out) const;
+	 *
+	 * @brief	Saves the given out, the waiting trip.
+	 *
+	 * @author	João
+	 * @date	20-11-2016
+	 *
+	 * @param [in,out]	out	The trip to save.
+	 **************************************************************************************************/
+
+	void save(ofstream& out) const;
+
+	/**********************************************************************************************//**
+	 * @fn	friend ofstream& waitingTrip::operator<<(ofstream& out, const waitingTrip& trip);
+	 *
+	 * @brief	Stream insertion operator.
+	 *
+	 * @author	João
+	 * @date	20-11-2016
+	 *
+	 * @param [in,out]	out 	The output.
+	 * @param 		  	trip	The trip.
+	 *
+	 * @return	The shifted result.
+	 **************************************************************************************************/
+
+	friend ofstream& operator<<(ofstream& out, const waitingTrip& trip);//save on file
+
+	/**********************************************************************************************//**
+	 * @fn	friend ostream& waitingTrip::operator<<(ostream& out, const waitingTrip& trip);
+	 *
+	 * @brief	Stream insertion operator.
+	 *
+	 * @author	João
+	 * @date	20-11-2016
+	 *
+	 * @param [in,out]	out	The output.
+	 * @param 		  	trip	The trip.
+	 *
+	 * @return	The shifted result.
+	 **************************************************************************************************/
+
+	friend ostream& operator<<(ostream& out, const waitingTrip& trip);
 };
 
-template<class T>
-
 /**********************************************************************************************//**
- * @class	LoginException
+ * @class	Path
  *
- * @brief	Exception for signalling login errors.
+ * @brief	A path to follow, given 2 locations.
  *
  * @author	João
  * @date	20-11-2016
  **************************************************************************************************/
 
-class LoginException
-{
+class Path {
+	/** @brief	The time spent. */
+	Time timeSpent;
+	/** @brief	The first location. */
+	string first;
+	/** @brief	The second location. */
+	string second;
 public:
-	T info;
-	LoginException(T info)
-	{
-		this->info = info;
-	}
+
+	/**********************************************************************************************//**
+	 * @fn	Path::Path(string first, string second, Time timeSpent);
+	 *
+	 * @brief	Constructor.
+	 *
+	 * @author	João
+	 * @date	20-11-2016
+	 *
+	 * @param	first	 	The first point.
+	 * @param	second   	The second point.
+	 * @param	timeSpent	The time spent between points.
+	 **************************************************************************************************/
+
+	Path(string first, string second, Time timeSpent);
+
+	/**********************************************************************************************//**
+	 * @fn	Path::Path()
+	 *
+	 * @brief	Default constructor.
+	 *
+	 * @author	João
+	 * @date	20-11-2016
+	 **************************************************************************************************/
+
+	Path(){}
+
+	/**********************************************************************************************//**
+	 * @fn	Time Path::getTime() const;
+	 *
+	 * @brief	Gets the time.
+	 *
+	 * @author	João
+	 * @date	20-11-2016
+	 *
+	 * @return	The time.
+	 **************************************************************************************************/
+
+	Time getTime() const;
+
+	/**********************************************************************************************//**
+	 * @fn	string Path::getFirst() const;
+	 *
+	 * @brief	Gets the first location.
+	 *
+	 * @author	João
+	 * @date	20-11-2016
+	 *
+	 * @return	The first location.
+	 **************************************************************************************************/
+
+	string getFirst() const;
+
+	/**********************************************************************************************//**
+	 * @fn	string Path::getSecond() const;
+	 *
+	 * @brief	Gets the second location.
+	 *
+	 * @author	João
+	 * @date	20-11-2016
+	 *
+	 * @return	The second location.
+	 **************************************************************************************************/
+
+	string getSecond() const;
 };
-
-template<class T>
-
-/**********************************************************************************************//**
- * @class	RegistrationException
- *
- * @brief	Exception for signalling registration errors.
- *
- * @author	João
- * @date	20-11-2016
- **************************************************************************************************/
-
-class RegistrationException
-{
-public:
-	T info;
-	RegistrationException(T info)
-	{
-		this->info = info;
-	}
-};
-
-
-
-
 
 #endif

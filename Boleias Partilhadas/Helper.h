@@ -1,9 +1,20 @@
+
 #pragma once
 #ifndef HELPER_H_
 #define HELPER_H_
 
 #include <limits> // for std::numeric_limits
 #include <string>
+#include <iostream>
+#include <windows.h>
+#include <fstream>
+#include <conio.h>
+#undef max // because of numeric_limits
+
+#define TAB_BIG "          "
+#define TAB    "   "
+#define SPACE " "
+#define TAB_SUPER "                                 "
 
 using namespace std;
 
@@ -31,6 +42,114 @@ T get_input(const string &strQuery)
 	return out;
 }
 
+/**********************************************************************************************//**
+ * @fn	string readLine();
+ *
+ * @brief	Reads the line.
+ *
+ * @author	João
+ * @date	20-11-2016
+ *
+ * @return	The line.
+ **************************************************************************************************/
 
+string readLine();
 
+/**********************************************************************************************//**
+ * @fn	string readPassword(const char *prompt, bool show_asterisk);
+ *
+ * @brief	Reads a password and shadows, if true, the characters on the screen.
+ *
+ * @author	João
+ * @date	20-11-2016
+ *
+ * @param	prompt		 	The prompt.
+ * @param	show_asterisk	True to show, false to hide the asterisk.
+ *
+ * @return	The password.
+ **************************************************************************************************/
+
+string readPassword(const char *prompt, bool show_asterisk);
+
+/**********************************************************************************************//**
+ * @fn	void getEnter();
+ *
+ * @brief	Waits to user to press ENTER.
+ *
+ * @author	João
+ * @date	20-11-2016
+ **************************************************************************************************/
+
+void getEnter();
+// espera que o utilizador prima ENTER
+
+/**********************************************************************************************//**
+ * @fn	void ClearScreen();
+ *
+ * @brief	Clears the screen.
+ *
+ * @author	João
+ * @date	20-11-2016
+ **************************************************************************************************/
+
+void ClearScreen();
+
+/**********************************************************************************************//**
+ * @fn	string ltrim(string& s);
+ *
+ * @brief	eliminates initial spaces the given string may have.
+ *
+ * @author	João
+ * @date	20-11-2016
+ *
+ * @param [in,out]	s	The string to process.
+ *
+ * @return	A string.
+ **************************************************************************************************/
+
+string ltrim(string& s);
+//elimina os espaços inicias de uma string
+// @param s - string a ser analisada
+
+/**********************************************************************************************//**
+ * @fn	string rtrim(string& s);
+ *
+ * @brief	eliminates last spaces the given string can have.
+ *
+ * @author	João
+ * @date	20-11-2016
+ *
+ * @param [in,out]	s	The string to process.
+ *
+ * @return	A string.
+ **************************************************************************************************/
+
+string rtrim(string& s);
+//elimina os espaços finais de uma string
+// @param s - string a ser analisada
+
+/**********************************************************************************************//**
+ * @fn	bool is_empty(ifstream& pFile);
+ *
+ * @brief	Query if 'pFile' is empty.
+ *
+ * @author	João
+ * @date	20-11-2016
+ *
+ * @param [in,out]	pFile	The file.
+ *
+ * @return	True if empty, false if not.
+ **************************************************************************************************/
+
+bool is_empty(ifstream& pFile);
+
+/**********************************************************************************************//**
+* @fn	void ClearScreen();
+*
+* @brief simple loading function.
+*
+* @author	João
+* @date	20-11-2016
+**************************************************************************************************/
+void loading();
 #endif /* HELPER_H_ */
