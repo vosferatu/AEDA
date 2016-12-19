@@ -326,11 +326,10 @@ void SharedRides::deleteAccount() {
 
 		if (remaccount == "y") {
 			if (currentUser->getVehicle()->getYear() != 0) {
-				
 				//delete of system!!!!!!!!!!!!
 				for (size_t i = 0; i < tripsPrinter.size(); i++) {
-					if (currentUser->getID() == tripsPrinter[i].getOwner())
-						tripsPrinter[i].setOwner(00);
+					if (currentUser->getusername() == tripsPrinter[i].getName())
+						tripsPrinter[i].setName("Deleted");
 				}
 				recompensate(currentUser->getID());
 
