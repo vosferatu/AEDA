@@ -1,6 +1,6 @@
 # AEDA 2016/2017 - "Boleias Partilhadas" [projeto C++]
 
-### Descrição do tema
+### PARTE 1
 
 Uma empresa deseja explorar o conceito de car-pooling e ride-sharing, e pretende criar um sistema para a
 gestão de uma rede social de partilha de boleias. Poderá haver dois tipos de utilizadores: os registados no
@@ -29,13 +29,29 @@ origem e destino da viagem, a hora de início e de fim, assim como o dia em que 
 poderá considerar veículos diferentes, nomeadamente veículos ligeiros (5 lugares), vans (de 7 lugares), entre
 outras opções.
 
-### Linhas gerais do trabalho
+### PARTE 2
 
-Trabalho prático - Parte 1
+A aplicação a desenvolver faz uso das estruturas de dados não lineares: **árvore binária de pesquisa**, **fila de
+prioridade** e **tabela de dispersão**. O grupo de trabalho deve efetuar as considerações que considerar necessárias
+para, sobre estas estruturas de dados, ilustrar:
+ + operações básicas CRUD (Create, Read, Update, Delete)
+ + listagens várias: totais ou parciais com critérios a definir pelo utilizador (não aplicável a filas de
+prioridade)
+As classes implementadas devem ser devidamente documentadas (usando Doxygen)
 
-O trabalho agora enunciado apenas se refere à primeira parte do mesmo. 
+Complemente o sistema já implementado com as seguintes funcionalidades:
 
-A segunda parte do trabalho será enunciada posteriormente (após a entrega desta primeira parte).
++ A empresa decidiu disponibilizar aos clientes informação sobre as viaturas disponíveis; alguns clientes poderão condicionar suas opções de partilha de viagem em função do tipo de viatura. 
+ + Assim, a empresa guarda numa **Árvore Binária de Pesquisa**:
+  + informação de todas as viaturas disponíveis no sistema, devendo ser possível identificar o seu dono (quem disponibiliza a viatura). As viaturas são ordenadas alfabeticamente pelo nome do fabricante (Ford, Renault, etc) e pelo nome do modelo. Para viaturas da mesma marca e modelo, estas são ordenadas pelo seu ano, sendo exibidas as mais recentes em primeiro. 
+  + Deve ser permitido inserir novas viaturas, eliminar viaturas existentes ou alterar o dono da viatura. O cliente também pode pesquisar viaturas.
++ Para melhor gerir a procura por determinados desnos de várias pessoas, acima da capacidade das viaturas, a empresa decide priorizar aquelas com relação de amizade mais próxima do motorista, e depois aquelas com distância mais próxima do itnerário original a ser executado pelo motorista. Os candidatos à partilha da viagem são então ordenados numa **Fila de Prioridade**, a fim de preencher as vagas disponíveis nas viaturas.
++ Para efeitos de promoção do sistema de partilhas, a empresa decide manter numa **Tabela de Dispersão** os membros inativos, ou seja, aqueles que não utilizam o sistema há mais de um determinado período de tempo. Sempre que um cliente inativo realiza uma nova viagem, ele passa novamente a ativo. As moradas são atualizadas, em campanhas promocionais, de tempos em tempos, de forma a ter esta informação sempre válida no sistema, para os clientes inativos.
+
+
+
+
+
 
 
 ### Notas relativas à implementação (itens sujeitos a avaliação)
@@ -72,8 +88,8 @@ A segunda parte do trabalho será enunciada posteriormente (após a entrega dest
 
 ### Datas
 + Data de entrega: 
- + dia **18/novembro, até às 23h59m**. 
+ + dia **2/janeir, até às 23h55m**. 
  + Submeter pelo Moodle: **Relatório em pdf + Código do programa + documentação**
 + Apresentação do trabalho:  
- + de **21 a 24 de novembro**, em horário a combinar com o docente das aulas práticas
+ + de **3 a 5 de janeiro**, em horário a combinar com o docente das aulas práticas
 
