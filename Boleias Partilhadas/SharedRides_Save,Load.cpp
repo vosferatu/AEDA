@@ -139,7 +139,7 @@ void SharedRides::loadTakenTrips() {
 	getline(infile, strnumber);
 	maxTakenCode = stoi(strnumber);
 
-	string name;
+	unsigned int ownerID;
 	string start;
 	string end;
 	Time startime;
@@ -157,9 +157,15 @@ void SharedRides::loadTakenTrips() {
 
 		size_t findpos = info.find(';', 0);			//inteiro que tem a posicao do primeiro ';'
 
-		name = info.substr(0, findpos);  //id = à string desde o inicio ate ';' transformada em unsigned int
+		tripcode = atoi(info.substr(0, findpos).c_str());  //id = à string desde o inicio ate ';' transformada em unsigned int
 		info = info.substr(findpos + 1, search);			//string = desde findpos até ao resto da  string
 		findpos = info.find(';', 0);					//agora o inteiro é a posicao na string do segundo ';'
+		
+		
+		ownerID = atoi(info.substr(0, findpos).c_str());  //id = à string desde o inicio ate ';' transformada em unsigned int
+		info = info.substr(findpos + 1, search);			//string = desde findpos até ao resto da  string
+		findpos = info.find(';', 0);
+
 
 		start = info.substr(0, findpos);
 		info = info.substr(findpos + 1, search);			//string = desde primeiro ';' até ao segundo
@@ -167,21 +173,21 @@ void SharedRides::loadTakenTrips() {
 
 		end = info.substr(0, findpos);
 		info = info.substr(findpos + 1, search);
-		findpos = info.find(';', 0);
+		findpos = info.find(':', 0);
 
 		startimehora = atoi(info.substr(0, findpos).c_str());
 		info = info.substr(findpos + 1, search);
-		findpos = info.find(':', 0);
+		findpos = info.find(';', 0);
 
 		startimeminuto = atoi(info.substr(0, findpos).c_str());
 		info = info.substr(findpos + 1, search);
-		findpos = info.find(';', 0);
+		findpos = info.find(':', 0);
 
 		startime = Time(startimehora, startimeminuto);
 
 		endtimehora = atoi(info.substr(0, findpos).c_str());
 		info = info.substr(findpos + 1, search);
-		findpos = info.find(':', 0);
+		findpos = info.find(';', 0);
 
 		endtimeminuto = atoi(info.substr(0, findpos).c_str());
 		info = info.substr(findpos + 1, search);
@@ -189,9 +195,8 @@ void SharedRides::loadTakenTrips() {
 
 		endtime = Time(endtimehora, endtimeminuto);
 
-		tripcode = stoi(info.substr(0, findpos).c_str());
 
-		takenTrip v1(name, start, end, endtime);
+		takenTrip v1(ownerID, start, end, endtime);
 		v1.setStartime(startime);
 		v1.setTripCode(tripcode);
 

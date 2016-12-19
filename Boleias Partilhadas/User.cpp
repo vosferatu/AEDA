@@ -122,7 +122,6 @@ void RegisteredUser::save(ofstream& out) const {
 
 	for (size_t i = 0; i < this->Trips.size(); i++)
 	{
-		out << this->Trips.size() << ";";
 		out << this->Trips[i] << ";";
 	}
 

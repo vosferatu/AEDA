@@ -5,8 +5,8 @@
 unsigned int takenTrip::tripCode = 1;
 
 
-takenTrip::takenTrip(string owns, string start, string finish, Time end){
-	owner = owns;
+takenTrip::takenTrip(unsigned int owns, string start, string finish, Time end){
+	ownerID = owns;
 	startPoint = start;
 	endPoint = endPoint;
 	startTime = Time();
@@ -20,8 +20,8 @@ unsigned int takenTrip::getTripCode() const{
 	return this->tripCode;
 }
 
-string takenTrip::getName() const{
-	return owner;
+unsigned int takenTrip::getOwner() const{
+	return ownerID;
 }
 
 string takenTrip::getStart() const
@@ -40,8 +40,8 @@ Time takenTrip::getStartTime() const {
 Date takenTrip::getDay() const { 
 	return this->day; }
 
-void takenTrip::setName(string nome){
-	this->owner = nome;
+void takenTrip::setOwner(unsigned int id){
+	this->ownerID = id;
 }
 
 void takenTrip::setStartime(Time start) {
@@ -56,7 +56,7 @@ void takenTrip::setTripCode(unsigned int tripcode) {
 
 
 ofstream & operator<<(ofstream & out, const takenTrip & trip){
-	out << trip.owner << ";";
+	out << trip.ownerID << ";";
 	out << trip.tripCode << ";";
 	out << trip.startPoint << ";";
 	out << trip.endPoint << ";";
@@ -67,7 +67,7 @@ ofstream & operator<<(ofstream & out, const takenTrip & trip){
 }
 
 ostream & operator<<(ostream & out, const takenTrip & trip){
-	out << "Dono: " << trip.owner << " ";
+	out << "Dono: " << trip.ownerID << " ";
 	out << "Start City: " << trip.startPoint << " ";
 	out << "Last City: " << trip.endPoint << endl;
 	out << "Start Time: " << trip.startTime << " ";
@@ -78,9 +78,9 @@ ostream & operator<<(ostream & out, const takenTrip & trip){
 }
 
 void takenTrip::save(ofstream& out) const {
-	out << this->getName() << ";" << this->getStart() << ";" <<
+	out << this->getTripCode() << this->getOwner() << ";" << this->getStart() << ";" <<
 		this->getEnd() << ";" << this->getStartTime() << ";" <<
-		this->getEndTime() << ";" << this->getTripCode() << endl;
+		this->getEndTime() << endl;
 }
 
 

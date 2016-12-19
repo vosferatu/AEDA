@@ -19,7 +19,7 @@
 
 class takenTrip { //usada para mostrar e gravar viagens dos owners
 	/** @brief	The ownser of the trip. */
-	string owner;
+	unsigned int ownerID;
 	/** @brief	The start point of the trip. */
 	string startPoint;
 	/** @brief	The end point of the trip. */
@@ -49,7 +49,7 @@ public:
 	 * @param	end   	The endtime.
 	 **************************************************************************************************/
 
-	takenTrip(string owns, string start, string finish, Time end);
+	takenTrip(unsigned int owns, string start, string finish, Time end);
 
 	/**********************************************************************************************//**
 	 * @fn	takenTrip::takenTrip()
@@ -78,15 +78,15 @@ public:
 	/**********************************************************************************************//**
 	 * @fn	string takenTrip::getName() const;
 	 *
-	 * @brief	Gets the owner name.
+	 * @brief	Gets the owner ID;
 	 *
 	 * @author	João
 	 * @date	20-11-2016
 	 *
-	 * @return	The ownerr name.
+	 * @return	The owner ID.
 	 **************************************************************************************************/
 
-	string getName() const;
+	unsigned int getOwner() const;
 
 	/**********************************************************************************************//**
 	 * @fn	string takenTrip::getStart() const;
@@ -195,16 +195,15 @@ public:
 	/**********************************************************************************************//**
 	 * @fn	void takenTrip::setName(string nome);
 	 *
-	 * @brief	Sets the name of owner.
+	 * @brief	Sets the owner ID
 	 *
 	 * @author	João
-	 * @date	20-11-2016
+	 * @date	19-12-2016
 	 *
-	 * @param	nome	The nanme.
+	 * @param	id	the owner id
 	 **************************************************************************************************/
 
-	void setName(string nome);
-
+	void setOwner(unsigned int id);
 	/**********************************************************************************************//**
 	 * @fn	friend ofstream& takenTrip::operator<<(ofstream& out, const takenTrip& trip);
 	 *
