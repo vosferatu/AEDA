@@ -41,10 +41,9 @@ As classes implementadas devem ser devidamente documentadas (usando Doxygen)
 
 Complemente o sistema já implementado com as seguintes funcionalidades:
 
-+ A empresa decidiu disponibilizar aos clientes informação sobre as viaturas disponíveis; alguns clientes poderão condicionar suas opções de partilha de viagem em função do tipo de viatura. 
- + Assim, a empresa guarda numa **Árvore Binária de Pesquisa**:
-  + informação de todas as viaturas disponíveis no sistema, devendo ser possível identificar o seu dono (quem disponibiliza a viatura). As viaturas são ordenadas alfabeticamente pelo nome do fabricante (Ford, Renault, etc) e pelo nome do modelo. Para viaturas da mesma marca e modelo, estas são ordenadas pelo seu ano, sendo exibidas as mais recentes em primeiro. 
-  + Deve ser permitido inserir novas viaturas, eliminar viaturas existentes ou alterar o dono da viatura. O cliente também pode pesquisar viaturas.
++ A empresa decidiu disponibilizar aos clientes informação sobre as viaturas disponíveis; alguns clientes poderão condicionar suas opções de partilha de viagem em função do tipo de viatura.  Assim, a empresa guarda numa **Árvore Binária de Pesquisa**:
+ + informação de todas as viaturas disponíveis no sistema, devendo ser possível identificar o seu dono (quem disponibiliza a viatura). As viaturas são ordenadas alfabeticamente pelo nome do fabricante (Ford, Renault, etc) e pelo nome do modelo. Para viaturas da mesma marca e modelo, estas são ordenadas pelo seu ano, sendo exibidas as mais recentes em primeiro. 
+ + Deve ser permitido inserir novas viaturas, eliminar viaturas existentes ou alterar o dono da viatura. O cliente também pode pesquisar viaturas.
 + Para melhor gerir a procura por determinados desnos de várias pessoas, acima da capacidade das viaturas, a empresa decide priorizar aquelas com relação de amizade mais próxima do motorista, e depois aquelas com distância mais próxima do itnerário original a ser executado pelo motorista. Os candidatos à partilha da viagem são então ordenados numa **Fila de Prioridade**, a fim de preencher as vagas disponíveis nas viaturas.
 + Para efeitos de promoção do sistema de partilhas, a empresa decide manter numa **Tabela de Dispersão** os membros inativos, ou seja, aqueles que não utilizam o sistema há mais de um determinado período de tempo. Sempre que um cliente inativo realiza uma nova viagem, ele passa novamente a ativo. As moradas são atualizadas, em campanhas promocionais, de tempos em tempos, de forma a ter esta informação sempre válida no sistema, para os clientes inativos.
 
