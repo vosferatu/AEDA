@@ -119,22 +119,27 @@ void RegisteredUser::save(ofstream& out) const {
 
 	if (Trips.size() == 0)
 		out << this->Trips.size() << ";";
-
-	for (size_t i = 0; i < this->Trips.size(); i++)
-	{
+	else {
 		out << this->Trips.size() << ";";
+
+		for (size_t i = 0; i < this->Trips.size(); i++) {
 		out << this->Trips[i] << ";";
+		}
 	}
 
 	if (favorites.size() == 0)
 		out << this->favorites.size() << ";" << endl;
-
-	for (size_t i = 0; i < this->favorites.size(); i++)
-	{
+	else {
 		out << this->favorites.size() << ";";
-		
-		if (i == this->favorites.size()-1)
-		out << this->favorites[i] << ";" << endl;
+
+		for (size_t i = 0; i < this->favorites.size(); i++){
+			
+			if (i < favorites.size() - 1)
+				out << this->favorites[i] << ";";
+			else if (i == favorites.size() - 1)
+				out << this->favorites[i] << endl;
+			
+		}
 	}
 }
 

@@ -9,11 +9,6 @@ void SharedRides::showTrips() const {
 		return;
 	}
 
-	if (currentUser->getnumTrips() == 0) {
-		cout << endl << TAB << "You have no taken trips in your history!" << endl;
-		return;
-	}
-
 	cout << endl;
 
 	cin.ignore(numeric_limits <streamsize>::max(), '\n');
@@ -35,6 +30,11 @@ void SharedRides::showTrips() const {
 	}
 
 	case 1: {
+		if (currentUser->getnumTrips() == 0) {
+			cout << endl << TAB << "You have no taken trips in your history!" << endl;
+			return;
+		}
+		
 		vector<int> vec = currentUser->getTrips();
 
 		cout << endl << TAB << "Your trip history:" << endl << endl;
@@ -42,7 +42,7 @@ void SharedRides::showTrips() const {
 		for (size_t i = 0; i < vec.size(); i++) {
 			for (size_t j = 0; j < tripsPrinter.size(); j++) {
 				if (tripsPrinter[j].getTripCode() == vec[i]) {
-					cout << "Trip number " << i + 1 << endl;
+					cout << "Trip number " << tripsPrinter[j].getTripCode() << endl; // em vez de i +1 (para efeitos de listagem pessoal)
 					cout << tripsPrinter[j] << endl;
 					cout << "----------------------------------------------------" << endl << endl;
 					break;
@@ -191,9 +191,13 @@ void SharedRides::addTrip() {
 }
 
 void SharedRides::startTrip() {
+
 	bool noTrip = false;
+
 	unsigned int codigo = 0;
+
 	vector<Stretch> s1;
+
 	for (size_t i = 0; i < tripOffers.size(); i++) {
 		if (tripOffers[i].getOwner() == currentUser->getID()) {
 			s1 = tripOffers[i].getWay();
@@ -201,8 +205,12 @@ void SharedRides::startTrip() {
 			Time tfim = Time() + tripOffers[i].getTotalTime();
 
 			takenTrip t1(currentUser->getusername(), s1[0].getCity(), end, tfim);
+
 			codigo = t1.getTripCode();
 			tripOffers.erase(tripOffers.begin() + i);
+			
+			tripsPrinter.push_back(t1);
+
 			noTrip = true;
 			break;
 		}
@@ -211,21 +219,29 @@ void SharedRides::startTrip() {
 	if (noTrip == false)
 		cout << endl << TAB << "You have no pending trips!" << endl;
 	else {
+		
 		cout << endl << TAB << "Your trip has been started!" << endl;
+		
 		vector<int> gajos{};
+		
 		for (size_t i = 0; i < s1.size(); i++) {
 			for (size_t j = 0; j < s1[i].getusers().size(); j++)
 				gajos.push_back(s1[i].getusers()[j]);
 		}
-		gajos.push_back(currentUser->getID());
+
 		sort(gajos.begin(), gajos.end());
+		
 		gajos.erase(unique(gajos.begin(), gajos.end()), gajos.end());
-		//fica com vetor de users na viagem
+		
+		//fica com vetor de users na viagem (sem o owner)
+		
 		for (size_t i = 0; i < gajos.size(); i++) {
 			size_t j = getPositionUser(gajos[i]);
 			users[j]->addTrip(codigo);
 		}
+		
 		currentUser->addTrip(codigo);
+		
 		usersalterados = true;
 	}
 }

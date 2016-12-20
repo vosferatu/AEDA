@@ -31,7 +31,8 @@ class takenTrip { //usada para mostrar e gravar viagens dos owners
 	/** @brief	The day of the trip. */
 	Date day;
 	/** @brief	The trip code of the trip. */
-	static unsigned int tripCode;
+	static unsigned int tripCodeStat;
+	unsigned int tripCode;
 
 public:
 

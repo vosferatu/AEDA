@@ -2,18 +2,18 @@
 
 
 ////////////////////////TAKEN ///////////////////////////////////////////
-unsigned int takenTrip::tripCode = 1;
+unsigned int takenTrip::tripCodeStat = 1;
 
 
 takenTrip::takenTrip(string owns, string start, string finish, Time end){
 	owner = owns;
 	startPoint = start;
-	endPoint = endPoint;
+	endPoint = finish;
 	startTime = Time();
 	endTime = end;
 	day = Date();
-	this->tripCode = tripCode;
-	tripCode++;
+	this->tripCode = tripCodeStat;
+	tripCodeStat++;
 }
 
 unsigned int takenTrip::getTripCode() const{
@@ -78,9 +78,13 @@ ostream & operator<<(ostream & out, const takenTrip & trip){
 }
 
 void takenTrip::save(ofstream& out) const {
-	out << this->getName() << ";" << this->getStart() << ";" <<
-		this->getEnd() << ";" << this->getStartTime() << ";" <<
-		this->getEndTime() << ";" << this->getTripCode() << endl;
+	out << this->tripCode << ";";
+	out << this->owner << ";";
+	out << this->startPoint << ";";
+	out << this->endPoint << ";";
+	out << this->startTime << ";";
+	out << this->endTime << ";";
+	out << this->day << endl;
 }
 
 
@@ -159,6 +163,7 @@ ofstream & operator<<(ofstream & out, const waitingTrip & trip){
 
 ostream & operator<<(ostream & out, const waitingTrip & trip){
 	
+		
 	out << "No. of stops: " << trip.getWay().size() << endl << endl;
 	
 	vector<Stretch> viagem = trip.getWay();

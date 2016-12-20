@@ -1,3 +1,2 @@
-5
-1;Seat Ibiza;5;2005;C;Porto;Vila Real;Viseu;
-5;Fiat Punto;5;2012;B;Vila Real;Viseu;Aveiro;
+1
+1;Renault Clio;5;2003;A;Porto;Vila Real;Viseu;
