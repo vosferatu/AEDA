@@ -139,6 +139,7 @@ void SharedRides::loadTakenTrips() {
 	getline(infile, strnumber);
 	maxTakenCode = stoi(strnumber);
 
+	unsigned int tripcode;
 	string name;
 	string start;
 	string end;
@@ -148,7 +149,11 @@ void SharedRides::loadTakenTrips() {
 	Time endtime;
 	int endtimehora;
 	int endtimeminuto;
-	unsigned int tripcode;
+	unsigned int dia;
+	unsigned int mes;
+	unsigned int ano;
+	Date data;
+	
 
 	while (getline(infile, info))
 	{
@@ -156,7 +161,11 @@ void SharedRides::loadTakenTrips() {
 
 
 		size_t findpos = info.find(';', 0);			//inteiro que tem a posicao do primeiro ';'
-
+		
+		tripcode = stoi(info.substr(0, findpos).c_str());
+		info = info.substr(findpos + 1, search);			//string = desde findpos até ao resto da  string
+		findpos = info.find(';', 0);					//agora o inteiro é a posicao na string do segundo ';'
+		
 		name = info.substr(0, findpos);  //id = à string desde o inicio ate ';' transformada em unsigned int
 		info = info.substr(findpos + 1, search);			//string = desde findpos até ao resto da  string
 		findpos = info.find(';', 0);					//agora o inteiro é a posicao na string do segundo ';'
@@ -189,11 +198,23 @@ void SharedRides::loadTakenTrips() {
 
 		endtime = Time(endtimehora, endtimeminuto);
 
-		tripcode = stoi(info.substr(0, findpos).c_str());
+		dia = atoi(info.substr(0, findpos).c_str());
+		info = info.substr(findpos + 1, search);
+		findpos = info.find('/', 0);
 
+		mes = atoi(info.substr(0, findpos).c_str());
+		info = info.substr(findpos + 1, search);
+		findpos = info.find('/', 0);
+
+		ano = atoi(info.substr(0, findpos).c_str());
+
+		data = Date(dia, mes, ano);
+		
 		takenTrip v1(name, start, end, endtime);
 		v1.setStartime(startime);
+		v1.setEndTime(endtime);
 		v1.setTripCode(tripcode);
+		v1.setDay(data);
 
 		tripsPrinter.push_back(v1);
 	}

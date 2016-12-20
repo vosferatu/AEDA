@@ -16,6 +16,8 @@ takenTrip::takenTrip(string owns, string start, string finish, Time end){
 	tripCodeStat++;
 }
 
+
+
 unsigned int takenTrip::getTripCode() const{
 	return this->tripCode;
 }
@@ -43,6 +45,15 @@ Date takenTrip::getDay() const {
 void takenTrip::setName(string nome){
 	this->owner = nome;
 }
+
+void takenTrip::setDay(Date data) {
+	this->day = data;
+}
+
+void takenTrip::setEndTime(Time end) {
+	this->endTime = end;
+}
+
 
 void takenTrip::setStartime(Time start) {
 	this->startTime = start;
