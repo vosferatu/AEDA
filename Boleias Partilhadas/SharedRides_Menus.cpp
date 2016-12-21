@@ -187,11 +187,7 @@ void SharedRides::manage_menu(){
 void SharedRides::user_menu(){
 	if (dynamic_cast<RegisteredUser*>(currentUser) != NULL) { //isto da erro porque nao temos uma
 
-		cout << endl << TAB << "Welcome to Shared Rides V.1.0. Please put your seatbelts on and enjoy your travel." << endl;
-		cout << endl << TAB << " --- USER HOMEPAGE --- " << endl << endl;
-		cout << TAB << "-> You are currently logged as " << currentUser->getusername() << " <-" << endl << endl;
-		
-
+		header(" --- USER HOMEPAGE --- ");
 
 		if (currentUser->getVehicle()->getnumberSeats() != 0) { //currentUser has a CAR			
 		
@@ -208,18 +204,13 @@ void SharedRides::user_menu(){
 			switch (choice) {
 			case 0:
 				ClearScreen();
-				cout << endl << TAB << "Welcome to Shared Rides V.1.0. Please put your seatbelts on and enjoy your travel." << endl;
-				cout << endl << TAB << " --- TRIPS --- " << endl << endl;
-				cout << TAB << "-> You are currently logged as " << currentUser->getusername() << " <-" << endl;
-
+				header(" --- TRIPS --- ");
 				showTrips();
 				_getch();
 				break;
 			case 1:
 				ClearScreen();
-				cout << endl << TAB << "Welcome to Shared Rides V.1.0. Please put your seatbelts on and enjoy your travel." << endl;
-				cout << endl << TAB << " --- VEHICLE --- " << endl << endl;
-				cout << TAB << "-> You are currently logged as " << currentUser->getusername() << " <-" << endl;
+				header(" --- VEHICLE --- ");
 				cout <<endl<< TAB << "Right now you have " << currentUser->getVehicle()->getBrand() << " associated to your account." << endl << endl;
 
 				userWithVehicleMenu();
@@ -227,35 +218,26 @@ void SharedRides::user_menu(){
 				break;
 			case 2:
 				ClearScreen();
-				cout << endl << TAB << "Welcome to Shared Rides V.1.0. Please put your seatbelts on and enjoy your travel." << endl;
-				cout << endl << TAB << " --- NEW TRIP --- " << endl << endl;
-				cout << TAB << "-> You are currently logged as " << currentUser->getusername() << " <-" << endl;
+				header(" --- NEW TRIP --- ");
 
 				VehicleTripMenu();
 				_getch();
 				break;
 			case 3:
 				ClearScreen();
-				cout << endl << TAB << "Welcome to Shared Rides V.1.0. Please put your seatbelts on and enjoy your travel." << endl;
-				cout << endl << TAB << " --- BUDDIES --- " << endl << endl;
-				cout << TAB << "-> You are currently logged as " << currentUser->getusername() << " <-" << endl;
-
+				header(" --- BUDDIES --- ");
 				buddiesMenu();
 				_getch();
 				break;
 			case 4:
 				ClearScreen();
-				cout << endl << TAB << "Welcome to Shared Rides V.1.0. Please put your seatbelts on and enjoy your travel." << endl;
-				cout << endl << TAB << " --- CREDDIT ACCOUNT --- " << endl << endl;
-				cout << TAB << "-> You are currently logged as " << currentUser->getusername() << " <-" << endl;
+				header(" --- CREDDIT ACCOUNT --- ");
 				creditAccount();
 				Sleep(2000);
 				break;
 			case 5:
 				ClearScreen();
-				cout << endl << TAB << "Welcome to Shared Rides V.1.0. Please put your seatbelts on and enjoy your travel." << endl;
-				cout << endl << TAB << " --- CHANGE PROFILE --- " << endl << endl;
-				cout << TAB << "-> You are currently logged as " << currentUser->getusername() << " <-" << endl;
+				header(" --- CHANGE PROFILE --- ");
 				changeProfile();
 				Sleep(2000);
 				break;
@@ -265,9 +247,7 @@ void SharedRides::user_menu(){
 				break;
 			case 7:
 				ClearScreen();
-				cout << endl << TAB << "Welcome to Shared Rides V.1.0. Please put your seatbelts on and enjoy your travel." << endl;
-				cout << endl << TAB << " --- DELETE ACCOUNT --- " << endl << endl;
-				cout << TAB << "-> You are currently logged as " << currentUser->getusername() << " <-" << endl;
+				header(" --- DELETE ACCOUNT --- ");
 				deleteAccount();
 				_getch();
 				return;
@@ -292,49 +272,43 @@ void SharedRides::user_menu(){
 			switch (choice) {
 			case 0:
 				ClearScreen();
-				cout << endl << TAB << "Welcome to Shared Rides V.1.0. Please put your seatbelts on and enjoy your travel." << endl;
-				cout << endl << TAB << " --- TRIPS --- " << endl << endl;
-				cout << TAB << "-> You are currently logged as " << currentUser->getusername() << " <-" << endl;
+				header(" --- TRIPS --- ");
 				showTrips();
 				_getch();
 				break;
 			case 1:
 				ClearScreen();
-				cout << endl << TAB << "Welcome to Shared Rides V.1.0. Please put your seatbelts on and enjoy your travel." << endl;
-				cout << endl << TAB << " --- ADD VEHICLE --- " << endl << endl;
-				cout << TAB << "-> You are currently logged as " << currentUser->getusername() << " <-" << endl;
+				header(" --- ADD VEHICLE --- ");
 				addVehicle();
 				Sleep(2000);
 				break;
 			case 2:
 				ClearScreen();
-				cout << endl << TAB << "Welcome to Shared Rides V.1.0. Please put your seatbelts on and enjoy your travel." << endl;
-				cout << endl << TAB << " --- ENTER TRIP --- " << endl << endl;
-				cout << TAB << "-> You are currently logged as " << currentUser->getusername() << " <-" << endl;
-				enterTrip();
-				_getch();
+				try { enterTrip(); }
+				catch (TripEnterException<string> err)
+				{
+					cout << err.info << endl;
+					Sleep(2000);  //only in windows (?)
+					_getch();
+					ClearScreen();					
+					return user_menu();
+				}
 				break;
 			case 3:
 				ClearScreen();
-				cout << endl << TAB << "Welcome to Shared Rides V.1.0. Please put your seatbelts on and enjoy your travel." << endl;
-				cout << endl << TAB << " --- BUDDIES --- " << endl << endl;
-				cout << TAB << "-> You are currently logged as " << currentUser->getusername() << " <-" << endl;
+				header(" --- BUDDIES --- ");
 				buddiesMenu();
 				_getch();
 				break;
 			case 4:
 				ClearScreen();
-				cout << endl << TAB << "Welcome to Shared Rides V.1.0. Please put your seatbelts on and enjoy your travel." << endl;
-				cout << endl << TAB << " --- CREDIT ACCOUNT --- " << endl << endl;
-				cout << TAB << "-> You are currently logged as " << currentUser->getusername() << " <-" << endl;
+				header(" --- CREDIT ACCOUNT --- ");
 				creditAccount();
 				Sleep(2000);
 				break;
 			case 5:
 				ClearScreen();
-				cout << endl << TAB << "Welcome to Shared Rides V.1.0. Please put your seatbelts on and enjoy your travel." << endl;
-				cout << endl << TAB << " --- CHANGE PROFILE --- " << endl << endl;
-				cout << TAB << "-> You are currently logged as " << currentUser->getusername() << " <-" << endl;
+				header(" --- CHANGE PROFILE --- ");
 				changeProfile();
 				Sleep(2000);
 				break;
@@ -344,9 +318,7 @@ void SharedRides::user_menu(){
 				break;
 			case 7:
 				ClearScreen();
-				cout << endl << TAB << "Welcome to Shared Rides V.1.0. Please put your seatbelts on and enjoy your travel." << endl;
-				cout << endl << TAB << " --- DELETE ACCOUNT --- " << endl << endl;
-				cout << TAB << "-> You are currently logged as " << currentUser->getusername() << " <-" << endl;
+				header(" --- DELETE ACCOUNT --- ");
 				deleteAccount();
 				_getch();
 				return;
@@ -361,9 +333,7 @@ void SharedRides::user_menu(){
 	}
 	else { // guest user
 		ClearScreen();
-		cout << endl << TAB << "Welcome to Shared Rides V.1.0. Please put your seatbelts on and enjoy your travel." << endl;
-		cout << endl << TAB << " --- GUEST HOMEPAGE --- " << endl << endl;
-		cout << TAB << "-> You aren't logged to any account <- " << endl << endl;
+		header(" --- GUEST HOMEPAGE --- ");
 
 		int choice = get_input <int>(
 
@@ -374,7 +344,14 @@ void SharedRides::user_menu(){
 		switch (choice) {
 		case 0:
 			ClearScreen();
-			enterTrip();
+			try { enterTrip(); }
+			catch (TripEnterException<string> err)
+			{
+				cout << err.info << endl;
+				Sleep(2000);  //only in windows (?)
+				ClearScreen();
+				return user_menu();
+			}
 			_getch();
 			break;
 		case 1:

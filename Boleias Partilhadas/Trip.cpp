@@ -175,7 +175,7 @@ ofstream & operator<<(ofstream & out, const waitingTrip & trip){
 ostream & operator<<(ostream & out, const waitingTrip & trip){
 	
 		
-	out << "No. of stops: " << trip.getWay().size() << endl << endl;
+	out << "No. of stops: " << trip.getWay().size() -1 << endl << endl;
 	
 	vector<Stretch> viagem = trip.getWay();
 	
@@ -204,7 +204,7 @@ void waitingTrip::save(ofstream& out) const {
 		out << this->Viagem[i];
 	}
 
-	out << this->getpriceStop() << ";" << getmaxSeats() << endl;
+	out << this->getpriceStop() << ";" << this->getmaxSeats() << endl;
 
 
 }

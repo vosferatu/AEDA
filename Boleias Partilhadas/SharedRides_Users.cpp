@@ -4,9 +4,7 @@ using namespace std;
 // User-specific functions
 
 void SharedRides::CreateRegis()
-{
-
-	// gets username
+{	// gets username
 	bool userexists = true;
 	string username;
 
@@ -87,8 +85,12 @@ void SharedRides::CreateRegis()
 		if (addvehicle == "y") {
 			cin.ignore(numeric_limits <streamsize>::max(), '\n');
 			cout << endl << TAB;
-			cout << "Please specify its brand and model." << endl;
+			cout << "Please specify its brand." << endl;
 			string brand = readLine();
+
+			cout << endl << TAB;
+			cout << "Please specify its model." << endl;
+			string model = readLine();
 
 			bool goodyear = false;
 			unsigned int year;
@@ -199,6 +201,7 @@ void SharedRides::CreateRegis()
 
 
 			Vehicle* v1 = new Vehicle(seats, brand, year, rate);
+			v1->setModel(model);
 			v1->setRoute(rout);
 			maxVehiclesID++;
 			RegisteredUser* RU = new RegisteredUser(username, password1, city, v1);

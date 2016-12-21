@@ -612,6 +612,8 @@ public:
 
 	void showBuddiesProfileToUser();
 
+	void header(string header);
+
 };
 
 // tratamento de exceções
@@ -639,7 +641,7 @@ public:
 	}
 };
 
-template<class T>
+
 
 /**********************************************************************************************//**
  * @class	LoginException
@@ -649,7 +651,7 @@ template<class T>
  * @author	João
  * @date	20-11-2016
  **************************************************************************************************/
-
+template<class T>
 class LoginException
 {
 public:
@@ -660,7 +662,7 @@ public:
 	}
 };
 
-template<class T>
+
 
 /**********************************************************************************************//**
  * @class	RegistrationException
@@ -670,7 +672,7 @@ template<class T>
  * @author	João
  * @date	20-11-2016
  **************************************************************************************************/
-
+template<class T>
 class RegistrationException
 {
 public:
@@ -680,6 +682,29 @@ public:
 		this->info = info;
 	}
 };
+
+
+
+
+/**********************************************************************************************//**
+ * @class	TripEnterException
+ *
+ * @brief	Exception for entering trips.
+ *
+ * @author	João
+ * @date	21-12-2016
+ **************************************************************************************************/
+template<class T>
+class TripEnterException
+{
+public:
+	T info;
+	TripEnterException(T info)
+	{
+		this->info = info;
+	}
+};
+
 
 
 

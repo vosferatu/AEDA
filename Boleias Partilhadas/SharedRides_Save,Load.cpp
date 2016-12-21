@@ -245,6 +245,7 @@ void SharedRides::loadWaitingTrips() {
 	int numIDs;
 	float pricestop;
 	int maxseats;
+
 	vector<Stretch> viagem;
 
 	while (getline(infile, info)) {
@@ -332,6 +333,7 @@ void SharedRides::loadVehicles() {
 
 	unsigned int ID;
 	string brand;
+	string model;
 	unsigned int year;
 	string rate;
 	unsigned int seats;
@@ -350,6 +352,10 @@ void SharedRides::loadVehicles() {
 		brand = info.substr(0, findpos);
 		info = info.substr(findpos + 1, search);			//string = desde primeiro ';' até ao segundo
 		findpos = info.find(';', 0);					//agora o inteiro é a posicao na string do terceiro ';'
+
+		model = info.substr(0, findpos);
+		info = info.substr(findpos + 1, search);
+		findpos = info.find(';', 0);
 
 		seats = stoul(info.substr(0, findpos).c_str());
 		info = info.substr(findpos + 1, search);
