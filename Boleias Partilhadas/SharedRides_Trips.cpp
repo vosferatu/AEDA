@@ -346,35 +346,44 @@ void SharedRides::enterTrip() {
 	}
 
 	int contador = 0;
+	bool entrou = false;
 	unsigned int bancos = tripOffers[choice].getmaxSeats();
+
 	vector<Stretch> novo = tripOffers[choice].getWay();
+
 	for (size_t i = 0; i < novo.size(); i++) {
+		
 		if (novo[i].getCity() == firstPoint) {
 			if (novo[i].getusers().size() < bancos)
-				contador++;
+				entrou = true;
+			else entrou = false;
 		}
-		if ((contador > 0) && (novo[i].getCity() != secondPoint)) {
+		if ((entrou == true) && (novo[i].getCity() != secondPoint)) {
 			if (novo[i].getusers().size() < bancos)
-				contador++;
+				entrou = true;
+			else entrou = false;
 		}
 		if (novo[i].getCity() == secondPoint) {
 			if (novo[i].getusers().size() < bancos)
-				contador++;
+				entrou = true;
+			else entrou = false;
 			break;
 		}
 	}
-	if (contador != stops) {
+
+	if (entrou != true) {
 		cout << endl << TAB << "Not enough seats available! We're sorry." << endl;
 		return;
 	}
 
 	contador = 0;
+	
 	for (size_t i = 0; i < novo.size(); i++) {
 		if (novo[i].getCity() == firstPoint) {
 			novo[i].addUser(currentUser->getID());
 			contador++;
 		}
-		if ((contador > 0) && (novo[i].getCity() != secondPoint)) {
+		if ((contador > 0) && (novo[i].getCity() != secondPoint) && (novo[i].getCity() != firstPoint)) {
 			novo[i].addUser(currentUser->getID());
 			contador++;
 		}
@@ -383,12 +392,13 @@ void SharedRides::enterTrip() {
 			break;
 		}
 	}
+	
 
 	tripOffers[choice].setWay(novo);
 
 	currentUser->chargeAccount(stops*tripOffers[choice].getpriceStop());
 
-	cout << endl << TAB << "You have been added to the trip and you have payed for it." << endl;
+	cout << endl << TAB << "You have been added to the trip. The trip price " << stops*tripOffers[choice].getpriceStop() <<"$ was automatically charged from your account." << endl;
 
 }
 

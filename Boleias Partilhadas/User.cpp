@@ -111,9 +111,6 @@ void RegisteredUser::setFavs(vector<int> favs) {
 	this->favorites = favs;
 }
 
-
-
-
 void RegisteredUser::save(ofstream& out) const {
 	out << this->getID() << ";" << this->getusername() << ";" << this->getpassword() << ";" << this->getAccount() << ";" << this->getCity() << ";";
 

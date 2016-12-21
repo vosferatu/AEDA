@@ -201,7 +201,7 @@ void waitingTrip::save(ofstream& out) const {
 
 	for (size_t i = 0; i < this->Viagem.size(); i++)
 	{
-		out << this->Viagem[i] << ";";
+		out << this->Viagem[i];
 	}
 
 	out << this->getpriceStop() << ";" << getmaxSeats() << endl;
@@ -248,8 +248,13 @@ void Stretch::setvectID(vector<int> usersID) {
 ofstream & operator<<(ofstream & out, const Stretch & way) {
 	out << way.stop << ";" << way.toNext << ";";
 	
-	out << way.usersID.size();
+	if (way.usersID.size() == 0) {
+		out << way.usersID.size() << ";";
+		return out;
+	}
 	
+	out << way.usersID.size() << ";";
+
 	for (size_t i = 0; i < way.usersID.size(); i++) {
 		out << way.usersID[i] << ";";
 	}

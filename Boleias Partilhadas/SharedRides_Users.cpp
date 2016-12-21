@@ -237,8 +237,10 @@ void SharedRides::creditAccount() {
 	cout << endl << TAB << "Your current balance: $" << currentUser->getAccount() << endl << endl;
 
 	float novo = 0.0;
+
 	while (true) {
 		novo = get_input <float>(TAB "How much do you want to credit your acount? (X.Y)" "\n" TAB "(Input 0 if you selected the wrong menu and want to go back)");
+		
 		if (novo < 0) {
 			cout << endl << TAB << "Cannot charge negative values" << endl;
 			continue;
@@ -433,6 +435,7 @@ void SharedRides::guest_log() {
 		}
 		else userexists = false;
 	}
+
 	User* u1 = new GuestUser(username);
 	users.push_back(u1);
 	usersalterados = true;
