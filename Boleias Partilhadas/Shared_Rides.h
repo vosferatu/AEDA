@@ -5,6 +5,8 @@
 #include "User.h"
 #include "Helper.h"
 #include "Vehicle.h"
+#include "BST.h"
+
 
 #include <iostream>
 #include <fstream>
@@ -13,6 +15,7 @@
 #include <sstream>
 #include <ostream>
 #include <algorithm>
+
 
 
 #undef max // because of numeric_limits
@@ -43,6 +46,9 @@ class SharedRides
 	User* currentUser = NULL;  //se não for pointer, slicing problem
 	vector<waitingTrip> tripsWaiting;
 	static vector<string>cities;
+
+	//** @brief The BST for saving vehicles data. */
+	BST<Vehicle*> carsBST;
 
 	/**********************************************************************************************//**
 	 * @property	static vector<string>cities
@@ -92,8 +98,8 @@ public:
 	 * @author	João
 	 * @date	20-11-2016
 	 **************************************************************************************************/
-
-	SharedRides() {}; //podemos fazer os loads todos no construtor
+	
+	SharedRides() : carsBST( new Vehicle() ){}; //podemos fazer os loads todos no construtor
 
 	/**********************************************************************************************//**
 	 * @fn	void SharedRides::run();
@@ -253,7 +259,7 @@ public:
 	 * @date	20-11-2016
 	 **************************************************************************************************/
 
-	static void CreateRegis();
+	 void CreateRegis();
 
 	/**********************************************************************************************//**
 	 * @fn	unsigned int SharedRides::getCARHighID() const;
@@ -612,7 +618,20 @@ public:
 
 	void showBuddiesProfileToUser();
 
+	/**********************************************************************************************//**
+	 * @fn	void header(string header);
+	 *
+	 * @brief	a function to show a header in the program
+	 *
+	 * @author	João
+	 * @date	22-12-2016
+	 *
+	 * @param	header	the header title  
+	 **************************************************************************************************/
 	void header(string header);
+
+
+	BST<Vehicle*> getCars() const;
 
 };
 

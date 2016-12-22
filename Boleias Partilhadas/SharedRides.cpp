@@ -228,3 +228,8 @@ void SharedRides::header(string header) {
 
 
 }
+
+BST<Vehicle*> SharedRides::getCars() const
+{
+	return carsBST;
+}
