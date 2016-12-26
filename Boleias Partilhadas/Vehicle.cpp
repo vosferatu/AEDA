@@ -128,6 +128,7 @@ ostream& operator<< (ostream& os, const Vehicle car) {
 	os << TAB << "Rate: " << car.getRate() << endl;
 	os << TAB << "Owner predefined route: ";
 	
+	if (car.getRoute().size() == 0) os << "This user does not have any predefined route.";
 	for (size_t i = 0; i < car.getRoute().size(); i++){
 		if (i == car.getRoute().size() - 1)
 			os << car.getRoute()[i];
@@ -170,16 +171,27 @@ ostream & operator<<(ostream & os, const Vehicle* car){
 	return os;
 }
 
-bool Vehicle::operator < (const Vehicle & car1) const {
-	if (this->brand == car1.brand)
-		if (this->model == car1.model)
-			return (this->year < car1.year);
-		else return (this->model < car1.model);
-	else
-		return (this->brand < car1.brand);
+//bool Vehicle::operator < (const Vehicle & car1) const {
+		
+	//if (this->brand != car1.brand) return (this->brand > car1.brand);
+//	if (  (this->brand == car1.brand) && (this->model == car1.model)  ) 
+	//	return (this->year > car1.year);
+	//else return (this->model < car1.model);
+//}
+
+
+bool Vehicle::operator < (Vehicle* const& car1) const {
+
+	if (this->brand != car1->brand) return (this->brand < car1->brand);
+
+	if ( (this->brand == car1->brand) && (this->model == car1->model) )
+		return (this->year < car1->year);
+		else return (this->model < car1->model);
 }
+
 
 
 bool Vehicle::operator == (const Vehicle &car1) const {
-	return ((this->brand == car1.brand) && (this->model == car1.model) && (this->year == car1.year));
+	return ( (this->brand == car1.brand) && (this->model == car1.model) && (this->year == car1.year));
 }
+

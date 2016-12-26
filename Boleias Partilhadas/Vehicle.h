@@ -356,6 +356,10 @@ public:
 	 **************************************************************************************************/
 	bool operator < (const Vehicle & car1) const;
 
+	bool operator()(Vehicle * const & car1, Vehicle * const & car2) const;
+
+	bool operator<(Vehicle * const & car1) const;
+
 	/**********************************************************************************************//**
 	 * @fn	bool Vehicle::operator == (Vehicle car1);
 	 *

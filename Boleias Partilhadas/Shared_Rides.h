@@ -164,7 +164,7 @@ public:
 	// LOAD
 
 	/**********************************************************************************************//**
-	 * @fn	static void SharedRides::load();
+	 * @fn	 void SharedRides::load();
 	 *
 	 * @brief	Loads all the things.
 	 *
@@ -172,10 +172,10 @@ public:
 	 * @date	20-11-2016
 	 **************************************************************************************************/
 
-	static void load();
+	void load();
 
 	/**********************************************************************************************//**
-	 * @fn	static void SharedRides::loadCities();
+	 * @fn	 void SharedRides::loadCities();
 	 *
 	 * @brief	Loads the cities.
 	 *
@@ -183,10 +183,10 @@ public:
 	 * @date	20-11-2016
 	 **************************************************************************************************/
 
-	static void loadCities();
+	 void loadCities();
 
 	/**********************************************************************************************//**
-	 * @fn	static void SharedRides::loadUsers();
+	 * @fn	 void SharedRides::loadUsers();
 	 *
 	 * @brief	Loads the users.
 	 *
@@ -194,18 +194,18 @@ public:
 	 * @date	20-11-2016
 	 **************************************************************************************************/
 
-	static void loadUsers();
+	 void loadUsers();
 
 	/**********************************************************************************************//**
-	 * @fn	static void SharedRides::loadVehicles();
+	 * @fn	 void SharedRides::loadVehicles();
 	 *
-	 * @brief	Loads the vehicles.
+	 * @brief	Loads the vehicles from file.
 	 *
 	 * @author	João
 	 * @date	20-11-2016
 	 **************************************************************************************************/
 
-	static void loadVehicles();
+	void loadVehicles();
 
 	/**********************************************************************************************//**
 	 * @fn	static void SharedRides::loadTakenTrips();
@@ -216,10 +216,10 @@ public:
 	 * @date	20-11-2016
 	 **************************************************************************************************/
 
-	static void loadTakenTrips();
+	 void loadTakenTrips();
 
 	/**********************************************************************************************//**
-	 * @fn	static void SharedRides::loadWaitingTrips();
+	 * @fn	 void SharedRides::loadWaitingTrips();
 	 *
 	 * @brief	Loads waiting trips.
 	 *
@@ -227,7 +227,7 @@ public:
 	 * @date	20-11-2016
 	 **************************************************************************************************/
 
-	static void loadWaitingTrips();
+	 void loadWaitingTrips();
 
 
 	//LOGIN & REGISTRATION

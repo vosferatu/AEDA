@@ -1,2 +1,5 @@
-1
-1;Tesla;Model S;5;2016;A;Porto;Vila Real;Viseu;
+4
+1;Citroen;C4;5;2016;A;Porto;Vila Real;Viseu;
+2;Citroen;C4;5;2014;A;Viseu;Beja;
+3;Citroen;C4;5;2015;A;Vila Real;Aveiro;
+4;Tesla;Model S;5;2015;A;
