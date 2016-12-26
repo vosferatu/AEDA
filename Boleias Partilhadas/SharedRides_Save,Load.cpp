@@ -379,16 +379,9 @@ void SharedRides::loadVehicles() {
 		}
 
 		Vehicle* v1 = new Vehicle(ID, seats, brand, year, rate);
-		v1->setModel(model);
 		v1->setRoute(route);
 		cars.push_back(v1);
 
-		//Vehicle v2(ID, seats, brand, year, rate);
-		//v2.setModel(model);
-	//	v2.setRoute(route);
-		
-		
-		carsBST.insert(v1);
 	}
 
 	for (size_t i = 0; i < cars.size(); i++) {

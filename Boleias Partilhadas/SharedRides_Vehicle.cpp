@@ -36,6 +36,10 @@ void SharedRides::editVehicle() {
 
 	switch (choice) {
 	case 0: {
+		
+		Vehicle * carfound = carsBST.find(currentUser->getVehicle());
+		carsBST.remove(carfound);
+
 		cin.ignore(numeric_limits <streamsize>::max(), '\n');
 		cout << endl << TAB;
 		cout << "Please specify its brand." << endl;
@@ -87,14 +91,35 @@ void SharedRides::editVehicle() {
 			else goodrate = true;
 		}
 
-		currentUser->getVehicle()->setRate(rate);
-		currentUser->getVehicle()->setYear(year);
-		currentUser->getVehicle()->setSeats(seats);
-		currentUser->getVehicle()->setBrand(brand);
-		currentUser->getVehicle()->setModel(model);
-		currentUser->getVehicle()->setId(currentUser->getID());
+		carfound->setRate(rate);
+		carfound->setYear(year);
+		carfound->setSeats(seats);
+		carfound->setBrand(brand);
+		carfound->setModel(model);
+		carfound->setId(currentUser->getID());
+
+		carsBST.insert(carfound);
+
+		currentUser->setVehicle(carfound);
+
+		for (size_t i = 0; i < cars.size(); i++) {
+			if (cars[i]->getID() == currentUser->getID()) {
+				cars[i] = currentUser->getVehicle();
+				break;
+			}
+		}
+
+		carsalterados = true;
+				
+		//currentUser->getVehicle()->setRate(rate);
+		//currentUser->getVehicle()->setYear(year);
+		//currentUser->getVehicle()->setSeats(seats);
+		//currentUser->getVehicle()->setBrand(brand);
+		//currentUser->getVehicle()->setModel(model);
+		//currentUser->getVehicle()->setId(currentUser->getID());
+		
 		// adds route 
-		bool routebool = false;
+		/*bool routebool = false;
 		string cityroute;
 		string addroute;
 		vector<string> rout(0);
@@ -140,16 +165,10 @@ void SharedRides::editVehicle() {
 		}
 
 		currentUser->getVehicle()->setRoute(rout);
-
-		for (size_t i = 0; i < cars.size(); i++) {
-			if (cars[i]->getID() == currentUser->getID()) {
-				cars[i] = currentUser->getVehicle();
-				break;
-			}
-		}
-		carsalterados = true;
+		*/
 	}
 			break;
+
 	case 1: {
 		string cityroute;
 		vector<string> rout(0);

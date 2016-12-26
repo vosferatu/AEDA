@@ -85,7 +85,6 @@ void SharedRides::manage_menu(){
 		TAB_BIG"[4] Set new tax" "\n""\n"
 		TAB_BIG"[5] Log Off");
 	float choice1 = 0;
-	
 	switch (choice) {
 	case 0:
 		ClearScreen();
@@ -121,7 +120,7 @@ void SharedRides::manage_menu(){
 		}
 		_getch();
 		break;
-	case 2: {
+	case 2:
 		if (cars.size() == 0) {
 			cout << endl << TAB << "No trips to show.\n" << endl;
 			_getch();
@@ -132,27 +131,12 @@ void SharedRides::manage_menu(){
 		cout << endl << TAB << " --- APP CARS --- " << endl << endl;
 		cout << endl << "-------------------------------------------------------------------------" << endl << endl;
 		for (size_t i = 0; i < cars.size(); i++) {
-			cout << TAB << "Car number " << i + 1 << endl << endl;
+			cout <<TAB<<  "Car number " << i + 1 << endl<<endl;
 			cout << *(cars[i]) << endl << endl;
 			cout << endl << "-------------------------------------------------------------------------" << endl << endl;
 		}
-		cout << endl << endl << "------------------------------- BST PRINT TABLE ----------------------------------------" << endl << endl;
-
-		BSTItrIn<Vehicle*> it(carsBST);
-		int i = 1;
-
-		while (!it.isAtEnd()) {
-			cout << TAB << "Car number " << i << endl << endl;
-			cout << *it.retrieve() << endl << endl;
-			cout << endl << "-------------------------------------------------------------------------" << endl << endl;
-			i++;
-			it.advance();
-		}
-		cout << endl << endl;
-		carsBST.printTree();
 		_getch();
-		break; 
-	}
+		break;
 	case 3:
 		for (size_t i = 0; i < users.size(); i++) {
 			if (users[i]->getVehicle()->getYear() == 0)

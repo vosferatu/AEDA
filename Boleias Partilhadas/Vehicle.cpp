@@ -139,7 +139,6 @@ ostream& operator<< (ostream& os, const Vehicle car) {
 	return os;
 }
 
-
 void Vehicle::save(ofstream& out) const {
 	out << this->getID() << ";" << this->getBrand() << ";" << this->getModel() << ";" << this->getnumberSeats() << ";" << this->getYear() << ";" << this->getRate() << ";";
 	
@@ -157,7 +156,6 @@ void Vehicle::save(ofstream& out) const {
 	}
 }
 
-
 ostream & operator<<(ostream & os, const Vehicle* car){
 	os << "\nBrand: " << car->getBrand() << " ";
 	os << "\nModel: " << car->getModel() << " ";
@@ -170,4 +168,18 @@ ostream & operator<<(ostream & os, const Vehicle* car){
 	}
 
 	return os;
+}
+
+bool Vehicle::operator < (const Vehicle & car1) const {
+	if (this->brand == car1.brand)
+		if (this->model == car1.model)
+			return (this->year < car1.year);
+		else return (this->model < car1.model);
+	else
+		return (this->brand < car1.brand);
+}
+
+
+bool Vehicle::operator == (const Vehicle &car1) const {
+	return ((this->brand == car1.brand) && (this->model == car1.model) && (this->year == car1.year));
 }

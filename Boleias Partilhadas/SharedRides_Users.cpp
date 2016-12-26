@@ -210,7 +210,12 @@ void SharedRides::CreateRegis()
 
 
 			users.push_back(RU);
-			cars.push_back((*RU).getVehicle());
+
+			
+			cars.push_back((*RU).getVehicle()); // vetor de cars
+			
+			carsBST.insert((*RU).getVehicle()); // cars BST
+
 			usersalterados = true;
 			carsalterados = true;
 			vehiclebool = true;

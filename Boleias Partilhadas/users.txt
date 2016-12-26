@@ -1,5 +1,2 @@
-6
+1
 1;godzilla;manel;0;Braga;0;0;
-2;Capitao;manel;0;Viseu;0;0;
-3;americo;manel;0;Braga;0;0;
-4;america;manel;0;Braga;0;0;

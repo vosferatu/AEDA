@@ -342,6 +342,33 @@ public:
 
 	void save(ofstream& out) const;
 
+	/**********************************************************************************************//**
+	 * @fn	bool Vehicle::operator<(Vehicle car1);
+	 *
+	 * @brief	Ordering operator
+	 *
+	 * @author	João
+	 * @date	21-12-2016
+	 *
+	 * @param	car	The car.
+	 *
+	 * @return	if the car is not greater
+	 **************************************************************************************************/
+	bool operator < (const Vehicle & car1) const;
+
+	/**********************************************************************************************//**
+	 * @fn	bool Vehicle::operator == (Vehicle car1);
+	 *
+	 * @brief	equality operator
+	 *
+	 * @author	João
+	 * @date	22-12-2016
+	 *
+	 * @param	car	The car.
+	 *
+	 * @return	if the car is  the same or not
+	 **************************************************************************************************/
+	bool operator==(const Vehicle & car1) const;
 };
 
 #endif /* VEHICLE_H_ */
