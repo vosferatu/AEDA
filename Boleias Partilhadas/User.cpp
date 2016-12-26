@@ -103,7 +103,6 @@ void RegisteredUser::setVehicle(Vehicle* car)  {
 	this->vehicle = car;
 }
 
-
 void RegisteredUser::setTrips(vector<int> trips) {
 	this->Trips = trips;
 }
