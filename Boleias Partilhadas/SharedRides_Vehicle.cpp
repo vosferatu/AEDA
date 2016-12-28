@@ -111,12 +111,12 @@ void SharedRides::editVehicle() {
 
 		carsalterados = true;
 				
-		//currentUser->getVehicle()->setRate(rate);
-		//currentUser->getVehicle()->setYear(year);
-		//currentUser->getVehicle()->setSeats(seats);
-		//currentUser->getVehicle()->setBrand(brand);
-		//currentUser->getVehicle()->setModel(model);
-		//currentUser->getVehicle()->setId(currentUser->getID());
+		currentUser->getVehicle()->setRate(rate);
+		currentUser->getVehicle()->setYear(year);
+		currentUser->getVehicle()->setSeats(seats);
+		currentUser->getVehicle()->setBrand(brand);
+		currentUser->getVehicle()->setModel(model);
+		currentUser->getVehicle()->setId(currentUser->getID());
 		
 		// adds route 
 		/*bool routebool = false;
@@ -170,6 +170,10 @@ void SharedRides::editVehicle() {
 			break;
 
 	case 1: {
+		
+		//Vehicle * carfound = carsBST.find(currentUser->getVehicle());
+		//carsBST.remove(carfound);
+
 		string cityroute;
 		vector<string> rout(0);
 		cout << TAB << "Please specify the cities of your route, separared by slash" << endl;
@@ -180,6 +184,7 @@ void SharedRides::editVehicle() {
 				cout << cities[i] << ", ";
 			else cout << cities[i] << ".\n";
 		}
+		
 		cin.ignore(numeric_limits <streamsize>::max(), '\n');
 		cityroute = readLine();
 		stringstream ss(cityroute);
@@ -189,7 +194,10 @@ void SharedRides::editVehicle() {
 			getline(ss, substr, '-');
 			rout.push_back(substr);
 		}
-		currentUser->getVehicle()->setRoute(rout);
+
+//		carfound->setRoute(rout);
+		
+	//	currentUser->setVehicle(carfound);
 
 		for (size_t i = 0; i < cars.size(); i++) {
 			if (cars[i]->getID() == currentUser->getID()) {

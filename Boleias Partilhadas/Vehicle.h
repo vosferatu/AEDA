@@ -23,8 +23,10 @@ using namespace std;
 class Vehicle {
 	/** @brief	Number of seats. */
 	unsigned int numberSeats;
-	/** @brief	vehicle type, only for showing purposes. */
+	/** @brief	vehicle type, showing and ordering purposes. */
 	string brand;
+	/** @brief	vehicle model,showin and ordering purposes */
+	string model;
 	/** @brief	user might not choose this vehicle for this. */
 	unsigned int year;
 	/** @brief	optional. grade from A to F based on vehicle condition. */
@@ -148,6 +150,20 @@ public:
 
 	unsigned int getID() const;
 
+	
+	/**********************************************************************************************//**
+	 * @fn	unsigned int Vehicle::getModel() const;
+	 *
+	 * @brief	Gets the model of the car. 
+
+	 * @author	João
+	 * @date	21-12-2016
+	 *
+	 * @return	The model of the car.
+	 **************************************************************************************************/
+
+	string getModel() const;
+
 	/**********************************************************************************************//**
 	 * @fn	vector<string> Vehicle::getRoute() const;
 	 *
@@ -202,6 +218,19 @@ public:
 
 	void setYear(unsigned int year);
 
+	
+	/**********************************************************************************************//**
+	 * @fn	void Vehicle::setModel(string model);
+	 *
+	 * @brief	Sets the car model.
+	 *
+	 * @author	João
+	 * @date	21-12-2016
+	 *
+	 * @param	model	the car model
+	 **************************************************************************************************/
+	void setModel(string model);
+
 	/**********************************************************************************************//**
 	 * @fn	void Vehicle::setSeats(unsigned int seats);
 	 *
@@ -212,7 +241,6 @@ public:
 	 *
 	 * @param	seats	The number of seats.
 	 **************************************************************************************************/
-
 	void setSeats(unsigned int seats);
 
 	/**********************************************************************************************//**
@@ -327,6 +355,10 @@ public:
 	 * @return	if the car is not greater
 	 **************************************************************************************************/
 	bool operator < (const Vehicle & car1) const;
+
+	bool operator()(Vehicle * const & car1, Vehicle * const & car2) const;
+
+	bool operator<(Vehicle * const & car1) const;
 
 	/**********************************************************************************************//**
 	 * @fn	bool Vehicle::operator == (Vehicle car1);

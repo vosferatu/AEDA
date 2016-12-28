@@ -7,6 +7,7 @@
 #include "Vehicle.h"
 #include "BST.h"
 
+
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -16,7 +17,8 @@
 #include <algorithm>
 
 
-#undef max // because of numeric_limitsS
+
+#undef max // because of numeric_limits
 
 using namespace std;
 
@@ -44,6 +46,9 @@ class SharedRides
 	User* currentUser = NULL;  //se não for pointer, slicing problem
 	vector<waitingTrip> tripsWaiting;
 	static vector<string>cities;
+
+	//** @brief The BST for saving vehicles data. */
+	BST<Vehicle*> carsBST;
 
 	/**********************************************************************************************//**
 	 * @property	static vector<string>cities
@@ -83,8 +88,6 @@ class SharedRides
 	static bool carsalterados;
 
 
-	BST<Vehicle*> carsBST;
-
 public:
 
 	/**********************************************************************************************//**
@@ -95,8 +98,8 @@ public:
 	 * @author	João
 	 * @date	20-11-2016
 	 **************************************************************************************************/
-
-	SharedRides() {}; //podemos fazer os loads todos no construtor
+	
+	SharedRides() : carsBST( new Vehicle() ){}; //podemos fazer os loads todos no construtor
 
 	/**********************************************************************************************//**
 	 * @fn	void SharedRides::run();
@@ -161,7 +164,7 @@ public:
 	// LOAD
 
 	/**********************************************************************************************//**
-	 * @fn	static void SharedRides::load();
+	 * @fn	 void SharedRides::load();
 	 *
 	 * @brief	Loads all the things.
 	 *
@@ -169,10 +172,10 @@ public:
 	 * @date	20-11-2016
 	 **************************************************************************************************/
 
-	static void load();
+	void load();
 
 	/**********************************************************************************************//**
-	 * @fn	static void SharedRides::loadCities();
+	 * @fn	 void SharedRides::loadCities();
 	 *
 	 * @brief	Loads the cities.
 	 *
@@ -180,10 +183,10 @@ public:
 	 * @date	20-11-2016
 	 **************************************************************************************************/
 
-	static void loadCities();
+	 void loadCities();
 
 	/**********************************************************************************************//**
-	 * @fn	static void SharedRides::loadUsers();
+	 * @fn	 void SharedRides::loadUsers();
 	 *
 	 * @brief	Loads the users.
 	 *
@@ -191,18 +194,18 @@ public:
 	 * @date	20-11-2016
 	 **************************************************************************************************/
 
-	static void loadUsers();
+	 void loadUsers();
 
 	/**********************************************************************************************//**
-	 * @fn	static void SharedRides::loadVehicles();
+	 * @fn	 void SharedRides::loadVehicles();
 	 *
-	 * @brief	Loads the vehicles.
+	 * @brief	Loads the vehicles from file.
 	 *
 	 * @author	João
 	 * @date	20-11-2016
 	 **************************************************************************************************/
 
-	static void loadVehicles();
+	void loadVehicles();
 
 	/**********************************************************************************************//**
 	 * @fn	static void SharedRides::loadTakenTrips();
@@ -213,10 +216,10 @@ public:
 	 * @date	20-11-2016
 	 **************************************************************************************************/
 
-	static void loadTakenTrips();
+	 void loadTakenTrips();
 
 	/**********************************************************************************************//**
-	 * @fn	static void SharedRides::loadWaitingTrips();
+	 * @fn	 void SharedRides::loadWaitingTrips();
 	 *
 	 * @brief	Loads waiting trips.
 	 *
@@ -224,7 +227,7 @@ public:
 	 * @date	20-11-2016
 	 **************************************************************************************************/
 
-	static void loadWaitingTrips();
+	 void loadWaitingTrips();
 
 
 	//LOGIN & REGISTRATION
@@ -256,7 +259,7 @@ public:
 	 * @date	20-11-2016
 	 **************************************************************************************************/
 
-	static void CreateRegis();
+	 void CreateRegis();
 
 	/**********************************************************************************************//**
 	 * @fn	unsigned int SharedRides::getCARHighID() const;
@@ -615,6 +618,21 @@ public:
 
 	void showBuddiesProfileToUser();
 
+	/**********************************************************************************************//**
+	 * @fn	void header(string header);
+	 *
+	 * @brief	a function to show a header in the program
+	 *
+	 * @author	João
+	 * @date	22-12-2016
+	 *
+	 * @param	header	the header title  
+	 **************************************************************************************************/
+	void header(string header);
+
+
+	BST<Vehicle*> getCars() const;
+
 };
 
 // tratamento de exceções
@@ -642,7 +660,7 @@ public:
 	}
 };
 
-template<class T>
+
 
 /**********************************************************************************************//**
  * @class	LoginException
@@ -652,7 +670,7 @@ template<class T>
  * @author	João
  * @date	20-11-2016
  **************************************************************************************************/
-
+template<class T>
 class LoginException
 {
 public:
@@ -663,7 +681,7 @@ public:
 	}
 };
 
-template<class T>
+
 
 /**********************************************************************************************//**
  * @class	RegistrationException
@@ -673,7 +691,7 @@ template<class T>
  * @author	João
  * @date	20-11-2016
  **************************************************************************************************/
-
+template<class T>
 class RegistrationException
 {
 public:
@@ -683,6 +701,29 @@ public:
 		this->info = info;
 	}
 };
+
+
+
+
+/**********************************************************************************************//**
+ * @class	TripEnterException
+ *
+ * @brief	Exception for entering trips.
+ *
+ * @author	João
+ * @date	21-12-2016
+ **************************************************************************************************/
+template<class T>
+class TripEnterException
+{
+public:
+	T info;
+	TripEnterException(T info)
+	{
+		this->info = info;
+	}
+};
+
 
 
 
