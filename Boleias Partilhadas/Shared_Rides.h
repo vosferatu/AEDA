@@ -5,8 +5,6 @@
 #include "User.h"
 #include "Helper.h"
 #include "Vehicle.h"
-#include "BST.h"
-
 
 #include <iostream>
 #include <fstream>
@@ -15,7 +13,6 @@
 #include <sstream>
 #include <ostream>
 #include <algorithm>
-
 
 
 #undef max // because of numeric_limits
@@ -46,9 +43,6 @@ class SharedRides
 	User* currentUser = NULL;  //se não for pointer, slicing problem
 	vector<waitingTrip> tripsWaiting;
 	static vector<string>cities;
-
-	//** @brief The BST for saving vehicles data. */
-	//BST<Vehicle*> carsBST;
 
 	/**********************************************************************************************//**
 	 * @property	static vector<string>cities
@@ -98,7 +92,7 @@ public:
 	 * @author	João
 	 * @date	20-11-2016
 	 **************************************************************************************************/
-	
+
 	SharedRides() {}; //podemos fazer os loads todos no construtor
 
 	/**********************************************************************************************//**
@@ -164,7 +158,7 @@ public:
 	// LOAD
 
 	/**********************************************************************************************//**
-	 * @fn	 void SharedRides::load();
+	 * @fn	static void SharedRides::load();
 	 *
 	 * @brief	Loads all the things.
 	 *
@@ -172,10 +166,10 @@ public:
 	 * @date	20-11-2016
 	 **************************************************************************************************/
 
-	void load();
+	static void load();
 
 	/**********************************************************************************************//**
-	 * @fn	 void SharedRides::loadCities();
+	 * @fn	static void SharedRides::loadCities();
 	 *
 	 * @brief	Loads the cities.
 	 *
@@ -183,10 +177,10 @@ public:
 	 * @date	20-11-2016
 	 **************************************************************************************************/
 
-	 void loadCities();
+	static void loadCities();
 
 	/**********************************************************************************************//**
-	 * @fn	 void SharedRides::loadUsers();
+	 * @fn	static void SharedRides::loadUsers();
 	 *
 	 * @brief	Loads the users.
 	 *
@@ -194,18 +188,18 @@ public:
 	 * @date	20-11-2016
 	 **************************************************************************************************/
 
-	 void loadUsers();
+	static void loadUsers();
 
 	/**********************************************************************************************//**
-	 * @fn	 void SharedRides::loadVehicles();
+	 * @fn	static void SharedRides::loadVehicles();
 	 *
-	 * @brief	Loads the vehicles from file.
+	 * @brief	Loads the vehicles.
 	 *
 	 * @author	João
 	 * @date	20-11-2016
 	 **************************************************************************************************/
 
-	void loadVehicles();
+	static void loadVehicles();
 
 	/**********************************************************************************************//**
 	 * @fn	static void SharedRides::loadTakenTrips();
@@ -216,10 +210,10 @@ public:
 	 * @date	20-11-2016
 	 **************************************************************************************************/
 
-	 void loadTakenTrips();
+	static void loadTakenTrips();
 
 	/**********************************************************************************************//**
-	 * @fn	 void SharedRides::loadWaitingTrips();
+	 * @fn	static void SharedRides::loadWaitingTrips();
 	 *
 	 * @brief	Loads waiting trips.
 	 *
@@ -227,7 +221,7 @@ public:
 	 * @date	20-11-2016
 	 **************************************************************************************************/
 
-	 void loadWaitingTrips();
+	static void loadWaitingTrips();
 
 
 	//LOGIN & REGISTRATION
@@ -259,7 +253,7 @@ public:
 	 * @date	20-11-2016
 	 **************************************************************************************************/
 
-	 void CreateRegis();
+	static void CreateRegis();
 
 	/**********************************************************************************************//**
 	 * @fn	unsigned int SharedRides::getCARHighID() const;
@@ -618,21 +612,6 @@ public:
 
 	void showBuddiesProfileToUser();
 
-	/**********************************************************************************************//**
-	 * @fn	void header(string header);
-	 *
-	 * @brief	a function to show a header in the program
-	 *
-	 * @author	João
-	 * @date	22-12-2016
-	 *
-	 * @param	header	the header title  
-	 **************************************************************************************************/
-	void header(string header);
-
-
-	//BST<Vehicle*> getCars() const;
-
 };
 
 // tratamento de exceções
@@ -660,7 +639,7 @@ public:
 	}
 };
 
-
+template<class T>
 
 /**********************************************************************************************//**
  * @class	LoginException
@@ -670,7 +649,7 @@ public:
  * @author	João
  * @date	20-11-2016
  **************************************************************************************************/
-template<class T>
+
 class LoginException
 {
 public:
@@ -681,7 +660,7 @@ public:
 	}
 };
 
-
+template<class T>
 
 /**********************************************************************************************//**
  * @class	RegistrationException
@@ -691,7 +670,7 @@ public:
  * @author	João
  * @date	20-11-2016
  **************************************************************************************************/
-template<class T>
+
 class RegistrationException
 {
 public:
@@ -701,29 +680,6 @@ public:
 		this->info = info;
 	}
 };
-
-
-
-
-/**********************************************************************************************//**
- * @class	TripEnterException
- *
- * @brief	Exception for entering trips.
- *
- * @author	João
- * @date	21-12-2016
- **************************************************************************************************/
-template<class T>
-class TripEnterException
-{
-public:
-	T info;
-	TripEnterException(T info)
-	{
-		this->info = info;
-	}
-};
-
 
 
 

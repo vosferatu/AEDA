@@ -42,12 +42,8 @@ void SharedRides::editVehicle() {
 
 		cin.ignore(numeric_limits <streamsize>::max(), '\n');
 		cout << endl << TAB;
-		cout << "Please specify its brand." << endl;
+		cout << "Please specify its brand and model." << endl;
 		string brand = readLine();
-
-		cout << endl << TAB;
-		cout << "Please specify its model." << endl;
-		string model = readLine();
 
 		bool goodyear = false;
 		unsigned int year;
@@ -106,7 +102,6 @@ void SharedRides::editVehicle() {
 		currentUser->getVehicle()->setYear(year);
 		currentUser->getVehicle()->setSeats(seats);
 		currentUser->getVehicle()->setBrand(brand);
-		currentUser->getVehicle()->setModel(model);
 		currentUser->getVehicle()->setId(currentUser->getID());
 
 		for (size_t i = 0; i < cars.size(); i++) {
@@ -267,12 +262,8 @@ void SharedRides::addVehicle() {
 
 	cin.ignore(numeric_limits <streamsize>::max(), '\n');
 	cout << endl << TAB;
-	cout << "Please specify its brand." << endl;
+	cout << "Please specify its brand and model." << endl;
 	string brand = readLine();
-
-	cout << endl << TAB;
-	cout << "Please specify its model." << endl;
-	string model = readLine();
 
 	bool goodyear = false;
 	unsigned int year;
@@ -320,7 +311,6 @@ void SharedRides::addVehicle() {
 	currentUser->getVehicle()->setYear(year);
 	currentUser->getVehicle()->setSeats(seats);
 	currentUser->getVehicle()->setBrand(brand);
-	currentUser->getVehicle()->setModel(model);
 	currentUser->getVehicle()->setId(currentUser->getID());
 	// adds route 
 	bool routebool = false;
