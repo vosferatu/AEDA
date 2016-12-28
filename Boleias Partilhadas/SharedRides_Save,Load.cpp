@@ -136,6 +136,7 @@ void SharedRides::loadTakenTrips() {
 		throw FileException<string>("ERROR! The TakenTrip file could not be opened.");
 	}
 
+	
 	getline(infile, strnumber);
 	maxTakenCode = stoi(strnumber);
 

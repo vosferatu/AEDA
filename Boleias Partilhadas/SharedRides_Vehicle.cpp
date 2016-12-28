@@ -37,8 +37,8 @@ void SharedRides::editVehicle() {
 	switch (choice) {
 	case 0: {
 		
-		Vehicle * carfound = carsBST.find(currentUser->getVehicle());
-		carsBST.remove(carfound);
+		//Vehicle * carfound = carsBST.find(currentUser->getVehicle());
+		//carsBST.remove(carfound);
 
 		cin.ignore(numeric_limits <streamsize>::max(), '\n');
 		cout << endl << TAB;
@@ -91,16 +91,23 @@ void SharedRides::editVehicle() {
 			else goodrate = true;
 		}
 
-		carfound->setRate(rate);
-		carfound->setYear(year);
-		carfound->setSeats(seats);
-		carfound->setBrand(brand);
-		carfound->setModel(model);
-		carfound->setId(currentUser->getID());
+		//carfound->setRate(rate);
+		//carfound->setYear(year);
+		//carfound->setSeats(seats);
+		//carfound->setBrand(brand);
+		//carfound->setModel(model);
+		//carfound->setId(currentUser->getID());
 
-		carsBST.insert(carfound);
+		//carsBST.insert(carfound);
 
-		currentUser->setVehicle(carfound);
+		//currentUser->setVehicle(carfound);
+
+		currentUser->getVehicle()->setRate(rate);
+		currentUser->getVehicle()->setYear(year);
+		currentUser->getVehicle()->setSeats(seats);
+		currentUser->getVehicle()->setBrand(brand);
+		currentUser->getVehicle()->setModel(model);
+		currentUser->getVehicle()->setId(currentUser->getID());
 
 		for (size_t i = 0; i < cars.size(); i++) {
 			if (cars[i]->getID() == currentUser->getID()) {

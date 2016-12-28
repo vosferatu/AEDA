@@ -48,7 +48,7 @@ class SharedRides
 	static vector<string>cities;
 
 	//** @brief The BST for saving vehicles data. */
-	BST<Vehicle*> carsBST;
+	//BST<Vehicle*> carsBST;
 
 	/**********************************************************************************************//**
 	 * @property	static vector<string>cities
@@ -99,7 +99,7 @@ public:
 	 * @date	20-11-2016
 	 **************************************************************************************************/
 	
-	SharedRides() : carsBST( new Vehicle() ){}; //podemos fazer os loads todos no construtor
+	SharedRides() {}; //podemos fazer os loads todos no construtor
 
 	/**********************************************************************************************//**
 	 * @fn	void SharedRides::run();
@@ -631,7 +631,7 @@ public:
 	void header(string header);
 
 
-	BST<Vehicle*> getCars() const;
+	//BST<Vehicle*> getCars() const;
 
 };
 
