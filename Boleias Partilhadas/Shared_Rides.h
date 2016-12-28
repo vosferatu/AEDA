@@ -5,6 +5,7 @@
 #include "User.h"
 #include "Helper.h"
 #include "Vehicle.h"
+#include "BST.h"
 
 #include <iostream>
 #include <fstream>
@@ -15,7 +16,7 @@
 #include <algorithm>
 
 
-#undef max // because of numeric_limits
+#undef max // because of numeric_limitsS
 
 using namespace std;
 
@@ -81,6 +82,8 @@ class SharedRides
 	/** @brief	True if vect of cars changed. */
 	static bool carsalterados;
 
+
+	BST<Vehicle*> carsBST;
 
 public:
 
