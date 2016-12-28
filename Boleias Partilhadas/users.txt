@@ -1,2 +1,4 @@
-1
-1;godzilla;manel;0;Braga;0;0;
+3
+1;godzilla;manel;0;Porto;0;0;
+2;joao;manel;403;Braga;0;0;
+3;caramelo;123;0;Porto;0;0;

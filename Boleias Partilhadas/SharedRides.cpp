@@ -212,24 +212,3 @@ unsigned int SharedRides::getTAKENHighID() const {
 
 	return maiorID;
 }
-
-void SharedRides::header(string header) {
-	if (dynamic_cast<RegisteredUser*>(currentUser) != NULL) { // registered user
-
-		cout << endl << TAB << "Welcome to Shared Rides V.1.0. Please put your seatbelts on and enjoy your travel." << endl;
-		cout << endl << TAB << header << endl << endl;
-		cout << TAB << "-> You are currently logged as " << currentUser->getusername() << " <-" << endl << endl;
-	}
-	else { //guest user
-		cout << endl << TAB << "Welcome to Shared Rides V.1.0. Please put your seatbelts on and enjoy your travel." << endl;
-		cout << endl << TAB << header << endl << endl;
-		cout << TAB << "-> You are in a temporary session with the name " << currentUser->getusername() << " <-" << endl << endl;
-	}
-
-
-}
-
-BST<Vehicle*> SharedRides::getCars() const
-{
-	return carsBST;
-}

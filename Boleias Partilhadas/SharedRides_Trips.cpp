@@ -77,15 +77,8 @@ void SharedRides::VehicleTripMenu() {
 		usersalterados = true;
 		return;
 		break;
-	case 2:		
-		try { enterTrip();  }
-		catch (TripEnterException<string> err)
-		{
-			cout << err.info << endl;
-			Sleep(2000);  //only in windows (?)
-			ClearScreen();
-			return VehicleTripMenu();
-		}
+	case 2:
+		enterTrip();
 		usersalterados = true;
 		return;
 		break;
@@ -254,34 +247,28 @@ void SharedRides::startTrip() {
 }
 
 void SharedRides::enterTrip() {
-	header(" --- ENTER TRIP --- ");
-
 	if (currentUser->getAccount() < 0) {
 		cout << TAB << "Your account is under 0. Please charge account to pay your taxes." << endl;
 		return;
 	}
-	else cout << endl << TAB << "Current balance: " << currentUser->getAccount() << endl;
-	
 
 	string firstPoint;
 	string secondPoint;
 	bool citybelong = false;
 
-
-	
 	cout << endl << TAB << "Where are you catching a ride?" << endl;
-	cin.ignore(numeric_limits <streamsize>::max(), '\n');
-	
+
 	while (!citybelong) {
-		
+
 		cout << TAB << "It must belong to one of these: ";
-		
+
 		for (size_t i = 0; i < cities.size(); i++)
 		{
 			if (i < cities.size() - 1)
 				cout << cities[i] << ", ";
 			else cout << cities[i] << ".\n";
 		}
+
 		firstPoint = readLine();
 
 		for (size_t i = 0; i < cities.size(); i++) {
@@ -290,10 +277,8 @@ void SharedRides::enterTrip() {
 		}
 
 	}
-
 	citybelong = false;
 	cout << endl << TAB << "Where are you dropping off?" << endl;
-	
 	while (!citybelong) {
 
 		cout << TAB << "It must belong to one of these: ";
@@ -315,13 +300,6 @@ void SharedRides::enterTrip() {
 	}
 
 
-	if (firstPoint == secondPoint)
-		throw TripEnterException<string>("\n You entered the same city twice! If you want to hang around in town, why don't you consider taking a walk? :) ");
-	
-
-
-	bool nomoney = false;
-
 	int stops = 0;
 	vector<int> AvailableTrips{};
 	for (size_t i = 0; i < tripOffers.size(); i++) {
@@ -331,19 +309,14 @@ void SharedRides::enterTrip() {
 				if (currentUser->getAccount() > stops*tripOffers[i].getpriceStop()) {
 					AvailableTrips.push_back(i);
 				}
-				else nomoney = true;
 			}
 		}
 	}
 
-	
-
 	if (AvailableTrips.size() == 0) {
-		if (nomoney == true) cout << endl << TAB << "We are sorry, but you don't have enough money to enter this trip. You can charge yoru account in the main menu." << endl;
-		else cout << endl << TAB << "We are sorry, but there are no trips available in your conditions." << endl;
+		cout << endl << TAB << "We are sorry, but there are no trips available in your conditions." << endl;
 		return;
 	}
-
 
 	if (dynamic_cast<RegisteredUser*>(currentUser) != NULL) {//REGISTERED
 		for (size_t i = 0; i < AvailableTrips.size(); i++) {
