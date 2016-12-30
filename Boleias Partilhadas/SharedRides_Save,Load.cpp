@@ -98,20 +98,39 @@ void SharedRides::loadUsers() {
 		bool usernocar = false;
 		Vehicle * nocar = new Vehicle();
 
-		for (size_t i = 0; i < cars.size(); i++) {
-			if (cars[i]->getID() == ID) {
-				RegisteredUser* RU = new RegisteredUser(username, password, homecity, cars[i]);
+		
+		BSTItrIn<VehicleDBItem> it(carsBST);
+
+		while (!it.isAtEnd()) {
+			
+			if (it.retrieve().getVehicle()->getID() == ID) {
+			
+				RegisteredUser* RU = new RegisteredUser(username, password, homecity, it.retrieve().getVehicle());
 				RU->setAccount(account);
 				RU->setFavs(buddies);
 				RU->setTrips(trips);
 				users.push_back(RU);
 				usernocar = true;
 			}
+			
+			it.advance();
 		}
+		
+		
+		
+		//for (size_t i = 0; i < cars.size(); i++) {
+			//if (cars[i]->getID() == ID) {
+			//RegisteredUser* RU = new RegisteredUser(username, password, homecity, cars[i]);
+			//RU->setAccount(account);
+			//RU->setFavs(buddies);
+			//RU->setTrips(trips);
+			//users.push_back(RU);
+			//usernocar = true;
+			//}
+		//}
 
 
-
-		if (!usernocar || cars.size() == 0) {
+		if (!usernocar || carsBST.isEmpty() ) {
 			RegisteredUser* RU = new RegisteredUser(username, password, homecity, nocar);
 			RU->setAccount(account);
 			RU->setFavs(buddies);
@@ -177,25 +196,25 @@ void SharedRides::loadTakenTrips() {
 
 		end = info.substr(0, findpos);
 		info = info.substr(findpos + 1, search);
-		findpos = info.find(';', 0);
+		findpos = info.find(':', 0);
 
 		startimehora = atoi(info.substr(0, findpos).c_str());
 		info = info.substr(findpos + 1, search);
-		findpos = info.find(':', 0);
+		findpos = info.find(';', 0);
 
 		startimeminuto = atoi(info.substr(0, findpos).c_str());
 		info = info.substr(findpos + 1, search);
-		findpos = info.find(';', 0);
+		findpos = info.find(':', 0);
 
 		startime = Time(startimehora, startimeminuto);
 
 		endtimehora = atoi(info.substr(0, findpos).c_str());
 		info = info.substr(findpos + 1, search);
-		findpos = info.find(':', 0);
+		findpos = info.find(';', 0);
 
 		endtimeminuto = atoi(info.substr(0, findpos).c_str());
 		info = info.substr(findpos + 1, search);
-		findpos = info.find(';', 0);
+		findpos = info.find('/', 0);
 
 		endtime = Time(endtimehora, endtimeminuto);
 
@@ -335,6 +354,7 @@ void SharedRides::loadVehicles() {
 	string brand;
 	unsigned int year;
 	string rate;
+	string model;
 	unsigned int seats;
 
 	while (getline(infile, info))
@@ -349,6 +369,10 @@ void SharedRides::loadVehicles() {
 		findpos = info.find(';', 0);					//agora o inteiro é a posicao na string do segundo ';'
 
 		brand = info.substr(0, findpos);
+		info = info.substr(findpos + 1, search);			//string = desde primeiro ';' até ao segundo
+		findpos = info.find(';', 0);					//agora o inteiro é a posicao na string do terceiro ';'
+
+		model = info.substr(0, findpos);
 		info = info.substr(findpos + 1, search);			//string = desde primeiro ';' até ao segundo
 		findpos = info.find(';', 0);					//agora o inteiro é a posicao na string do terceiro ';'
 
@@ -375,17 +399,32 @@ void SharedRides::loadVehicles() {
 
 		Vehicle* v1 = new Vehicle(ID, seats, brand, year, rate);
 		v1->setRoute(route);
-		cars.push_back(v1);
+		v1->setModel(model);
+		//cars.push_back(v1);
+
+		VehicleDBItem v1Item = VehicleDBItem(v1);
+		carsBST.insert(v1Item);
 
 	}
 
-	for (size_t i = 0; i < cars.size(); i++) {
+	BSTItrIn<VehicleDBItem> it(carsBST);
+	while (!it.isAtEnd()) {
+
 		for (size_t j = 0; j < users.size(); j++) {
-			if (users[j]->getID() == cars[i]->getID()) {
-				users[j]->setVehicle(cars[i]);
-			}
+			if (users[j]->getID() == it.retrieve().getVehicle()->getID()) 
+				users[j]->setVehicle(it.retrieve().getVehicle());
 		}
+		it.advance();
 	}
+	
+	
+	//for (size_t i = 0; i < cars.size(); i++) {
+		//for (size_t j = 0; j < users.size(); j++) {
+			//if (users[j]->getID() == cars[i]->getID()) {
+				//users[j]->setVehicle(cars[i]);
+			//}
+		//}
+	//}
 }
 
 
@@ -435,10 +474,17 @@ void SharedRides::saveChanges() const {
 
 		out_cars << getCARHighID() << endl;
 
-		for (size_t i = 0; i < cars.size(); i++)
-		{
-			cars[i]->save(out_cars);
+		BSTItrIn<VehicleDBItem> it(carsBST);
+
+		while (!it.isAtEnd()) {
+			it.retrieve().getVehicle()->save(out_cars);
+			it.advance();
 		}
+		
+		//for (size_t i = 0; i < cars.size(); i++) {
+			//cars[i]->save(out_cars);
+		//}
+
 		out_cars.close();
 	}
 

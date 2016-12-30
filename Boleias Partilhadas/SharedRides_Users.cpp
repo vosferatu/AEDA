@@ -87,8 +87,14 @@ void SharedRides::CreateRegis()
 		if (addvehicle == "y") {
 			cin.ignore(numeric_limits <streamsize>::max(), '\n');
 			cout << endl << TAB;
-			cout << "Please specify its brand and model." << endl;
+			cout << "Please specify its brand." << endl;
 			string brand = readLine();
+
+			cout << endl << TAB;
+			cout << "Please specify its model." << endl;
+			string model = readLine();
+
+
 
 			bool goodyear = false;
 			unsigned int year;
@@ -200,6 +206,7 @@ void SharedRides::CreateRegis()
 
 			Vehicle* v1 = new Vehicle(seats, brand, year, rate);
 			v1->setRoute(rout);
+			v1->setModel(model);
 			maxVehiclesID++;
 			RegisteredUser* RU = new RegisteredUser(username, password1, city, v1);
 			maxUsersID++;
@@ -209,9 +216,10 @@ void SharedRides::CreateRegis()
 			users.push_back(RU);
 
 			
-			cars.push_back((*RU).getVehicle()); // vetor de cars
+			//cars.push_back((*RU).getVehicle()); // vetor de cars
 			
-		//carsBST.insert((*RU).getVehicle()); // cars BST
+			VehicleDBItem v1Item = VehicleDBItem( (*RU).getVehicle() );
+			carsBST.insert(v1Item); // cars BST
 
 			usersalterados = true;
 			carsalterados = true;
@@ -347,8 +355,11 @@ void SharedRides::deleteAccount() {
 					}
 				}
 
-				size_t pos = getPositionCar(currentUser->getID());
-				cars.erase(cars.begin() + pos);
+				VehicleDBItem carfound = carsBST.find(currentUser->getVehicle());
+				carsBST.remove(carfound);
+				
+				//size_t pos = getPositionCar(currentUser->getID());
+				//cars.erase(cars.begin() + pos);
 			}
 
 			for (size_t i = 0; i < users.size(); i++) {
@@ -445,4 +456,19 @@ void SharedRides::guest_log() {
 	users.push_back(u1);
 	usersalterados = true;
 	currentUser = u1;
+}
+
+void SharedRides::showUsers() {
+	
+	if (users.size() == 0) {
+		cout << endl << TAB << "No users to show.\n" << endl;
+		_getch();
+		return;
+	}
+	cout << endl << "-------------------------------------------------------------------------" << endl << endl;
+	for (size_t i = 0; i < users.size(); i++) {
+		cout << TAB << "User with ID " << users[i]->getID() << endl;
+		users[i]->showProfile();
+		cout << endl << "-------------------------------------------------------------------------" << endl << endl;
+	}
 }

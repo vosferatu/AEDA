@@ -60,6 +60,14 @@ string Vehicle::getBrand() const{
 	return brand;
 }
 
+string Vehicle::getModel() const {
+	return this->model;
+}
+
+void Vehicle::setModel(string model) {
+	this->model = model;
+}
+
 unsigned int Vehicle::getYear() const{
 	return year;
 }
@@ -110,8 +118,9 @@ Vehicle& Vehicle::operator=(Vehicle car){
 }
 
 ostream& operator<< (ostream& os, const Vehicle car) {
-	os << TAB << "Owner ID: "  << car.getID() << endl;
+	os << TAB << "Owner/Vehicle ID: "  << car.getID() << endl;
 	os << TAB << "Brand: " << car.getBrand() << endl;
+	os << TAB << "Model: " << car.getModel() << endl;
 	os << TAB << "Year: " << car.getYear() << endl;
 	os << TAB << "Number of Seats: " << car.getnumberSeats()<<endl;
 	os << TAB << "Rate: " << car.getRate() << endl;
@@ -133,7 +142,7 @@ ostream& operator<< (ostream& os, const Vehicle car) {
 }
 
 void Vehicle::save(ofstream& out) const {
-	out << this->getID() << ";" << this->getBrand() << ";" << this->getnumberSeats() << ";" << this->getYear() << ";" << this->getRate() << ";";
+	out << this->getID() << ";" << this->getBrand() << ";" << this->getModel()<< ";" << this->getnumberSeats() << ";" << this->getYear() << ";" << this->getRate() << ";";
 	
 	if (this->getRoute().size() == 0)
 		out << endl;
@@ -162,27 +171,74 @@ ostream & operator<<(ostream & os, const Vehicle* car){
 	return os;
 }
 
-//bool Vehicle::operator < (const Vehicle & car1) const {
+bool VehicleDBItem::operator < (const VehicleDBItem & car1) const {
 		
-	//if (this->brand != car1.brand) return (this->brand > car1.brand);
-//	if (  (this->brand == car1.brand) && (this->model == car1.model)  ) 
-	//	return (this->year > car1.year);
-	//else return (this->model < car1.model);
-//}
-
-
-bool Vehicle::operator < (Vehicle* const& car1) const {
-
-	if (this->brand != car1->brand) return (this->brand < car1->brand);
-
-	if ( (this->brand == car1->brand) && (this->model == car1->model) )
-		return (this->year < car1->year);
-		else return (this->model < car1->model);
+	if (this->brand != car1.brand) return (this->brand < car1.brand);
+	
+	if (  (this->brand == car1.brand) && (this->model == car1.model)  ) 
+		return (this->year > car1.year);
+	else return (this->model < car1.model);
 }
 
 
 
-bool Vehicle::operator == (const Vehicle &car1) const {
+bool VehicleDBItem::operator == (const VehicleDBItem &car1) const {
 	return ( (this->brand == car1.brand) && (this->model == car1.model) && (this->year == car1.year));
 }
 
+
+VehicleDBItem::VehicleDBItem() {
+	this->vehicle = NULL;
+	this->brand = "";
+	this->model = "";
+	this->year = 0;
+
+}
+
+VehicleDBItem::VehicleDBItem(Vehicle * car)
+{
+	this->vehicle = car;
+	this->brand = car->getBrand();
+	this->model = car->getModel();
+	this->year = car->getYear();
+}
+
+void VehicleDBItem::setBrand(string brand)
+{
+	this->brand = brand;
+}
+
+void VehicleDBItem::setModel(string model)
+{
+	this->model = model;
+}
+
+void VehicleDBItem::setYear(int year)
+{
+	this->year = year;
+}
+
+void VehicleDBItem::setVehicle(Vehicle * car)
+{
+	this->vehicle = car;
+}
+
+string VehicleDBItem::getBrand() const
+{
+	return brand;
+}
+
+string VehicleDBItem::getModel() const
+{
+	return model;
+}
+
+int VehicleDBItem::getYear() const
+{
+	return year;
+}
+
+Vehicle * VehicleDBItem::getVehicle() const
+{
+	return vehicle;
+}

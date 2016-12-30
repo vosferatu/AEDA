@@ -3,8 +3,10 @@
 using namespace std;
 
 vector<User*> SharedRides::users(0);
-vector<Vehicle*>SharedRides::cars(0);
+//vector<Vehicle*>SharedRides::cars(0);
+
 vector<string>SharedRides::cities(0);
+
 vector<takenTrip> SharedRides::tripsPrinter(0);
 vector<waitingTrip> SharedRides::tripOffers(0);
 
@@ -103,12 +105,26 @@ void SharedRides::fillPaths() {
 
 int SharedRides::getPositionCar(unsigned int id) const {
 	int position = -1;
-	for (size_t i = 0; i < cars.size(); i++) {
-		if (cars[i]->getID() == id) {
+	int i = 0;
+	
+	BSTItrIn<VehicleDBItem> it(carsBST);
+
+	while (!it.isAtEnd()) {
+		if (it.retrieve().getVehicle()->getID() == id) {
 			position = i;
 			return position;
 		}
+			i++;
+			it.advance();
 	}
+	
+	//for (size_t i = 0; i < cars.size(); i++) {
+		//if (cars[i]->getID() == id) {
+			//position = i;
+			//return position;
+		//}
+	//}
+
 	return position;
 }
 
@@ -172,13 +188,26 @@ unsigned int SharedRides::getCARHighID() const {
 
 	unsigned int maiorID = 0;
 
-	for (size_t i = 0; i < cars.size(); i++)
-	{
-		unsigned int ID = cars[i]->getID();
+	BSTItrIn<VehicleDBItem> it(carsBST);
 
+	while (!it.isAtEnd()) {
+		unsigned int ID = it.retrieve().getVehicle()->getID();
+		
 		if (ID > maiorID)
 			maiorID = ID;
+		
+		it.advance();
 	}
+	
+	
+	
+	//for (size_t i = 0; i < cars.size(); i++)
+	//{
+		//unsigned int ID = cars[i]->getID();
+
+		//if (ID > maiorID)
+			//maiorID = ID;
+	//}
 
 	return maiorID;
 }
@@ -212,3 +241,4 @@ unsigned int SharedRides::getTAKENHighID() const {
 
 	return maiorID;
 }
+

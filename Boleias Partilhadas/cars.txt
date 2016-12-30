@@ -1,2 +1,4 @@
-1
-1;Renault Clio;5;2003;A;Porto;Vila Real;Viseu;
+4
+4;Ford;Focus;5;2014;A;Lisboa;Beja;
+2;Renault;Clio;5;2010;B;Aveiro;Lisboa;
+1;Tesla;Model S;5;2016;A;

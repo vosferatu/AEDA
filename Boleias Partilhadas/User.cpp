@@ -84,7 +84,7 @@ void RegisteredUser::showProfile(){
 	cout <<TAB << "Number of Buddies: " << this->getFavs().size() << endl;
 	if (this->getVehicle()->getYear() == 0)
 		cout <<TAB<< "This user does not have a car associated to his account." << endl;
-	else cout <<TAB<< "This user has a " << this->getVehicle()->getBrand() << " associated to his account." << endl;
+	else cout <<TAB<< "This user has a " << this->getVehicle()->getYear() << "'s " << this->getVehicle()->getBrand() << " " << this->getVehicle()->getModel() << " associated to his account." << endl;
 }
 
 vector<int> RegisteredUser::getFavs() const{

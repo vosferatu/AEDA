@@ -5,6 +5,7 @@
 #include "User.h"
 #include "Helper.h"
 #include "Vehicle.h"
+#include "BST.h"
 
 #include <iostream>
 #include <fstream>
@@ -35,7 +36,7 @@ class SharedRides
 	/** @brief	The trips that were taken. */
 	static vector<takenTrip> tripsPrinter;
 	/** @brief	used to list cars in manage app. */
-	static vector<Vehicle*> cars;
+	//static vector<Vehicle*> cars;
 	/** @brief	The paths. */
 	vector<Path> caminhos;
 	/** @brief	The trip offers in the moment. */
@@ -82,6 +83,10 @@ class SharedRides
 	static bool carsalterados;
 
 
+
+	BST<VehicleDBItem> carsBST;
+
+
 public:
 
 	/**********************************************************************************************//**
@@ -93,7 +98,7 @@ public:
 	 * @date	20-11-2016
 	 **************************************************************************************************/
 
-	SharedRides() {}; //podemos fazer os loads todos no construtor
+	SharedRides() : carsBST(VehicleDBItem()){}; //podemos fazer os loads todos no construtor
 
 	/**********************************************************************************************//**
 	 * @fn	void SharedRides::run();
@@ -166,7 +171,7 @@ public:
 	 * @date	20-11-2016
 	 **************************************************************************************************/
 
-	static void load();
+	void load();
 
 	/**********************************************************************************************//**
 	 * @fn	static void SharedRides::loadCities();
@@ -188,7 +193,7 @@ public:
 	 * @date	20-11-2016
 	 **************************************************************************************************/
 
-	static void loadUsers();
+	 void loadUsers();
 
 	/**********************************************************************************************//**
 	 * @fn	static void SharedRides::loadVehicles();
@@ -199,7 +204,7 @@ public:
 	 * @date	20-11-2016
 	 **************************************************************************************************/
 
-	static void loadVehicles();
+	void loadVehicles();
 
 	/**********************************************************************************************//**
 	 * @fn	static void SharedRides::loadTakenTrips();
@@ -244,6 +249,8 @@ public:
 
 	void guest_log();
 
+	void showUsers();
+
 	/**********************************************************************************************//**
 	 * @fn	static void SharedRides::CreateRegis();
 	 *
@@ -253,7 +260,7 @@ public:
 	 * @date	20-11-2016
 	 **************************************************************************************************/
 
-	static void CreateRegis();
+	 void CreateRegis();
 
 	/**********************************************************************************************//**
 	 * @fn	unsigned int SharedRides::getCARHighID() const;
@@ -308,9 +315,12 @@ public:
 		{
 			delete users[i];
 		}
-		for (unsigned int i = 0; i < cars.size(); ++i) {
-			delete cars[i];
-		}
+
+		carsBST.makeEmpty();
+
+		//for (unsigned int i = 0; i < cars.size(); ++i) {
+			//delete cars[i];
+		//}
 	}
 
 	//helpers
@@ -480,6 +490,21 @@ public:
 
 	void addVehicle();
 
+	 void searchVehicle();
+
+	/**********************************************************************************************//**
+	 * @fn	void SharedRides::editVehicleOwner();
+	 *
+	 * @brief	Changes the owner of a specific  car.
+	 *
+	 * @author	João
+	 * @date	29-12-2016
+	 **************************************************************************************************/
+
+	 void editVehicleOwner();
+
+	 void showCars();
+
 	/**********************************************************************************************//**
 	 * @fn	void SharedRides::creditAccount();
 	 *
@@ -612,6 +637,19 @@ public:
 
 	void showBuddiesProfileToUser();
 
+
+	/**********************************************************************************************//**
+	 * @fn	void SharedRides::header(string header);
+	 *
+	 * @brief	program header
+	 * @param header  the header thitle
+	 *@param who - if RU or guest
+	 *
+	 * @author	João
+	 * @date	25-12-2016
+	 **************************************************************************************************/
+
+	void header(string header,string who) const;
 };
 
 // tratamento de exceções
@@ -676,6 +714,27 @@ class RegistrationException
 public:
 	T info;
 	RegistrationException(T info)
+	{
+		this->info = info;
+	}
+};
+
+
+/**********************************************************************************************//**
+ * @class	UserNotFound
+ *
+ * @brief	Exception for users not found.
+ *
+ * @author	João
+ * @date	29-11-2016
+ **************************************************************************************************/
+
+template<class T>
+class UserNotFound
+{
+public:
+	T info;
+	UserNotFound(T info)
 	{
 		this->info = info;
 	}

@@ -25,6 +25,8 @@ class Vehicle {
 	unsigned int numberSeats;
 	/** @brief	vehicle type, only for showing purposes. */
 	string brand;
+	/** @brief	vehicle model*/
+	string model;
 	/** @brief	user might not choose this vehicle for this. */
 	unsigned int year;
 	/** @brief	optional. grade from A to F based on vehicle condition. */
@@ -108,6 +110,10 @@ public:
 	 **************************************************************************************************/
 
 	string getBrand() const;
+
+	string getModel() const;
+
+	void setModel(string model);
 
 	/**********************************************************************************************//**
 	 * @fn	unsigned int Vehicle::getYear() const;
@@ -314,37 +320,77 @@ public:
 
 	void save(ofstream& out) const;
 
+};
+
+/**********************************************************************************************//**
+ * @class	VehileDBItem
+ *
+ * @brief	Class to organize the vehicles in BST.
+ *
+ * @author	João
+ * @date	28-12-2016
+ **************************************************************************************************/
+
+
+class VehicleDBItem{
+	Vehicle* vehicle;
+	string brand;
+	string model;
+	int year;
+public:
 	/**********************************************************************************************//**
-	 * @fn	bool Vehicle::operator<(Vehicle car1);
+	 * @fn	bool VehicleDBitem::operator<(VehicleDBitem  car1);
 	 *
 	 * @brief	Ordering operator
 	 *
 	 * @author	João
 	 * @date	21-12-2016
 	 *
-	 * @param	car	The car.
+	 * @param	car1	The car.
 	 *
 	 * @return	if the car is not greater
-	 **************************************************************************************************/
-	bool operator < (const Vehicle & car1) const;
+	 /**********************************************************************************************/
+	bool operator<(const VehicleDBItem & car1) const;
 
-	bool operator()(Vehicle * const & car1, Vehicle * const & car2) const;
-
-	bool operator<(Vehicle * const & car1) const;
-
+	
 	/**********************************************************************************************//**
-	 * @fn	bool Vehicle::operator == (Vehicle car1);
+	 * @fn	bool VehicleDBItem::operator == (VehicleDBItem car1);
 	 *
 	 * @brief	equality operator
 	 *
 	 * @author	João
 	 * @date	22-12-2016
 	 *
-	 * @param	car	The car.
+	 * @param	car1	The car.
 	 *
 	 * @return	if the car is  the same or not
 	 **************************************************************************************************/
-	bool operator==(const Vehicle & car1) const;
+
+	bool operator==(const VehicleDBItem & car1) const;
+
+	VehicleDBItem(Vehicle* car);
+	VehicleDBItem();
+	void setBrand(string brand);
+	void setModel(string model);
+	void setYear(int year);
+	void setVehicle(Vehicle* car);
+
+	string getBrand() const;
+	string getModel() const;
+	int getYear() const;
+	Vehicle* getVehicle() const;
 };
+
+
+
+
+
+
+
+
+
+
+
+
 
 #endif /* VEHICLE_H_ */
