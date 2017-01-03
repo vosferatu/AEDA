@@ -1,6 +1,3 @@
-#include "Helper.h"
-#include "User.h"
-#include "Vehicle.h"
 #include "Shared_Rides.h"
 
 #include <iostream>
@@ -8,7 +5,7 @@
 using namespace std;
 
 int main() {	
-
+	
 	//funcao para fazer resize do cmd
 	HWND console = GetConsoleWindow();
 	RECT r;

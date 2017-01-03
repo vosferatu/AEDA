@@ -5,7 +5,9 @@
 #include "User.h"
 #include "Helper.h"
 #include "Vehicle.h"
+#include "DateTime.h"
 #include "BST.h"
+#include "Trip.h"
 
 #include <iostream>
 #include <fstream>
@@ -14,11 +16,51 @@
 #include <sstream>
 #include <ostream>
 #include <algorithm>
+#include <queue>
+#include <unordered_set>
 
 
 #undef max // because of numeric_limits
 
 using namespace std;
+
+/**********************************************************************************************//**
+* @struct	eqstr
+*
+* @brief	Equal operator to user to use in hash table
+*
+* @author	João
+* @date	1-1-2017
+*
+**************************************************************************************************/
+
+
+struct eqstr {
+	bool operator() (const User *s1, const User *s2) const {
+		return s1->getID() == s2->getID();
+	}
+};
+
+/**********************************************************************************************//**
+* @struct	hstr
+*
+* @brief	Function to insert elements in the table.
+*
+* @author	João
+* @date	1-1-2017
+*
+**************************************************************************************************/
+
+struct hstr {
+	int operator() (const User *s1) const {
+
+		string name = s1->getusername();
+		int v = 0;
+		for (unsigned int i = 0; i< name.size(); i++)
+			v = 37 * v + name[i];
+		return v;
+	}
+};
 
 /**********************************************************************************************//**
  * @class	SharedRides
@@ -41,19 +83,12 @@ class SharedRides
 	vector<Path> caminhos;
 	/** @brief	The trip offers in the moment. */
 	static vector<waitingTrip> tripOffers;
-	User* currentUser = NULL;  //se não for pointer, slicing problem
+	/** @brief	The current user. */
+	User* currentUser = NULL;  //se não for pointer, slicing proble
+	/** @brief	vector of active trips */
 	vector<waitingTrip> tripsWaiting;
+	/** @brief	vector with cities suported by this program */
 	static vector<string>cities;
-
-	/**********************************************************************************************//**
-	 * @property	static vector<string>cities
-	 *
-	 * @brief	static vector of the cities.
-	 *
-	 * @tparam	string	Type of the string.
-	 *
-	 * @value	.
-	 **************************************************************************************************/
 
 
 	/** @brief	Identifier for the maximum users. */
@@ -83,8 +118,14 @@ class SharedRides
 	static bool carsalterados;
 
 
-
+	/** @brief	The BST to save the vehicles of the system */
 	BST<VehicleDBItem> carsBST;
+
+	/** @brief	The hash table to save the inactive users*/
+
+	unordered_set<User*, hstr, eqstr> inativos;
+
+
 
 
 public:
@@ -146,6 +187,17 @@ public:
 	 **************************************************************************************************/
 
 	void user_menu();
+
+	/**********************************************************************************************//**
+	 * @fn	void SharedRides::promotion();
+	 *
+	 * @brief	This function realizes all the hash table operations, verifing how long a user is inactive in putting him in the table if greater then 10
+	 *
+	 * @author	João
+	 * @date	1-1-2017
+	 **************************************************************************************************/
+
+	void promotion();
 
 	// SAVE
 
@@ -247,8 +299,41 @@ public:
 
 	User* login(const string &username, const string &password);
 
+	
+	/**********************************************************************************************//**
+	 * @fn	void SharedRides::guest_log();
+	 *
+	 * @brief	Login system to guest (only requests username)
+	 *
+	 * @author	João
+	 * @date	20-11-2016
+	 *
+	 **************************************************************************************************/
+	
 	void guest_log();
 
+	/**********************************************************************************************//**
+	 * @fn	void SharedRides::setTable(unordered_set<User*, hstr, eqstr> inativos);
+	 *
+	 * @brief	sets a hash table.
+	 *
+	 * @author	João
+	 * @date	1-1-2017
+	 *
+	 * @param inativos the hash table to define.
+	 **************************************************************************************************/
+
+	void setTable(unordered_set<User*, hstr, eqstr> inativos);
+
+	/**********************************************************************************************//**
+	 * @fn	static void SharedRides::showUsers();
+	 *
+	 * @brief	outups the users.
+	 *
+	 * @author	João
+	 * @date	1-1-2017
+	 **************************************************************************************************/
+	
 	void showUsers();
 
 	/**********************************************************************************************//**
@@ -490,7 +575,16 @@ public:
 
 	void addVehicle();
 
-	 void searchVehicle();
+	/**********************************************************************************************//**
+	 * @fn	void SharedRides::searchVehicle();
+	 *
+	 * @brief	function to search vehicles in the BST
+	 *
+	 * @author	João
+	 * @date	1-1-2017
+	 **************************************************************************************************/
+	
+	void searchVehicle();
 
 	/**********************************************************************************************//**
 	 * @fn	void SharedRides::editVehicleOwner();
@@ -502,6 +596,15 @@ public:
 	 **************************************************************************************************/
 
 	 void editVehicleOwner();
+
+	 /**********************************************************************************************//**
+	 * @fn	void SharedRides::showCars();
+	 *
+	 * @brief	shows the cars of BST
+	 *
+	 * @author	João
+	 * @date	1-1-2017
+	 **************************************************************************************************/
 
 	 void showCars();
 
@@ -656,7 +759,7 @@ public:
 
 
 
-template<class T>
+
 
 /**********************************************************************************************//**
  * @class	FileException
@@ -666,7 +769,7 @@ template<class T>
  * @author	João
  * @date	20-11-2016
  **************************************************************************************************/
-
+template<class T>
 class FileException
 {
 public:
@@ -677,7 +780,7 @@ public:
 	}
 };
 
-template<class T>
+
 
 /**********************************************************************************************//**
  * @class	LoginException
@@ -687,7 +790,7 @@ template<class T>
  * @author	João
  * @date	20-11-2016
  **************************************************************************************************/
-
+template<class T>
 class LoginException
 {
 public:
@@ -698,7 +801,6 @@ public:
 	}
 };
 
-template<class T>
 
 /**********************************************************************************************//**
  * @class	RegistrationException
@@ -708,6 +810,7 @@ template<class T>
  * @author	João
  * @date	20-11-2016
  **************************************************************************************************/
+template<class T>
 
 class RegistrationException
 {

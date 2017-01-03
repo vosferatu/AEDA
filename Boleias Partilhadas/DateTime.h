@@ -240,9 +240,6 @@ class Date {
 		friend istream& operator>>(istream& in, const Date & data); //escrever data
 };
 
-
-
-
 class Time {
 	/** @brief	The hours. */
 	unsigned int hours;

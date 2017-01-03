@@ -6,7 +6,176 @@
 #include "User.h"
 #include "DateTime.h"
 #include "Vehicle.h"
+#include <queue>
 
+/**********************************************************************************************//**
+ * @class	WaitingUser
+ *
+ * @brief	Represents the user that is waiting for its trip to begin.
+ * @author	João
+ * @date	1-1-2017
+ **************************************************************************************************/
+
+class WaitingUser {
+	/** @brief	The user's ID. */
+	unsigned int userID;
+	/** @brief	The user's friends. */
+	vector<int> buddies;
+	/** @brief	How far away is from the driver. */
+	Time driveraway;
+	/** @brief	The ID of the driver. */
+	unsigned int driverID;
+
+public:
+	/**********************************************************************************************//**
+	 * @fn	WaitingUser::WaitingUser()
+	 *
+	 * @brief	Default constructor.
+	 *
+	 * @author	João
+	 * @date	1-1-2016
+	 **************************************************************************************************/
+	WaitingUser();
+
+	/**********************************************************************************************//**
+	 * @fn	WaitingUser::(unsigned int userID, vector<int> buddies, Time driveraway, unsigned int driverID);
+	 *
+	 * @brief	Class constructor.
+	 *
+	 * @author	João
+	 * @param userID the user's ID
+	 * @param buddies the user's vector of friends
+	 * @param driveraway how far is from the driver
+	 * @param driverID the driver's ID
+	 * @date	1-1-2016
+	 **************************************************************************************************/
+
+	WaitingUser(unsigned int userID, vector<int> buddies, Time driveraway, unsigned int driverID);
+	//bool operator<(const WaitingUser & WU) const ;
+
+	/**********************************************************************************************//**
+	 * @fn	bool WaitingUser::operator == (WaitingUser car1);
+	 *
+	 * @brief	equality operator
+	 *
+	 * @author	João
+	 * @date	1-1-2017
+	 *
+	 * @param	WU	The waiting user
+	 *
+	 * @return	if the waiting user is  the same or not
+	 **************************************************************************************************/
+	bool operator==(const WaitingUser & WU) const;
+	/**********************************************************************************************//**
+	 * @fn	void WaitingUser::setDriverAway(Time time);
+	 *
+	 * @brief	sets the time way from the driver.
+	 *
+	 * @author	João
+	 * @date	1-1-2017
+	 *
+	 * @param	time	The time.
+	 **************************************************************************************************/
+	void setDriverAway(Time time);
+
+	/**********************************************************************************************//**
+	 * @fn	void WaitingUser::itsBuddie();
+	 *
+	 * @brief	returns if a user is friend of driver or not
+	 *
+	 * @author	João
+	 * @date	1-1-2017
+	 *
+	 * @return	bool	if the user is a friend of the driver or not
+	 **************************************************************************************************/
+	
+	bool itsBuddie() const;
+
+	/**********************************************************************************************//**
+	 * @fn	vector<int>  WaitingUser:: getBuddies() const;
+	 *
+	 * @brief	returns the buddies of the user
+	 *
+	 * @author	João
+	 * @date	1-1-2017
+	 *
+	 * @return	vector<int>	the buddies.
+	 **************************************************************************************************/
+	vector<int> getBuddies() const;
+	
+	/**********************************************************************************************//**
+	 * @fn	unsigned int WaitingUser::getDriverID() const;
+	 *
+	 * @brief	returns driverID of the trip the WaitingUser is assigned
+	 *
+	 * @author	João
+	 * @date	1-1-2017
+	 *
+	 * @return	unsigned int	the buddies.
+	 **************************************************************************************************/
+	unsigned int getDriverID() const;
+	/**********************************************************************************************//**
+	 * @fn	Time WaitingUser::getDriverAway() const;
+	 *
+	 * @brief	returns the time the user is from driver.
+	 *
+	 * @author	João
+	 * @date	1-1-2017
+	 *
+	 * @return	Time  time the user is from driver.
+	 **************************************************************************************************/
+	Time getDriverAway() const;
+
+	/**********************************************************************************************//**
+	 * @fn	unsigned int WaitingUser::getUserID() const;
+	 *
+	 * @brief	returns userID 
+	 *
+	 * @author	João
+	 * @date	1-1-2017
+	 *
+	 * @return	unsigned int	the userID
+	 **************************************************************************************************/
+	unsigned int getUserID() const;
+};
+
+/**********************************************************************************************//**
+	 * @fn	bool operator<(const WaitingUser & WU, const WaitingUser &WU2);
+	 *
+	 * @brief	the overload for the less operator (priority line requirement)
+	 *
+	 * @author	João
+	 * @date	1-1-2017
+	 *
+	 * @return	unsigned int	the userID
+	 **************************************************************************************************/
+
+bool operator<(const WaitingUser & WU, const WaitingUser &WU2);
+
+/*struct Comparator
+{
+	bool operator() (const WaitingUser &lhs, const WaitingUser &rhs) const
+	{
+		return true;
+
+		bool itsbuddie = false;
+		
+		for (size_t i = 0; i <lhs.getBuddies().size(); i++)
+		{
+			if (lhs.getBuddies()[i] == lhs.getDriverID()) itsbuddie = true;
+		}
+
+
+		//if (itsbuddie) {
+			//return (!(lhs.getDriverAway() < rhs.getDriverAway()));
+		//}
+		//else return true;
+	}
+};	
+*/
+
+
+typedef priority_queue<WaitingUser> HEAP_USERS;
 
 /**********************************************************************************************//**
  * @class	takenTrip
@@ -33,6 +202,9 @@ class takenTrip { //usada para mostrar e gravar viagens dos owners
 	/** @brief	The trip code of the trip. */
 	static unsigned int tripCodeStat;
 	unsigned int tripCode;
+
+	
+
 
 public:
 
@@ -278,6 +450,8 @@ class Stretch {
 	string stop;
 	/** @brief	Vector of users. */
 	vector<int> usersID;
+	/** @brief	Priority queue  of users to enter in the stretch. */
+	HEAP_USERS users;
 	/** @brief	Time to next stop. */
 	Time toNext;
 public:
@@ -331,7 +505,33 @@ public:
 	 * @return	A vector of users ID.
 	 **************************************************************************************************/
 
-	vector<int> getusers() const;
+	/**********************************************************************************************//**
+	 * @fn	void Stretch::addtoHeap(WaitingUser u1);
+	 *
+	 * @brief	adds an user to the heap of users of the stretch
+	 *
+	 * @author	João
+	 * @date	20-11-2016
+	 *
+	 * @param	u1 the waiting user to add.
+	 **************************************************************************************************/
+	
+	void addtoHeap(WaitingUser u1);
+
+	/**********************************************************************************************//**
+	 * @fn	HEAP_USERS  Stretch:: getHeap() const;
+	 *
+	 * @brief returns the heap of the users.
+	 *
+	 * @author	João
+	 * @date	20-11-2016
+	 *
+	 * @return	HEAP_USERS  the users heap.
+	 **************************************************************************************************/
+	
+	HEAP_USERS getHeap() const;
+
+	//vector<int> getusers() const;
 
 	/**********************************************************************************************//**
 	 * @fn	Time Stretch::getTime() const;
@@ -396,7 +596,7 @@ public:
 	 * @param	usersID	the vector of ids of the users.
 	 **************************************************************************************************/
 
-	void setvectID(vector<int> usersID);
+	void setHeap(HEAP_USERS heap);
 
 	/**********************************************************************************************//**
 	 * @fn	friend ofstream& Stretch::operator<<(ofstream& out, const Stretch& way);
@@ -502,6 +702,8 @@ public:
 	 **************************************************************************************************/
 
 	vector<Stretch> getWay() const;
+
+	vector<Stretch> getWayStretch();
 
 	/**********************************************************************************************//**
 	 * @fn	float waitingTrip::getpriceStop() const;
@@ -723,5 +925,10 @@ public:
 
 	string getSecond() const;
 };
+
+
+
+
+
 
 #endif

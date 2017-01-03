@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 #include <fstream>
+#include <queue>
 #include "Vehicle.h"
 #include "DateTime.h"
 #include "Trip.h"
@@ -31,6 +32,7 @@ class User{
 	string username;
 	/** @brief	The account of the user. */
 	float account = 0;
+
 
 public:
 
@@ -263,6 +265,19 @@ public:
 	virtual void save(ofstream& out) const = 0;
 
 	/**********************************************************************************************//**
+	 * @fn	virtual void User:: setLastTrip(Date data) = 0;
+	 *
+	 * @brief	Set the date of the last trip of the user.
+	 *
+	 * @author	João
+	 * @date	1-1-2017
+	 *
+	 * @param	data	the date.
+	 **************************************************************************************************/
+	
+	virtual void setLastTrip(Date data) = 0;
+
+	/**********************************************************************************************//**
 	 * @fn	virtual void User::setTrips(vector<int> trips) = 0;
 	 *
 	 * @brief	Sets the trips.
@@ -272,9 +287,20 @@ public:
 	 *
 	 * @param	trips	The vector of taken trips.
 	 **************************************************************************************************/
-
 	virtual void setTrips(vector<int> trips) = 0;
 
+	/**********************************************************************************************//**
+	 * @fn	virtual Date User::getLastTrip() const = 0;
+	 *
+	 * @brief	returns the date of the last trip the user went trough.
+	 *
+	 * @author	João
+	 * @date	1-1-2017
+	 *
+	 * @return	Date	date of the last trip the user went trough.
+	 **************************************************************************************************/
+	virtual Date getLastTrip() const = 0;
+	
 	/**********************************************************************************************//**
 	 * @fn	virtual void User::setFavs(vector<int> favs) = 0;
 	 *
@@ -285,7 +311,6 @@ public:
 	 *
 	 * @param	favs	The vector of buddies. 
 	 **************************************************************************************************/
-
 	virtual void setFavs(vector<int> favs) = 0;
 
 	/**********************************************************************************************//**
@@ -301,6 +326,17 @@ public:
 
 	virtual void addTrip(unsigned int ID) = 0;
 
+	
+	/**********************************************************************************************//**
+	 * @fn	virtual void User::setVehicle(Vehicle* car) = 0;
+	 *
+	 * @brief	Sets the car of the user
+	 *
+	 * @author	João
+	 * @date	1-1-2017
+	 *
+	 * @param	car	 the car of the user.
+	 **************************************************************************************************/
 	virtual void setVehicle(Vehicle* car) = 0;
 };
 
@@ -325,6 +361,10 @@ class RegisteredUser : public User {
 	string password;
 	/** @brief	The vehicle. */
 	Vehicle* vehicle;
+
+	/** @brief	the date of the last trip the user went trough. */
+
+	Date lastTrip;
 
 
 public:
@@ -383,6 +423,19 @@ public:
 	 **************************************************************************************************/
 
 	string getCity() const;
+
+	/**********************************************************************************************//**
+	 * @fn	string RegisteredUser::getLastTrip() const;
+	 *
+	 * @brief	Gets the date of the last trip of the user.
+	 *
+	 * @author	João
+	 * @date	01-01-2017
+	 *
+	 * @return	The date of the trip.
+	 **************************************************************************************************/
+
+	Date getLastTrip() const;
 
 	/**********************************************************************************************//**
 	 * @fn	vector<int> RegisteredUser::getTrips() const;
@@ -449,6 +502,19 @@ public:
 
 	void setVehicle(Vehicle* car);
 
+
+	/**********************************************************************************************//**
+	 * @fn	void RegisteredUser::setLastTrip(Date date);
+	 *
+	 * @brief	Sets date of last trip of the user.
+	 *
+	 * @author	João
+	 * @date	1-1-2017
+	 *
+	 * @param	date	The date.
+	 **************************************************************************************************/
+	
+	void setLastTrip(Date date);
 	/**********************************************************************************************//**
 	 * @fn	Vehicle* RegisteredUser::getVehicle() const;
 	 *
@@ -459,7 +525,6 @@ public:
 	 *
 	 * @return	Null if it fails, else the vehicle.
 	 **************************************************************************************************/
-
 	Vehicle* getVehicle() const;
 
 	/**********************************************************************************************//**
@@ -597,7 +662,11 @@ public:
 	void setFavs(vector<int> favs) {};
 	void addTrip(unsigned int ID) {};
 	void setVehicle(Vehicle* car) {};
+	void setLastTrip(Date date) {};
+	Date getLastTrip() const { return Date(); };
 };
+
+
 
 
 

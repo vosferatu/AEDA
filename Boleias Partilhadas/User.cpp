@@ -1,5 +1,4 @@
-#include "User.h"
-#include "Helper.h"
+#include "Shared_Rides.h"
 #include <string>
 
 
@@ -17,11 +16,9 @@ User::User(string username) {
 	idstatic++;
 }
 
-
 string User::getusername() const {
 	return username;
 }
-
 
 unsigned int User::getID() const {
 	return id; 
@@ -47,7 +44,6 @@ string RegisteredUser::getpassword() const
 	return password;
 }
 
-
 vector<int> RegisteredUser::getTrips() const {
 	return Trips;
 }
@@ -58,6 +54,15 @@ unsigned int RegisteredUser::getnumTrips() const {
 
 string RegisteredUser::getCity() const {
 	return homeCity;
+}
+
+Date RegisteredUser::getLastTrip() const {
+	return lastTrip;
+}
+
+void RegisteredUser::setLastTrip(Date date)
+{
+	this->lastTrip = date;
 }
 
 Vehicle* RegisteredUser::getVehicle() const {
@@ -90,6 +95,7 @@ void RegisteredUser::showProfile(){
 vector<int> RegisteredUser::getFavs() const{
 	return favorites;
 }
+
 void User::setAccount(float account) {
 	this->account = account;
 }
@@ -102,7 +108,6 @@ ofstream& operator<<(ofstream& os, const RegisteredUser* RU) {
 void RegisteredUser::setVehicle(Vehicle* car)  {
 	this->vehicle = car;
 }
-
 
 void RegisteredUser::setTrips(vector<int> trips) {
 	this->Trips = trips;
@@ -147,12 +152,7 @@ void RegisteredUser::setVehicleID(unsigned int id) {
 
 
 
-
-
 ////////////////////////////////////////////////// GUEST USER /////////////////////////////////////////////////////////////
 
 GuestUser::GuestUser(string username) : User(username) {
 }
-
-
-

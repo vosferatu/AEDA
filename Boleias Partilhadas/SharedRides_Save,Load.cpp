@@ -236,10 +236,17 @@ void SharedRides::loadTakenTrips() {
 		v1.setTripCode(tripcode);
 		v1.setDay(data);
 
+		for (size_t i = 0; i < users.size(); i++)
+		{
+			if (users[i]->getusername() == name) {
+				if (users[i]->getLastTrip() < data)
+					users[i]->setLastTrip(data);
+			}
+		}
+
 		tripsPrinter.push_back(v1);
 	}
 }
-
 
 void SharedRides::loadWaitingTrips() {
 
@@ -265,6 +272,10 @@ void SharedRides::loadWaitingTrips() {
 	int numIDs;
 	float pricestop;
 	int maxseats;
+	int driverawayhour;
+	int driverawayminute;
+	Time driveraway;
+
 	vector<Stretch> viagem;
 
 	while (getline(infile, info)) {
@@ -303,16 +314,44 @@ void SharedRides::loadWaitingTrips() {
 			info = info.substr(findpos + 1, search);			//string = desde primeiro ';' até ao segundo
 			findpos = info.find(';', 0);
 			int j = 0;
-			vector<int> vectID;
+			//vector<int> vectID;
+			
+			HEAP_USERS heap;
+			
 			while (j < numIDs) {
 				ID = atoi(info.substr(0, findpos).c_str());
-				vectID.push_back(ID);
+				info = info.substr(findpos + 1, search);			//string = desde primeiro ';' até ao segundo
+				findpos = info.find(':', 0);
+
+				driverawayhour = atoi(info.substr(0, findpos).c_str());
 				info = info.substr(findpos + 1, search);			//string = desde primeiro ';' até ao segundo
 				findpos = info.find(';', 0);
+
+				driverawayminute = atoi(info.substr(0, findpos).c_str());
+				info = info.substr(findpos + 1, search);			//string = desde primeiro ';' até ao segundo
+				findpos = info.find(';', 0);
+
+				driveraway = Time(driverawayhour, driverawayminute);
+				vector<int> buddies;
+				
+				for (size_t i = 0; i < users.size(); i++) {
+					if (users[i]->getID() == ID) {
+						buddies = users[i]->getFavs();
+						break;
+					}
+				}
+				
+				WaitingUser u1 = WaitingUser(ID, buddies, driveraway, owner);
+				
+				//heap.push(u1);
+				
+				//vectID.push_back(ID);
+				
 				j++;
 			}
 			Stretch str(stop, tonext);
-			str.setvectID(vectID);
+			//str.setvectID(vectID);
+			str.setHeap(heap);
 			viagem.push_back(str);
 			i++;
 		}
@@ -330,7 +369,6 @@ void SharedRides::loadWaitingTrips() {
 		tripOffers.push_back(waiting);
 	}
 }
-
 
 void SharedRides::loadVehicles() {
 
@@ -427,7 +465,6 @@ void SharedRides::loadVehicles() {
 	//}
 }
 
-
 void SharedRides::loadCities() {
 
 	fstream file;
@@ -456,7 +493,6 @@ void SharedRides::loadCities() {
 
 
 }
-
 
 void SharedRides::load() {
 	loadCities();

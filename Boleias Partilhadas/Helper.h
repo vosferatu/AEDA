@@ -41,6 +41,21 @@ T get_input(const string &strQuery)
 
 	return out;
 }
+/**********************************************************************************************//**
+ * @fn	int rdn();
+ *
+ * @brief	Returns the number difference days between 2 dates. Taken from the web
+ *
+ * @author	João
+ * @date	1-12-2016
+ *
+ * @param	int y	the year
+ * @param	int m	the month
+ * @param	int d     the day
+ * @return	The number of days between
+ /***********************************************************************************************/
+int rdn(int y, int m, int d);
+
 
 /**********************************************************************************************//**
  * @fn	string readLine();

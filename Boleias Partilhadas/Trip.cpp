@@ -1,4 +1,4 @@
-#include "Trip.h"
+#include "Shared_Rides.h"
 
 
 ////////////////////////TAKEN ///////////////////////////////////////////
@@ -127,6 +127,11 @@ vector<Stretch> waitingTrip::getWay() const
 	return Viagem;
 }
 
+vector<Stretch> waitingTrip::getWayStretch() 
+{
+	return Viagem;
+}
+
 float waitingTrip::getpriceStop() const{
 	return pricePerStop;
 }
@@ -174,8 +179,8 @@ ofstream & operator<<(ofstream & out, const waitingTrip & trip){
 
 ostream & operator<<(ostream & out, const waitingTrip & trip){
 	
-		
-	out << "No. of stops: " << trip.getWay().size() << endl << endl;
+	out << "Owner: " << trip.getOwner();
+	out << " || No. of stops: " << trip.getWay().size() << endl << endl;
 	
 	vector<Stretch> viagem = trip.getWay();
 	
@@ -220,9 +225,18 @@ string Stretch::getCity() const{
 	return stop;
 }
 
-vector<int> Stretch::getusers() const{
-	return usersID;
+ void Stretch::addtoHeap(WaitingUser u1)  {
+	 this->users.push(u1);
 }
+
+ HEAP_USERS Stretch::getHeap() const
+ {
+	 return users;
+ }
+
+// vector<int> Stretch::getusers() const{
+	//return usersID;
+//}
 
 Time Stretch::getTime() const
 {
@@ -233,31 +247,39 @@ void Stretch::setCity(string city){
 	this->stop = city;
 }
 
-void Stretch::addUser(int id){
-	this->usersID.push_back(id);
-}
+//void Stretch::addUser(int id){
+	//this->usersID.push_back(id);
+//}
 
 void Stretch::setTime(Time newTime){
 	this->toNext = newTime;
 }
 
-void Stretch::setvectID(vector<int> usersID) {
-	this->usersID = usersID;
+void Stretch::setHeap(HEAP_USERS heap) {
+	this->users = heap;
 }
 
 ofstream & operator<<(ofstream & out, const Stretch & way) {
 	out << way.stop << ";" << way.toNext << ";";
 	
-	if (way.usersID.size() == 0) {
-		out << way.usersID.size() << ";";
+	if (way.users.size() == 0) {
+		out << way.users.size() << ";";
 		return out;
 	}
 	
-	out << way.usersID.size() << ";";
+	out << way.users.size() << ";";
 
-	for (size_t i = 0; i < way.usersID.size(); i++) {
-		out << way.usersID[i] << ";";
+	HEAP_USERS buffer = way.users;
+
+	while (!buffer.empty()) {
+		out << buffer.top().getUserID() << ";" << buffer.top().getDriverAway() << ";";
+		buffer.pop();
 	}
+	
+	//for (size_t i = 0; i < way.usersID.size(); i++) {
+				
+		//out << way.usersID[i] << ";";
+	//}
 
 	return out;
 }
@@ -270,14 +292,23 @@ ostream & operator<<(ostream & out, const Stretch & way) {
 	else out << " | Time to next stop: " << way.toNext << endl;
 
 	if (!(way.toNext == Time(0, 0))) {
-		if (way.usersID.size() == 0) out << "There are no users waiting to enter in this stop" << endl;
+		if (way.users.size() == 0) out << "There are no users waiting to enter in this stop." << endl;
 		else {
-			out << "There are " << way.usersID.size() << " users entering in this stop, being the Users with the IDs ";
-
-			for (size_t i = 0; i < way.usersID.size(); i++) {
-				if (i < way.usersID.size() - 1) out << way.usersID[i] << ", ";
-				else out << way.usersID[i] << "." << endl;
+			out << "There are " << way.users.size() << " users in line to enter in this stop, being the Users with the IDs ";
+			HEAP_USERS buffer = way.users;
+			int i = 0;
+			while (!buffer.empty()) {
+				if (i < way.users.size() - 1) {
+					out << buffer.top().getUserID() << ", ";
+					buffer.pop();
+				}
+				else out << buffer.top().getUserID() << "." << endl;
 			}
+			
+			//for (size_t i = 0; i < way.usersID.size(); i++) {
+				//if (i < way.usersID.size() - 1) out << way.usersID[i] << ", ";
+				//else out << way.usersID[i] << "." << endl;
+			//}
 
 		}
 	}
@@ -285,6 +316,7 @@ ostream & operator<<(ostream & out, const Stretch & way) {
 }
 
 /////////////////////////////PATH///////////////////////////////////
+
 
 
 Path::Path(string first, string second, Time timeSpent){
@@ -304,3 +336,97 @@ string Path::getFirst() const{
 string Path::getSecond() const{
 	return second;
 }
+
+
+/////////////////////////////////////////////////// WAITING USER ///////////////////////////////////////////////////////
+
+WaitingUser::WaitingUser()
+{
+	userID = NULL;
+	driverID = NULL;
+}
+
+WaitingUser::WaitingUser(unsigned int userID, vector<int> buddies, Time driveraway, unsigned int driverID)
+{
+	this->userID = userID;
+	this->buddies = buddies;
+	this->driverID = driverID;
+	this->driveraway = driveraway;
+}
+
+
+
+bool operator<(const WaitingUser & WU, const WaitingUser &WU2) {
+
+	if (!WU.itsBuddie() && WU2.itsBuddie())
+		return true;
+
+	if (WU.itsBuddie() && !WU2.itsBuddie())
+		return false;
+
+	if (!WU.itsBuddie() && !WU2.itsBuddie()) {
+		return(!(WU.getDriverAway() < WU2.getDriverAway()));
+		
+		/*if (!(WU.getDriverAway() < WU2.getDriverAway()))
+			return true;
+		else if ((WU.getDriverAway() == WU2.getDriverAway()))
+			return true;
+		else return false;*/
+	}
+
+	if (WU.itsBuddie() && WU2.itsBuddie()) {
+		return (!(WU.getDriverAway() < WU2.getDriverAway()));
+		
+		/*	if ( ! (WU.getDriverAway() < WU2.getDriverAway()))
+			return true;
+		else if ((WU.getDriverAway() == WU2.getDriverAway()))
+			return true;
+		else return false;*/
+	}
+
+	return false;
+
+}
+
+
+bool WaitingUser::operator==(const WaitingUser & WU) const {
+	return (this->userID == WU.userID);
+}
+
+void WaitingUser::setDriverAway(Time time)
+{
+	this->driveraway = time;
+}
+
+bool WaitingUser::itsBuddie() const
+{
+	for (size_t i = 0; i < buddies.size(); i++)
+	{
+		if (buddies[i] == driverID) return true;
+	}
+
+	return false;
+}
+
+vector<int> WaitingUser::getBuddies() const
+{
+	return buddies;
+}
+
+unsigned int WaitingUser::getUserID() const
+{
+	return userID;
+}
+
+unsigned int WaitingUser::getDriverID() const
+{
+	return driverID;
+}
+
+Time WaitingUser::getDriverAway() const
+{
+	return driveraway;
+}
+
+
+

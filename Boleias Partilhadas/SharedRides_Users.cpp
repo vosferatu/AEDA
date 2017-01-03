@@ -383,12 +383,27 @@ void SharedRides::deleteAccount() {
 
 			for (size_t i = 0; i < tripOffers.size(); i++) {
 				for (size_t j = 0; j < tripOffers[i].getWay().size(); j++) {
-					for (size_t k = 0; k < tripOffers[i].getWay()[j].getusers().size(); k++) {
-						if (tripOffers[i].getWay()[j].getusers()[k] == currentUser->getID()) {
-							tripOffers[i].getWay()[j].getusers().erase(tripOffers[i].getWay()[j].getusers().begin() + k);
-							break;
-						}
+
+					HEAP_USERS buffer1 = tripOffers[i].getWay()[j].getHeap();
+					HEAP_USERS buffer2;
+					while (!buffer1.empty()) {
+					
+						if (buffer1.top().getUserID() != currentUser->getID())
+							buffer2.push(buffer1.top());
+
+						buffer1.pop();
+
 					}
+
+					tripOffers[i].getWay()[j].setHeap(buffer2);
+
+					//for (size_t k = 0; k < tripOffers[i].getWay()[j].getusers().size(); k++) {
+					
+						//if (tripOffers[i].getWay()[j].getusers()[k] == currentUser->getID()) {
+							//tripOffers[i].getWay()[j].getusers().erase(tripOffers[i].getWay()[j].getusers().begin() + k);
+							//break;
+						//}
+					//}
 				}
 			}
 
@@ -456,6 +471,11 @@ void SharedRides::guest_log() {
 	users.push_back(u1);
 	usersalterados = true;
 	currentUser = u1;
+}
+
+void SharedRides::setTable(unordered_set<User*, hstr, eqstr> inativos)
+{
+	this->inativos = inativos;
 }
 
 void SharedRides::showUsers() {

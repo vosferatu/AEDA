@@ -26,6 +26,7 @@ void SharedRides::run() {
 	try {
 		fillPaths();
 		load();
+		promotion();
 		main_menu();
 		saveChanges();
 	}
@@ -145,12 +146,21 @@ void SharedRides::recompensate(unsigned int id) {
 	if (tripOffers.size() == 0)
 		return;
 
+	
 	for (size_t i = 0; i < tripOffers.size(); i++) {
 		if (tripOffers[i].getOwner() == id) {
 			for (size_t j = 0; j < tripOffers[i].getWay().size(); j++) {
-				for (size_t k = 0; k < tripOffers[i].getWay()[j].getusers().size(); k++) {
-					afetados.push_back(tripOffers[i].getWay()[j].getusers()[k]);
+				
+				HEAP_USERS buffer = tripOffers[i].getWay()[j].getHeap();
+
+				while (!buffer.empty()) {
+					afetados.push_back(buffer.top().getUserID());
+						buffer.pop();
 				}
+
+				//for (size_t k = 0; k < tripOffers[i].getWay()[j].getusers().size(); k++) {
+					//afetados.push_back(tripOffers[i].getWay()[j].getusers()[k]);
+				//}
 			}
 		}
 	}
@@ -240,5 +250,24 @@ unsigned int SharedRides::getTAKENHighID() const {
 	}
 
 	return maiorID;
+}
+
+
+
+void SharedRides::promotion() {
+
+	Date datahoje = Date();
+
+	for (size_t i = 0; i < users.size(); i++)
+	{
+		Date datauser = users[i]->getLastTrip();
+		int diff = rdn(datahoje.getYear(), datahoje.getMonth(), datahoje.getDay()) - rdn(datauser.getYear(), datauser.getMonth(), datauser.getDay());
+
+		if (diff > 10) // se o utilizador nao fizer viagens ha mais de 10 dias..
+			inativos.insert(users[i]); // insere na tabela de dispersao
+	}
+
+
+
 }
 

@@ -111,7 +111,29 @@ public:
 
 	string getBrand() const;
 
+	/**********************************************************************************************//**
+	 * @fn	string Vehicle::getModel() const;
+	 *
+	 * @brief	Gets the model of the car
+	 *
+	 * @author	João
+	 * @date	23-12-2016
+	 *
+	 * @return	The Model
+	 **************************************************************************************************/
+
 	string getModel() const;
+
+	/**********************************************************************************************//**
+	 * @fn	void Vehicle::setModel(string model);
+	 *
+	 * @brief	sets the model of the car
+	 *
+	 * @author	João
+	 * @date	23-12-2016
+	 *
+	 * @param string	The Model
+	 **************************************************************************************************/
 
 	void setModel(string model);
 
@@ -333,9 +355,13 @@ public:
 
 
 class VehicleDBItem{
+	/** @brief	pointer to prior vehicle existence */
 	Vehicle* vehicle;
+	/** @brief	brand, for ordering purposes */
 	string brand;
+	/** @brief	model, for ordering purposes */
 	string model;
+	/** @brief	year, for orderning purposes */
 	int year;
 public:
 	/**********************************************************************************************//**
@@ -368,16 +394,127 @@ public:
 
 	bool operator==(const VehicleDBItem & car1) const;
 
+	/**********************************************************************************************//**
+	 * @fn	VehicleDBItem::VehicleDBItem(Vehicle* car);
+	 *
+	 * @brief	Constructor.
+	 *
+	 * @author	João
+	 * @date	22-12-2016
+	 *
+	 * @param	car	the car that originates the item to be saved in the bst
+	 **************************************************************************************************/
 	VehicleDBItem(Vehicle* car);
+	
+	/**********************************************************************************************//**
+	 * @fn	VehicleDBItem::VehicleDBItem();
+	 *
+	 * @brief	default Constructor.
+	 *
+	 * @author	João
+	 * @date	22-12-2016
+	 *
+	 **************************************************************************************************/
 	VehicleDBItem();
+
+
+	/**********************************************************************************************//**
+	 * @fn	void VehicleDBItem::setBrand(string brand);
+	 *
+	 * @brief	Sets a brand.
+	 *
+	 * @author	João
+	 * @date	28-12-2016
+	 *
+	 * @param	brand	the car brand
+	 **************************************************************************************************/
 	void setBrand(string brand);
+
+	/**********************************************************************************************//**
+	 * @fn	void VehicleDBItem::setModel(string model);
+	 *
+	 * @brief	Sets a model.
+	 *
+	 * @author	João
+	 * @date	28-12-2016
+	 *
+	 * @param	model	the car model
+	 **************************************************************************************************/
 	void setModel(string model);
+	
+	/**********************************************************************************************//**
+	 * @fn	void VehicleDBItem::setYear(int year);
+	 *
+	 * @brief	Sets a year.
+	 *
+	 * @author	João
+	 * @date	28-12-2016
+	 *
+	 * @param	year	the car year
+	 **************************************************************************************************/
 	void setYear(int year);
+	
+	/**********************************************************************************************//**
+	 * @fn	void VehicleDBItem::setVehicle(Vehicle* car);
+	 *
+	 * @brief	Sets the car
+	 *
+	 * @author	João
+	 * @date	28-12-2016
+	 *
+	 * @param	car	 the car
+	 **************************************************************************************************/
 	void setVehicle(Vehicle* car);
 
+	/**********************************************************************************************//**
+	 * @fn	string Vehicle::getBrand() const;
+	 *
+	 * @brief	Gets the brand.
+	 *
+	 * @author	João
+	 * @date	28-12-2016
+	 *
+	 * @return	The car brand.
+	 **************************************************************************************************/
 	string getBrand() const;
+	
+	
+	/**********************************************************************************************//**
+	 * @fn	string Vehicle::getModel() const;
+	 *
+	 * @brief	Gets the model.
+	 *
+	 * @author	João
+	 * @date	28-12-2016
+	 *
+	 * @return	The car model.
+	 **************************************************************************************************/
 	string getModel() const;
+
+
+	/**********************************************************************************************//**
+	 * @fn	int Vehicle::getYear() const;
+	 *
+	 * @brief	Gets the year.
+	 *
+	 * @author	João
+	 * @date	28-12-2016
+	 *
+	 * @return	The car year.
+	 **************************************************************************************************/
 	int getYear() const;
+
+	
+	/**********************************************************************************************//**
+	 * @fn	Vehicle* Vehicle::getVehicle() const;
+	 *
+	 * @brief	Gets the vehicle
+	 *
+	 * @author	João
+	 * @date	28-12-2016
+	 *
+	 * @return	The car .
+	 **************************************************************************************************/
 	Vehicle* getVehicle() const;
 };
 
