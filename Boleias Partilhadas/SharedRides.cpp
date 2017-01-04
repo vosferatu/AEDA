@@ -104,6 +104,8 @@ void SharedRides::fillPaths() {
 	Path p56("Beja", "Faro", Time(1, 35)); caminhos.push_back(p56);
 }
 
+
+
 int SharedRides::getPositionCar(unsigned int id) const {
 	int position = -1;
 	int i = 0;

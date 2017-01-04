@@ -17,7 +17,6 @@ takenTrip::takenTrip(string owns, string start, string finish, Time end){
 }
 
 
-
 unsigned int takenTrip::getTripCode() const{
 	return this->tripCode;
 }
@@ -179,25 +178,25 @@ ofstream & operator<<(ofstream & out, const waitingTrip & trip){
 
 ostream & operator<<(ostream & out, const waitingTrip & trip){
 	
-	out << "Owner: " << trip.getOwner();
-	out << " || No. of stops: " << trip.getWay().size() << endl << endl;
+		
+	out << TAB << "Owner ID: " << trip.getOwner();
+	
+
+	out << "  ||  No. of stops: " << trip.getWay().size() << "  ||  Price per stop: " << trip.pricePerStop << endl << endl;
 	
 	vector<Stretch> viagem = trip.getWay();
 	
 	for (size_t i = 0; i < viagem.size(); i++)
 	{
-		if (i == 0)out << "- Starting point - " << endl;
-		if (i == viagem.size() - 1) out << "- End Point - " << endl;
+		if (i == 0) out << TAB <<  "- Starting point - " << endl;
+		if (i == viagem.size() - 1) out << TAB << "- End Point - " << endl;
 		out << viagem[i] << endl << endl;
-				
 	}
 	
-	out << "Price per stop: " << trip.pricePerStop << endl;
-	out << "Max seats per stop:  " << trip.maxSeats;
+	out << TAB << "This car has " << trip.maxSeats << "seats. ";
 	
 	return out;
 }
-
 
 void waitingTrip::save(ofstream& out) const {
 	out << this->getOwner() << ";";
@@ -286,23 +285,31 @@ ofstream & operator<<(ofstream & out, const Stretch & way) {
 
 ostream & operator<<(ostream & out, const Stretch & way) {
 
-	out << "Stop: " << way.stop;
+	out << TAB << "Stop: " << way.stop;
 	
 	if (way.toNext == Time(0, 0)) out << " | This is the final point in the journey" << endl;
-	else out << " | Time to next stop: " << way.toNext << endl;
+	else out  <<  " | Time to next stop: " << way.toNext << endl;
 
 	if (!(way.toNext == Time(0, 0))) {
-		if (way.users.size() == 0) out << "There are no users waiting to enter in this stop." << endl;
+		if (way.users.size() == 0) out << TAB << "There are no users waiting to enter in this stop." << endl;
 		else {
-			out << "There are " << way.users.size() << " users in line to enter in this stop, being the Users with the IDs ";
+			
+			out << TAB << "There are " << way.users.size() << " users in line to enter in this stop, being the Users with the IDs ";
 			HEAP_USERS buffer = way.users;
 			int i = 0;
+			
 			while (!buffer.empty()) {
+			
 				if (i < way.users.size() - 1) {
 					out << buffer.top().getUserID() << ", ";
 					buffer.pop();
+					i++;
 				}
-				else out << buffer.top().getUserID() << "." << endl;
+
+				else { 
+					out << buffer.top().getUserID() << "." << endl; 
+					buffer.pop();
+				}
 			}
 			
 			//for (size_t i = 0; i < way.usersID.size(); i++) {
@@ -356,7 +363,7 @@ WaitingUser::WaitingUser(unsigned int userID, vector<int> buddies, Time driveraw
 
 
 
-bool operator<(const WaitingUser & WU, const WaitingUser &WU2) {
+/*bool operator<(const WaitingUser & WU, const WaitingUser &WU2) {
 
 	if (!WU.itsBuddie() && WU2.itsBuddie())
 		return true;
@@ -371,7 +378,7 @@ bool operator<(const WaitingUser & WU, const WaitingUser &WU2) {
 			return true;
 		else if ((WU.getDriverAway() == WU2.getDriverAway()))
 			return true;
-		else return false;*/
+		else return false;
 	}
 
 	if (WU.itsBuddie() && WU2.itsBuddie()) {
@@ -381,13 +388,13 @@ bool operator<(const WaitingUser & WU, const WaitingUser &WU2) {
 			return true;
 		else if ((WU.getDriverAway() == WU2.getDriverAway()))
 			return true;
-		else return false;*/
+		else return false;
 	}
 
 	return false;
 
 }
-
+*/
 
 bool WaitingUser::operator==(const WaitingUser & WU) const {
 	return (this->userID == WU.userID);

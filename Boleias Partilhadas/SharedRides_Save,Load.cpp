@@ -314,7 +314,7 @@ void SharedRides::loadWaitingTrips() {
 			info = info.substr(findpos + 1, search);			//string = desde primeiro ';' até ao segundo
 			findpos = info.find(';', 0);
 			int j = 0;
-			//vector<int> vectID;
+			vector<int> vectID;
 			
 			HEAP_USERS heap;
 			
@@ -332,6 +332,7 @@ void SharedRides::loadWaitingTrips() {
 				findpos = info.find(';', 0);
 
 				driveraway = Time(driverawayhour, driverawayminute);
+				
 				vector<int> buddies;
 				
 				for (size_t i = 0; i < users.size(); i++) {
@@ -343,15 +344,16 @@ void SharedRides::loadWaitingTrips() {
 				
 				WaitingUser u1 = WaitingUser(ID, buddies, driveraway, owner);
 				
-				//heap.push(u1);
+				heap.push(u1);
 				
-				//vectID.push_back(ID);
+				vectID.push_back(ID);
 				
 				j++;
 			}
+			
 			Stretch str(stop, tonext);
 			//str.setvectID(vectID);
-			str.setHeap(heap);
+			//str.setHeap(heap);
 			viagem.push_back(str);
 			i++;
 		}

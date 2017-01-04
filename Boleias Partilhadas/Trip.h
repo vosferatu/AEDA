@@ -51,6 +51,7 @@ public:
 	 **************************************************************************************************/
 
 	WaitingUser(unsigned int userID, vector<int> buddies, Time driveraway, unsigned int driverID);
+	
 	//bool operator<(const WaitingUser & WU) const ;
 
 	/**********************************************************************************************//**
@@ -150,32 +151,63 @@ public:
 	 * @return	unsigned int	the userID
 	 **************************************************************************************************/
 
-bool operator<(const WaitingUser & WU, const WaitingUser &WU2);
+//bool operator<(const WaitingUser & WU, const WaitingUser &WU2);
 
-/*struct Comparator
+struct Comparator
 {
-	bool operator() (const WaitingUser &lhs, const WaitingUser &rhs) const
+	bool operator() (const WaitingUser &WU, const WaitingUser &WU2) const
 	{
-		return true;
-
-		bool itsbuddie = false;
 		
-		for (size_t i = 0; i <lhs.getBuddies().size(); i++)
-		{
-			if (lhs.getBuddies()[i] == lhs.getDriverID()) itsbuddie = true;
+		if (!WU.itsBuddie() && WU2.itsBuddie())
+			return true;
+
+		if (WU.itsBuddie() && !WU2.itsBuddie())
+			return false;
+
+		if (!WU.itsBuddie() && !WU2.itsBuddie()) {
+			if ( !(WU.getDriverAway() < WU2.getDriverAway() ))
+				return true;
+			else return false;
 		}
 
+		if (WU.itsBuddie() && WU2.itsBuddie()) {
+			if (!(WU.getDriverAway() < WU2.getDriverAway()))
+				return true;
+			else return false;
+		}
 
-		//if (itsbuddie) {
-			//return (!(lhs.getDriverAway() < rhs.getDriverAway()));
-		//}
-		//else return true;
+		return false;
+				
+		/*if (!WU.itsBuddie() && WU2.itsBuddie())
+			return true;
+
+		if (WU.itsBuddie() && !WU2.itsBuddie())
+			return false;
+
+		if (!WU.itsBuddie() && !WU2.itsBuddie()) {
+
+			if (!(WU.getDriverAway() < WU2.getDriverAway()))
+				return true;
+			else if ((WU.getDriverAway() == WU2.getDriverAway()))
+				return true;
+			else return false;
+		}
+
+		if (WU.itsBuddie() && WU2.itsBuddie()) {
+			if (!(WU.getDriverAway() < WU2.getDriverAway()))
+				return true;
+			else if ((WU.getDriverAway() == WU2.getDriverAway()))
+				return true;
+			else return false;
+		}*/
+		
+		//return false;
 	}
 };	
-*/
 
 
-typedef priority_queue<WaitingUser> HEAP_USERS;
+
+typedef priority_queue<WaitingUser, vector<WaitingUser>, Comparator> HEAP_USERS;
 
 /**********************************************************************************************//**
  * @class	takenTrip
