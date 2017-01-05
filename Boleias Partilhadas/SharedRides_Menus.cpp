@@ -174,8 +174,9 @@ void SharedRides::manage_menu(){
 		it = inativos.begin();
 
 		while (it != inativos.end()) {
-			cout << *it << endl << endl;
-			cout << " ------------------------------------------------------------------------- " << endl;
+			(*it)->showProfile();
+			cout << endl << " ------------------------------------------------------------------------- " << endl;
+			it++;
 		}
 	}
 		_getch();
