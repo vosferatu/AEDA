@@ -13,7 +13,7 @@ bool SharedRides::checkBuddie(unsigned int user1) {
 }
 
 void SharedRides::buddiesMenu() {
-	cout << endl << TAB << "You have ";
+	cout  << TAB << "You have ";
 	cout << currentUser->getFavs().size() << " buddies." << endl << endl;
 
 	int choice = get_input <int>(
@@ -43,27 +43,37 @@ void SharedRides::buddiesMenu() {
 }
 
 void SharedRides::addBuddie() {
+	
 	int counter = 0;
 	for (size_t i = 0; i < users.size(); i++) {
 		if (users[i]->getCity() == currentUser->getCity())
 			counter++;
 	}
+	
 	int number = 0;
+	
 	if (counter != 0) {
-		cout << "Users near you:" << endl;
+		int count2 = 0;
+		cout <<TAB<< "Users near you:" << endl;
+		
 		for (size_t i = 0; i < users.size(); i++) {
 			if ((users[i]->getCity() == currentUser->getCity()) && (users[i] != currentUser)) {
 				number = i + 1;
-				cout << "User number " << number << endl;
+				cout<< endl <<TAB << "User number " << number << endl;
+				cout << " -------------------------------------------------------------";
 				users[i]->showProfile();
+				count2++;
 			}
 		}
-		cout << endl << "Other users:" << endl;
+		if (count2 == 0) cout << TAB << "You have no users near you." << endl << endl;
+		cout << endl << TAB << "Other users:" << endl;
 		for (size_t i = 0; i < users.size(); i++) {
 			if ((users[i]->getCity() != currentUser->getCity()) && (users[i] != currentUser)) {
 				number = i + 1;
-				cout << "User number " << number << endl;
+				cout << endl << TAB << "User number " << number << endl;
 				users[i]->showProfile();
+				cout << " -------------------------------------------------------------";
+				cout << endl;
 			}
 		}
 	}
@@ -78,16 +88,26 @@ void SharedRides::addBuddie() {
 	}
 
 	unsigned int choice;
-	while (true) {
+	
+	bool validbuddie = false;
+	
+	while (!validbuddie) {
 		choice = get_input <unsigned int>(
-			"\tSelect one of the users, by their number identifier." "\n"
+			"\n\tSelect one of the users, by their number identifier." "\n"
 			);
-		if ((choice > 0) && (choice < users.size() + 1) && (choice - 1 != currentUser->getID()))
-			break;
-		else cout << "Input a valid number!" << endl;
+
+		if ( (choice > 0) && (choice <= users.size()) && (choice != currentUser->getID()))
+			validbuddie = true;
+
+		if (checkBuddie(users[choice - 1]->getID()) || !validbuddie) {
+			validbuddie = false;
+			cout << endl << TAB << "[ERROR] Input a valid number. You cannot be friends with users already in your buddie list." << endl;
+		}
 		cin.ignore(numeric_limits <streamsize>::max(), '\n');
 	}
+	
 	vector<int> novo = currentUser->getFavs();
+	
 	novo.push_back(users[choice - 1]->getID());
 	currentUser->setFavs(novo);
 	cout << endl << users[choice - 1]->getusername() << " is now one of your buddies." << endl;
@@ -96,12 +116,16 @@ void SharedRides::addBuddie() {
 
 void SharedRides::removeBuddie() {
 	size_t user = getPositionUser(currentUser->getID());
-	vector<int> fav = users[user]->getFavs();
-
+	vector<int> fav{};
+	if(user != -1) fav = users[user]->getFavs();
+	if (fav.size() == 0) {
+		cout << TAB << "You have no buddies!" << endl;
+		return;
+	}
 	for (size_t i = 0; i < fav.size(); i++) {
 		size_t j = getPositionUser(fav[i]);
-		cout << "Buddie number " << i + 1 << ":\n";
-		users[j]->showProfile();
+		cout << "Buddie ID " << j + 1 << ":\n";
+		if (j != -1) users[j]->showProfile();
 		cout << endl;
 	}
 
@@ -110,16 +134,21 @@ void SharedRides::removeBuddie() {
 		choice = get_input <unsigned int>(
 			"\tSelect one of your buddies, by their number identifier." "\n"
 			);
-		if ((choice > 0) && (choice < currentUser->getFavs().size() + 1))
+		if ((choice > 0) && (choice <= users.size()))
 			break;
-		else cout << "Input a valid number!" << endl;
+		
+		cout << "Input a valid number!" << endl;
 		cin.ignore(numeric_limits <streamsize>::max(), '\n');
 	}
 	vector<int> novo = currentUser->getFavs();
-	novo.erase(novo.begin() + (choice - 1));
+	for (size_t k = 0; k < novo.size(); k++) {
+		if (novo[k] == users[(choice - 1)]->getID()) {
+			novo.erase(novo.begin() + k);
+			break;
+		}
+	}
 	currentUser->setFavs(novo);
-	size_t amigo = getPositionUser(currentUser->getFavs()[choice - 1]);
-	cout << endl << users[amigo]->getusername() << " is no longer one of your Buddies." << endl;
+	cout << endl << users[choice-1]->getusername() << " is no longer one of your Buddies." << endl;
 	usersalterados = true;
 }
 

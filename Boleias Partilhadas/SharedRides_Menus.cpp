@@ -3,7 +3,7 @@
 
 
 void SharedRides::header(string header,string who) const {
-	cout << endl << TAB << "Welcome to Shared Rides V.1.0. Please put your seatbelts on and enjoy your travel." << endl;
+	cout << endl << TAB << "Welcome to Shared Rides V.2.0. Please put your seatbelts on and enjoy your travel." << endl;
 	cout << endl << TAB << header << endl << endl;
 	if (who == "RU") cout << TAB << "-> You are currently logged as " << currentUser->getusername() << " <-" << endl << endl;
 	else if (who == "guest") cout << TAB << "-> You are temporarily logged as " << currentUser->getusername() << " <-" << endl << endl;
@@ -12,7 +12,7 @@ void SharedRides::header(string header,string who) const {
 
 
 void SharedRides::main_menu() {
-	cout << endl << TAB << "Welcome to Shared Rides V.1.0. Please put your seatbelts on and enjoy your travel." << endl;
+	cout << endl << TAB << "Welcome to Shared Rides V.2.0. Please put your seatbelts on and enjoy your travel." << endl;
 	cout << endl;
 	int choice = get_input <int>(
 		TAB_BIG "[0] Enter as guest" "\n" "\n"
@@ -28,7 +28,7 @@ void SharedRides::main_menu() {
 	case 1:
 	{
 		ClearScreen();
-		cout << endl << TAB << "Welcome to Shared Rides V.1.0. Please put your seatbelts on and enjoy your travel." << endl;
+		cout << endl << TAB << "Welcome to Shared Rides V.2.0. Please put your seatbelts on and enjoy your travel." << endl;
 		cout << endl << TAB << " --- LOGIN MENU  --- " << endl;
 		cin.clear();
 		cin.ignore(numeric_limits <streamsize>::max(), '\n');
@@ -61,7 +61,7 @@ void SharedRides::main_menu() {
 	case 2:
 		ClearScreen();
 		loading();
-		cout << endl << TAB << "Welcome to Shared Rides V.1.0. Please put your seatbelts on and enjoy your travel." << endl;
+		cout << endl << TAB << "Welcome to Shared Rides V.2.0. Please put your seatbelts on and enjoy your travel." << endl;
 		cout << endl << TAB << " --- REGISTRATION  --- " << endl;
 		CreateRegis();
 		Sleep(2000);
@@ -93,26 +93,76 @@ void SharedRides::manage_menu(){
 		TAB_BIG"[6] Log Off");
 	float choice1 = 0;
 	switch (choice) {
-	case 0:
-		header(" --- APP TRIPS --- ", "admin");
+	case 0: {
 		ClearScreen();
-		if (tripsPrinter.size() == 0) {
-			cout << endl << TAB << "No trips to show.\n" << endl;
+		header(" --- APP TRIPS --- ", "admin");
+
+		int choice2 = get_input <int>(
+			TAB_BIG "[0] Trip history" "\n"  "\n"
+			TAB_BIG"[1] Current active trips" "\n"
+			);
+
+		switch (choice2) {
+		case 0: {
+			ClearScreen();
+			header(" --- APP TRIPS --- ", "admin");
+
+			if (tripsPrinter.size() == 0) {
+				cout << endl << TAB << "No trips to show.\n" << endl;
+				cout << endl << TAB << "Press [ENTER] to return.";
+				_getch();
+				break;
+			}
+
+			for (size_t i = 0; i < tripsPrinter.size(); i++) {
+				cout << "-----------------------------------------------------" << endl << endl;
+				cout << TAB << "Trip number " << i + 1 << endl << endl;
+				cout << tripsPrinter[i] << endl;
+				if (tripsPrinter.size() == 1) cout << "-----------------------------------------------------" << endl << endl;
+			}
+
+			cout << endl << TAB << "Press [ENTER] to return.";
 			_getch();
 			break;
 		}
-	
-		for (size_t i = 0; i < tripsPrinter.size(); i++) {
-			cout << "Trip number " << i + 1 << endl << endl;
-			cout << tripsPrinter[i] << endl << endl;
-			cout << "----------------------------------------------------" << endl << endl;
+		case 1: {
+			ClearScreen();
+			header(" --- APP TRIPS --- ", "admin");
+
+			if (tripOffers.size() == 0) {
+				cout << endl << TAB << "No active trips to show.\n" << endl;
+				cout << endl << TAB << "Press [ENTER] to return.";
+				_getch();
+				break;
+			}
+
+
+			for (size_t i = 0; i < tripOffers.size(); i++) {
+				cout << "---------------------------------------------------------------------" << endl << endl;
+				cout << TAB << "Active Trip number " << i + 1 << endl << endl;
+				cout << tripOffers[i] << endl << endl;
+				if (tripOffers.size() == 1) cout << "---------------------------------------------------------------------" << endl << endl;
+			}
+
+			cout << endl << TAB << "Press [ENTER] to return.";
+			_getch();
+
+			break;
 		}
-		_getch();
+
+		default:
+			cout << TAB << "Please, input an integer suitable to the options shown." << endl;
+			cin.ignore(numeric_limits <streamsize>::max(), '\n');
+			break;
+		}
+
 		break;
+	}
 	case 1:
 		ClearScreen();
 		header(" --- APP USERS --- ", "admin");
 		showUsers();
+		cout << endl << TAB << "Press [ENTER] to return.";
 		_getch();
 		break;
 	case 2: {
@@ -129,6 +179,7 @@ void SharedRides::manage_menu(){
 		}
 	}
 		_getch();
+		cout << endl << TAB << "Press [ENTER] to return.";
 		break;
 	case 3: {
 		ClearScreen();
@@ -151,17 +202,20 @@ void SharedRides::manage_menu(){
 			//cout << *(cars[i]) << endl << Sendl;
 			//cout << endl << "-------------------------------------------------------------------------" << endl << endl;
 			//}
-
+			cout << endl << TAB << "Press [ENTER] to return.";
 			_getch();
 			break; 
 		}
 		case 1: {
 			try {
 				editVehicleOwner();
+				cout << endl << TAB << "Press [ENTER] to return.";
+				_getch();
 			}
 			catch (UserNotFound<string> err)
 			{
 				cout << endl << TAB << err.info << endl;
+				cout << endl << TAB << "Press [ENTER] to return.";
 				_getch();
 				ClearScreen();
 				return manage_menu();
@@ -190,6 +244,8 @@ void SharedRides::manage_menu(){
 		}
 
 		cout << TAB << "SUCCESS! The billings were applied to all users.\n\n" << endl;
+		cout << endl << TAB << "Press [ENTER] to return.";
+
 		_getch();
 		break;
 	}
@@ -211,6 +267,7 @@ void SharedRides::manage_menu(){
 		this->TAX = choice1;
 
 		cout << endl <<TAB<< "SUCCESS! The new TAX is: " << this->TAX << endl;
+		cout << endl << TAB << "Press [ENTER] to return.";
 		_getch();
 		break;
 	case 6:
@@ -250,20 +307,22 @@ void SharedRides::user_menu(){
 				ClearScreen();
 				header(" --- TRIPS --- ","RU");
 				showTrips();
+				cout << endl << TAB << "Press [ENTER] to return.";
 				_getch();
 				break;
 			case 1:
 				ClearScreen();
 				header(" --- VEHICLE --- ", "RU");
-				cout <<endl<< TAB << "Right now you have " << currentUser->getVehicle()->getBrand() << " " << currentUser->getVehicle()->getModel() << " associated to your account." << endl << endl;
-
+				cout << TAB << "Right now you have " << currentUser->getVehicle()->getBrand() << " " << currentUser->getVehicle()->getModel() << " associated to your account." << endl << endl;
 				userWithVehicleMenu();
-				Sleep(3000);
+				cout << endl << TAB << "Press [ENTER] to return.";
+				_getch();
 				break;
 			case 2: {
 				ClearScreen();
 				header(" --- SEARCH VEHICLE ---", "RU");
 				searchVehicle();
+				cout << endl << TAB << "Press [ENTER] to return.";
 				_getch();
 				break;
 			}
@@ -272,6 +331,7 @@ void SharedRides::user_menu(){
 				header(" --- NEW TRIP --- ","RU");
 
 				VehicleTripMenu();
+
 				_getch();
 				break;
 			case 4:
@@ -279,19 +339,23 @@ void SharedRides::user_menu(){
 				header(" --- BUDDIES --- ", "RU");
 
 				buddiesMenu();
+				cout << endl << TAB << "Press [ENTER] to return.";
+
 				_getch();
 				break;
 			case 5:
 				ClearScreen();
 				header(" --- CREDDIT ACCOUNT --- ", "RU");
 				creditAccount();
-				Sleep(2000);
+				cout << endl << TAB << "Press [ENTER] to return.";
+				_getch();
 				break;
 			case 6:
 				ClearScreen();
 				header(" --- CHANGE PROFILE --- ", "RU");
 				changeProfile();
-				Sleep(2000);
+				cout << endl << TAB << "Press [ENTER] to return.";
+				_getch();
 				break;
 			case 8:
 				currentUser = NULL; //logs off
@@ -301,7 +365,7 @@ void SharedRides::user_menu(){
 				ClearScreen();
 				header(" --- DELETE ACCOUNT --- ", "RU");
 				deleteAccount();
-				_getch();
+				cout << endl << TAB << "Press [ENTER] to return.";
 				return;
 				break;
 			default:
@@ -327,18 +391,22 @@ void SharedRides::user_menu(){
 				ClearScreen();
 				header(" --- TRIPS --- ", "RU");
 				showTrips();
+				cout << endl << TAB << "Press [ENTER] to return.";
 				_getch();
 				break;
 			case 1:
 				ClearScreen();
 				header(" --- ADD VEHICLE --- ", "RU");
 				addVehicle();
-				Sleep(2000);
+				cout << endl << TAB << "Press [ENTER] to return.";
+				_getch();
 				break;
 			case 2: {
 				ClearScreen();
 				header(" --- SEARCH VEHICLE ---", "RU");
 				searchVehicle();
+				cout << endl << TAB << "Press [ENTER] to return.";
+				_getch();
 				break;
 			}
 			case 3:
@@ -351,19 +419,22 @@ void SharedRides::user_menu(){
 				ClearScreen();
 				header(" --- BUDDIES --- ", "RU");
 				buddiesMenu();
+				cout << endl << TAB << "Press [ENTER] to return.";
 				_getch();
 				break;
 			case 5:
 				ClearScreen();
 				header(" --- CREDIT ACCOUNT --- ", "RU");
 				creditAccount();
-				Sleep(2000);
+				cout << endl << TAB << "Press [ENTER] to return.";
+				_getch();
 				break;
 			case 6:
 				ClearScreen();
 				header(" --- CHANGE PROFILE --- ", "RU");
 				changeProfile();
-				Sleep(2000);
+				cout << endl << TAB << "Press [ENTER] to return.";
+				_getch();
 				break;
 			case 8:
 				currentUser = NULL; //logs off
@@ -373,7 +444,7 @@ void SharedRides::user_menu(){
 				ClearScreen();
 				header(" --- DELETE ACCOUNT --- ", "RU");
 				deleteAccount();
-				_getch();
+				cout << endl << TAB << "Press [ENTER] to return.";
 				return;
 				break;
 			default:
@@ -398,6 +469,8 @@ void SharedRides::user_menu(){
 			ClearScreen();
 			header(" --- SEARCH VEHICLE ---", "RU");
 			searchVehicle();
+			cout << endl << TAB << "Press [ENTER] to return.";
+			_getch();
 			break;
 		}
 		
@@ -405,13 +478,15 @@ void SharedRides::user_menu(){
 			ClearScreen();
 			header(" --- NEW TRIP --- ", "guest");
 			enterTrip();
+			cout << endl << TAB << "Press [ENTER] to return.";
 			_getch();
 			break;
 		case 2:
 			ClearScreen();
 			header(" --- WALLET --- ", "guest");
 			creditAccount();
-			Sleep(2000);
+			cout << endl << TAB << "Press [ENTER] to return.";
+			_getch();
 			break;
 		case 3:
 			currentUser = NULL; //resets currentUser,

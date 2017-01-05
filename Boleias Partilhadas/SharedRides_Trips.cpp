@@ -21,15 +21,31 @@ void SharedRides::showTrips() const {
 
 	switch (choice) {	
 	case 0: {
+		ClearScreen();
+		header(" --- TRIPS --- ", "RU");
+
+		int count = 0;
+
 		for (size_t i = 0; i < tripOffers.size(); i++) {
+
 			if (tripOffers[i].getOwner() == currentUser->getID()) {
-				cout << tripOffers[i] << endl;
+				cout << "---------------------------------------------------------------------" << endl << endl;
+				cout << TAB << "Active Trip number " << i + 1 << endl << endl;
+				cout << tripOffers[i] << endl << endl;
+				if (tripOffers.size() == 1) cout << "---------------------------------------------------------------------" << endl << endl;
+				count++;
 			}
+
+
 		}
+		if (count == 0) cout << endl << TAB << "You have no active trips!" << endl;
 		break;
 	}
 
 	case 1: {
+		ClearScreen();
+		header(" --- TRIPS --- ", "RU");
+
 		if (currentUser->getnumTrips() == 0) {
 			cout << endl << TAB << "You have no taken trips in your history!" << endl;
 			return;
@@ -42,9 +58,11 @@ void SharedRides::showTrips() const {
 		for (size_t i = 0; i < vec.size(); i++) {
 			for (size_t j = 0; j < tripsPrinter.size(); j++) {
 				if (tripsPrinter[j].getTripCode() == vec[i]) {
-					cout << "Trip number " << tripsPrinter[j].getTripCode() << endl; // em vez de i +1 (para efeitos de listagem pessoal)
-					cout << tripsPrinter[j] << endl;
-					cout << "----------------------------------------------------" << endl << endl;
+					
+					cout << "-----------------------------------------------------" << endl << endl;
+					cout << TAB << "Trip number " << tripsPrinter[j].getTripCode() << endl << endl; // em vez de i +1 (para efeitos de listagem pessoal)
+					cout << tripsPrinter[i] << endl;
+					if (tripsPrinter.size() == 1) cout << "-----------------------------------------------------" << endl << endl;
 					break;
 				}
 			}
@@ -58,7 +76,6 @@ void SharedRides::showTrips() const {
 }
 
 void SharedRides::VehicleTripMenu() {
-	cout << endl;
 	cin.ignore(numeric_limits <streamsize>::max(), '\n');
 	int choice = get_input <int>(
 		TAB_BIG"[0] Start Trip" "\n""\n"
@@ -91,7 +108,10 @@ void SharedRides::VehicleTripMenu() {
 }
 
 void SharedRides::addTrip() {
-	
+	ClearScreen();
+	header("--- NEW TRIP ---", "RU");
+
+
 	if (currentUser->getAccount() < 0) {
 		cout << endl << TAB << "Your account is under 0. Please charge account to pay your taxes." << endl;
 		return;
@@ -140,6 +160,7 @@ void SharedRides::addTrip() {
 		waitingTrip nova(currentUser->getID(), novo, currentUser->getVehicle()->getnumberSeats() - 1, pps);
 		tripOffers.push_back(nova);
 		cout << endl << TAB << "SUCCESS! New Trip Added." << endl;
+		cout << endl << TAB << "Press [ENTER] to return." << endl;
 		break;
 	}
 	case 1:
@@ -196,6 +217,8 @@ void SharedRides::addTrip() {
 }
 
 void SharedRides::startTrip() {
+	ClearScreen();
+	header("--- NEW TRIP ---", "RU");
 
 	bool noTrip = false;
 
@@ -205,8 +228,11 @@ void SharedRides::startTrip() {
 
 	int maxseats = 0;
 
+	
 	for (size_t i = 0; i < tripOffers.size(); i++) {
 		if (tripOffers[i].getOwner() == currentUser->getID()) {
+			
+
 			s1 = tripOffers[i].getWay();
 			string end = s1[s1.size() - 1].getCity();
 			Time tfim = Time() + tripOffers[i].getTotalTime();
@@ -228,8 +254,11 @@ void SharedRides::startTrip() {
 
 
 	
-	if (noTrip == false)
-		cout << endl << TAB << "You have no pending trips!" << endl;
+	if (noTrip == false) {
+		cout << TAB << "You have no pending trips!" << endl;
+
+		cout << endl << TAB << "Press [ENTER] to return";
+	}
 	else {
 		
 			
@@ -265,7 +294,10 @@ void SharedRides::startTrip() {
 		
 		for (size_t i = 0; i < gajos.size(); i++) {
 			size_t j = getPositionUser(gajos[i]);
-			users[j]->addTrip(codigo);
+			if (j != -1) {
+				users[j]->addTrip(codigo);
+				users[j]->setLastTrip(Date());
+			}
 		}
 		
 		currentUser->addTrip(codigo);
@@ -278,6 +310,10 @@ void SharedRides::startTrip() {
 }
 
 void SharedRides::enterTrip() {
+
+	ClearScreen();
+	header("--- NEW TRIP ---", "RU");
+
 	if (currentUser->getAccount() < 0) {
 		cout << TAB << "Your account is under 0. Please charge account to pay your taxes." << endl;
 		return;

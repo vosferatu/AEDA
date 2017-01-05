@@ -3,7 +3,10 @@
 using namespace std;
 
 void SharedRides::userWithVehicleMenu() {
-
+	ClearScreen();
+	header(" --- VEHICLE --- ", "RU");
+	cout << TAB << "Right now you have " << currentUser->getVehicle()->getBrand() << " " << currentUser->getVehicle()->getModel() << " associated to your account." << endl << endl;
+	
 	int choice = get_input <int>(
 		TAB_BIG"[0] Edit my Vehicle" "\n" "\n"
 		TAB_BIG"[1] Remove my Vehicle" "\n" "\n");
@@ -26,8 +29,10 @@ void SharedRides::userWithVehicleMenu() {
 }
 
 void SharedRides::editVehicle() {
+	ClearScreen();
+	header(" --- VEHICLE --- ", "RU");
+	cout << TAB << "Right now you have " << currentUser->getVehicle()->getBrand() << " " << currentUser->getVehicle()->getModel() << " associated to your account." << endl << endl;
 
-	cout << endl;
 	cin.ignore(numeric_limits <streamsize>::max(), '\n');
 
 	int choice = get_input <int>(
@@ -108,6 +113,8 @@ void SharedRides::editVehicle() {
 
 		currentUser->setVehicle(carfound.getVehicle());
 
+		cout << endl << TAB << "Sucess! Your car was succesfully edited to " << brand << " " << model << ".";
+
 		carsalterados = true;
 		
 		//for (size_t i = 0; i < cars.size(); i++) {
@@ -151,6 +158,8 @@ void SharedRides::editVehicle() {
 		
 		carsBST.insert(carfound);
 		currentUser->setVehicle(carfound.getVehicle());
+
+		cout << endl << TAB << "Sucess! Your route was succesfully edited.";
 		
 		carsalterados = true;
 
@@ -174,10 +183,15 @@ void SharedRides::editVehicle() {
 }
 
 void SharedRides::removeVehicle() {
+	ClearScreen();
+	header(" --- VEHICLE --- ", "RU");
+	cout << TAB << "Right now you have " << currentUser->getVehicle()->getBrand() << " " << currentUser->getVehicle()->getModel() << " associated to your account." << endl << endl;
+
+	
 	string remvehicle;
 
 	while (true) {
-		cout << endl << TAB;
+		cout << TAB;
 		remvehicle = get_input <string>("Do you really want to remove your vehicle? [y|n]");
 		cin.ignore(numeric_limits <streamsize>::max(), '\n');
 
@@ -200,6 +214,8 @@ void SharedRides::removeVehicle() {
 			//cars.erase(cars.begin() + pos);
 
 			currentUser->getVehicle()->setVehicle(v1);
+
+			cout << endl << TAB << "Sucess! Your car was succesfully removed.";
 
 			break;
 		}
@@ -357,7 +373,6 @@ void SharedRides::searchVehicle() {
 	
 	if (contador == 0) {
 		cout << endl << TAB << "There is no " << brand << " " << model << " registered in our system." << endl;
-		_getch();
 		return;
 	}
 	else if (contador == 1) cout << endl << TAB << "There is " << contador << " car avaiable:" << endl << endl;

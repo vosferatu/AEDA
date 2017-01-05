@@ -77,12 +77,12 @@ ofstream & operator<<(ofstream & out, const takenTrip & trip){
 }
 
 ostream & operator<<(ostream & out, const takenTrip & trip){
-	out << "Dono: " << trip.owner << " ";
-	out << "Start City: " << trip.startPoint << " ";
+	out << TAB << "Dono: " << trip.owner << endl << endl;
+	out << TAB << "Start City: " << trip.startPoint << "      ";
 	out << "Last City: " << trip.endPoint << endl;
-	out << "Start Time: " << trip.startTime << " ";
-	out << "End Time: " << trip.endTime << " ";
-	out << "Day: " << trip.day << endl;
+	out <<TAB<< "Start Time: " << trip.startTime << "      ";
+	out << "End Time: " << trip.endTime << endl << endl;
+	out <<TAB<< "Day: " << trip.day << endl;
 
 	return out;
 }

@@ -110,7 +110,7 @@ class SharedRides
 	static unsigned int numbercities;
 	
 	/** @brief	The tax to operate the money system. */
-	float TAX = 0;
+	float TAX = rand() % 20 + 1;
 
 	/** @brief	True if vect of users changed. */
 	static bool usersalterados;

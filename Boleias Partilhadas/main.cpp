@@ -1,10 +1,13 @@
 #include "Shared_Rides.h"
 
 #include <iostream>
+#include <time.h>
 
 using namespace std;
 
-int main() {	
+int main() {
+
+	srand(time(NULL));
 	
 	//funcao para fazer resize do cmd
 	HWND console = GetConsoleWindow();

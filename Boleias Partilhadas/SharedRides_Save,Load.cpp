@@ -282,10 +282,11 @@ void SharedRides::loadWaitingTrips() {
 	int driverawayminute;
 	Time driveraway;
 
-	vector<Stretch> viagem;
 
 	while (getline(infile, info)) {
 		unsigned int search = 1000;
+
+		vector<Stretch> viagem{};
 
 
 		size_t findpos = info.find(';', 0);			//inteiro que tem a posicao do primeiro ';'
