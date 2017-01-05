@@ -236,8 +236,14 @@ void SharedRides::loadTakenTrips() {
 		v1.setTripCode(tripcode);
 		v1.setDay(data);
 
-		for (size_t i = 0; i < users.size(); i++)
-		{
+		for (size_t i = 0; i < users.size(); i++){
+			vector<int> viagens = users[i]->getTrips();
+			for (size_t j = 0; j < viagens.size(); j++) {
+				if (viagens[j] == tripcode) {
+					if (users[i]->getLastTrip() < data)
+						users[i]->setLastTrip(data);
+				}
+			}
 			if (users[i]->getusername() == name) {
 				if (users[i]->getLastTrip() < data)
 					users[i]->setLastTrip(data);

@@ -37,7 +37,7 @@ using namespace std;
 
 struct eqstr {
 	bool operator() (const User *s1, const User *s2) const {
-		return s1->getID() == s2->getID();
+		return s1->getusername() == s2->getusername();
 	}
 };
 
@@ -123,7 +123,7 @@ class SharedRides
 
 	/** @brief	The hash table to save the inactive users*/
 
-	unordered_set<User*, hstr, eqstr> inativos;
+	tr1::unordered_set<User*, hstr, eqstr> inativos;
 
 
 

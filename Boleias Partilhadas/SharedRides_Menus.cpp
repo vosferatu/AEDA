@@ -228,7 +228,7 @@ void SharedRides::manage_menu(){
 }
 
 void SharedRides::user_menu(){
-	if (dynamic_cast<RegisteredUser*>(currentUser) != NULL) { //isto da erro porque nao temos uma
+	if (dynamic_cast<RegisteredUser*>(currentUser) != NULL) { 
 
 		header(" --- USER HOMEPAGE --- ","RU");
 
