@@ -22,6 +22,8 @@
 
 #undef max // because of numeric_limits
 
+
+
 using namespace std;
 
 /**********************************************************************************************//**
@@ -70,6 +72,8 @@ struct hstr {
  * @author	João
  * @date	20-11-2016
  **************************************************************************************************/
+
+typedef tr1::unordered_set<User*, hstr, eqstr> HASH;
 
 class SharedRides
 {
@@ -123,7 +127,7 @@ class SharedRides
 
 	/** @brief	The hash table to save the inactive users*/
 
-	tr1::unordered_set<User*, hstr, eqstr> inativos;
+	HASH inativos;
 
 
 

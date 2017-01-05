@@ -260,10 +260,7 @@ void SharedRides::promotion() {
 
 	Date datahoje = Date();
 
-	for (size_t i = 0; i < users.size(); i++) {
-		if (users[i]->getLastTrip() == datahoje)
-			users[i]->setLastTrip(Date(12,7,2016));
-	}
+	inativos.clear();
 
 	for (size_t i = 0; i < users.size(); i++)
 	{

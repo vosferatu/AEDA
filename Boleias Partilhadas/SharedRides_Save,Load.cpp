@@ -111,6 +111,7 @@ void SharedRides::loadUsers() {
 				RU->setTrips(trips);
 				users.push_back(RU);
 				usernocar = true;
+				RU->setLastTrip(Date(12, 7, 2016));
 			}
 			
 			it.advance();
@@ -136,8 +137,11 @@ void SharedRides::loadUsers() {
 			RU->setFavs(buddies);
 			RU->setTrips(trips);
 			users.push_back(RU);
+			RU->setLastTrip(Date(12, 7, 2016));
 		}
 	}
+
+
 }
 
 void SharedRides::loadTakenTrips() {

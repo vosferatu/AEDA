@@ -1,3 +1,5 @@
-2
+5
+3;Ford;Focus;2;2013;A;Beja;Viseu;
+5;Mercedes;Benz;5;2012;B;Faro;Vila Real;Braga;
 2;Renault;Clio;5;2004;A;
 1;Tesla;Model S;5;2016;A;Porto;Lisboa;Faro;

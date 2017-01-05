@@ -157,6 +157,12 @@ void SharedRides::myBuddies() const {
 	vector<int> fav = users[user]->getFavs();
 	vector<int> nearfav{};
 	vector<int> farfav{};
+
+	if (fav.empty()) {
+		cout << TAB << "You have no buddies!" << endl;
+		return;
+	}
+
 	for (size_t i = 0; i < fav.size(); i++) {
 		size_t j = getPositionUser(fav[i]);
 		if (users[j]->getCity() == users[user]->getCity())

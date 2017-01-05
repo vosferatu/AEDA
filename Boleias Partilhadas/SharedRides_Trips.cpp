@@ -278,7 +278,14 @@ void SharedRides::startTrip() {
 					seats++;
 				}
 
-				else buffer.pop();
+				else {
+					WaitingUser p1 = buffer.top();
+					size_t i = getPositionUser(p1.getUserID());
+					if (i != -1) {
+						users[i]->chargeAccount(20);
+					}
+					buffer.pop();
+				}
 			}
 
 
@@ -303,8 +310,9 @@ void SharedRides::startTrip() {
 		currentUser->addTrip(codigo);
 		
 		usersalterados = true;
-
+		promotion();
 		cout << endl << TAB << "Your trip has been started!" << endl;
+		cout << endl << TAB << "Users with low priority who haven't entered were recompensated." << endl;
 		cout << endl << TAB << "Press [ENTER] to return." << endl;
 	}
 }
@@ -509,6 +517,10 @@ void SharedRides::enterTrip() {
 	tripOffers[choice].setWay(novo);
 
 
+	if (dynamic_cast<RegisteredUser*>(currentUser) != NULL) {
+		currentUser->setLastTrip(Date());
+		promotion();
+	}
 	/*
 	int contador = 0;
 	bool entrou = false;
