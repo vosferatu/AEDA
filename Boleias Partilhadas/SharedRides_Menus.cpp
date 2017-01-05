@@ -230,6 +230,74 @@ void SharedRides::manage_menu(){
 void SharedRides::user_menu(){
 	if (dynamic_cast<RegisteredUser*>(currentUser) != NULL) { 
 
+		bool flag = false;
+
+		HASH::iterator it = inativos.begin();
+		while (it != inativos.end()) {
+			if (currentUser->getusername() == (*it)->getusername()) {
+				flag = true;
+				break;
+			}
+			it++;
+		}
+		bool flag1 = false;
+		if (flag) {
+			while (flag1 == false) {
+				string choice = get_input <string>(
+					TAB_BIG " You are currently one of our INACTIVE users." "\n""\n"
+					TAB_BIG " If you change your address, you'll show us you're back." "\n""\n"
+					TAB_BIG " To show our commitment to you, we'll give you a discount on your next trip." "\n""\n"
+					"Do you wish to do this? (y/n)"
+					);
+				if (choice == "y" || choice == "Y") {
+					bool citybelong = false;
+					string city;
+					int i = 0;
+					while (!citybelong) {
+						if (i == 0) cin.ignore(numeric_limits <streamsize>::max(), '\n');
+						cout << endl << endl << TAB << "Please specify your home city." << endl << TAB << "It must belong to one of these: ";
+
+						for (size_t i = 0; i < cities.size(); i++)
+						{
+							if (i < cities.size() - 1)
+								cout << cities[i] << ", ";
+							else cout << cities[i] << ".\n";
+						}
+
+						city = readLine();
+
+						for (size_t i = 0; i < cities.size(); i++) {
+							if (city == cities[i] && (currentUser->getCity() != city)) {
+								citybelong = true;
+								currentUser->setHome(city);
+								cout << TAB << "Your new city: " << city << endl;
+								flag1 = true;
+								usersalterados = true;
+								currentUser->setLastTrip(Date());
+								promotion();
+								break;
+							}
+						}
+						if (!flag1) {
+							cout << TAB_BIG << "Invalid City. You can't relocate to your own." << endl;
+							i++;
+						}
+						
+					}
+				}
+
+				if (choice == "n" || choice == "N") break;
+
+				if (!flag1)
+					cout << TAB_BIG << "Invalid." << endl;
+
+				cin.ignore(numeric_limits <streamsize>::max(), '\n');
+			}
+
+		}
+
+		ClearScreen();
+
 		header(" --- USER HOMEPAGE --- ","RU");
 
 		if (currentUser->getVehicle()->getnumberSeats() != 0) { //currentUser has a CAR			
