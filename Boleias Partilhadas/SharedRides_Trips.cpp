@@ -541,5 +541,8 @@ int SharedRides::checkTrip(string a, string b, const vector<Stretch> & v) const 
 		if (v[i].getCity() == b)
 			found2 = i;
 	}
+
+	if (found1 < 0 || found2 < 0 || found1 > found2) return 0;
+
 	return ((found2 - found1) + 1);
 }

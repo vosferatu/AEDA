@@ -297,11 +297,11 @@ ostream & operator<<(ostream & out, const Stretch & way) {
 			
 			out << TAB << "There are " << way.users.size() << " users in line to enter in this stop, being the Users with the IDs ";
 			HEAP_USERS buffer = way.users;
-			int i = 0;
+			unsigned int i = 0;
 			
 			while (!buffer.empty()) {
 			
-				if (i < way.users.size() - 1) {
+				if (i < (way.users.size() - 1)) {
 					out << buffer.top().getUserID() << ", ";
 					buffer.pop();
 					i++;

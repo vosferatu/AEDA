@@ -473,8 +473,7 @@ void SharedRides::guest_log() {
 	currentUser = u1;
 }
 
-void SharedRides::setTable(unordered_set<User*, hstr, eqstr> inativos)
-{
+void SharedRides::setTable(unordered_set<User*, hstr, eqstr> inativos){
 	this->inativos = inativos;
 }
 
@@ -487,6 +486,7 @@ void SharedRides::showUsers() {
 	}
 	cout << endl << "-------------------------------------------------------------------------" << endl << endl;
 	for (size_t i = 0; i < users.size(); i++) {
+		if (dynamic_cast<RegisteredUser*>(users[i]) == NULL) continue;
 		cout << TAB << "User with ID " << users[i]->getID() << endl;
 		users[i]->showProfile();
 		cout << endl << "-------------------------------------------------------------------------" << endl << endl;

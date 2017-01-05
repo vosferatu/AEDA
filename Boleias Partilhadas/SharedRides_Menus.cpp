@@ -56,8 +56,8 @@ void SharedRides::main_menu() {
 		}
 		ClearScreen();
 		user_menu(); //chama o menu de user(Seja ele carro, sem carro)
-		break;
 	}
+		break;
 	case 2:
 		ClearScreen();
 		loading();
@@ -119,9 +119,17 @@ void SharedRides::manage_menu(){
 		ClearScreen();
 		header(" --- INACTIVE USERS --- ", "admin");
 
-		unordered_set<User*, hstr, eqstr>::iterator it;		it = inativos.begin();		while (it != inativos.end()) {			cout << *it << endl << endl;			cout << " ------------------------------------------------------------------------- " << endl;		}
+		unordered_set<User*, hstr, eqstr>::iterator it;
+
+		it = inativos.begin();
+
+		while (it != inativos.end()) {
+			cout << *it << endl << endl;
+			cout << " ------------------------------------------------------------------------- " << endl;
+		}
 	}
-		
+		_getch();
+		break;
 	case 3: {
 		ClearScreen();
 		header(" --- APP VEHICLES --- ", "admin");
@@ -169,11 +177,13 @@ void SharedRides::manage_menu(){
 
 		break;
 	}
+		break;
 	case 4: {
 		ClearScreen();
 		header(" --- END OF MONTH --- ", "admin");
 
 		for (size_t i = 0; i < users.size(); i++) {
+			if (dynamic_cast<RegisteredUser*>(users[i]) == NULL) continue;
 			if (users[i]->getVehicle()->getYear() == 0)
 				users[i]->chargeAccount(-(this->TAX + users[i]->getnumTrips()));
 			else users[i]->chargeAccount(-(this->TAX));
@@ -183,6 +193,7 @@ void SharedRides::manage_menu(){
 		_getch();
 		break;
 	}
+		break;
 	case 5:
 		ClearScreen();
 		header(" --- TAX --- ", "admin");

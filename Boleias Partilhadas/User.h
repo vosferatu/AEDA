@@ -649,7 +649,7 @@ public:
 
 	string getpassword() const {return ""; };
 	Vehicle* getVehicle() const { return nullptr;};
-	void chargeAccount(float addition) {};
+	//void chargeAccount(float addition) {};
 	unsigned int getnumTrips() const { return 0;};
 	string getCity() const { return ""; };
 	vector<int> getTrips() const { return vector<int> {}; };

@@ -265,7 +265,7 @@ void SharedRides::promotion() {
 		Date datauser = users[i]->getLastTrip();
 		int diff = rdn(datahoje.getYear(), datahoje.getMonth(), datahoje.getDay()) - rdn(datauser.getYear(), datauser.getMonth(), datauser.getDay());
 
-		if (diff > 10) // se o utilizador nao fizer viagens ha mais de 10 dias..
+		if (diff > 9) // se o utilizador nao fizer viagens ha mais de 10 dias..
 			inativos.insert(users[i]); // insere na tabela de dispersao
 	}
 
