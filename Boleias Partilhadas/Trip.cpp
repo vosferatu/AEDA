@@ -193,7 +193,7 @@ ostream & operator<<(ostream & out, const waitingTrip & trip){
 		out << viagem[i] << endl << endl;
 	}
 	
-	out << TAB << "This car has " << trip.maxSeats << "seats. ";
+	out << TAB << "The car has " << trip.maxSeats << " seats. ";
 	
 	return out;
 }
@@ -259,6 +259,7 @@ void Stretch::setHeap(HEAP_USERS heap) {
 }
 
 ofstream & operator<<(ofstream & out, const Stretch & way) {
+	
 	out << way.stop << ";" << way.toNext << ";";
 	
 	if (way.users.size() == 0) {

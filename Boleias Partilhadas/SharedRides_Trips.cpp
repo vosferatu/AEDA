@@ -232,23 +232,24 @@ void SharedRides::startTrip() {
 		cout << endl << TAB << "You have no pending trips!" << endl;
 	else {
 		
-		cout << endl << TAB << "Your trip has been started!" << endl;
-		
+			
 		vector<int> gajos{};
 		
 		for (size_t i = 0; i < s1.size(); i++) {
 			
 			HEAP_USERS buffer = s1[i].getHeap();
-			int seats = 0;
+			int seats = 1;
 
-			while (seats != maxseats) {
-			
-				while (!buffer.empty()) {
+			while (!buffer.empty()) {
+
+				if (seats <= maxseats) {
 					WaitingUser u = buffer.top();
 					buffer.pop();
 					gajos.push_back(u.getUserID());
 					seats++;
 				}
+
+				else buffer.pop();
 			}
 
 
@@ -270,6 +271,9 @@ void SharedRides::startTrip() {
 		currentUser->addTrip(codigo);
 		
 		usersalterados = true;
+
+		cout << endl << TAB << "Your trip has been started!" << endl;
+		cout << endl << TAB << "Press [ENTER] to return." << endl;
 	}
 }
 
@@ -372,15 +376,18 @@ void SharedRides::enterTrip() {
 	if (dynamic_cast<RegisteredUser*>(currentUser) != NULL) {//REGISTERED
 		
 		for (size_t i = 0; i < AvailableTrips.size(); i++) {
-			
-			if (checkBuddie(tripOffers[AvailableTrips[i]].getOwner())) 
-			cout << endl << endl << TAB << " >>> Buddie Trip! <<< " << endl;
 
 			cout << endl << " ---------------------------------------------------------------------- " << endl;
-			cout << endl << TAB << "Trip number: " << AvailableTrips[i];
-			cout << tripOffers[AvailableTrips[i]] << endl << endl;
+			if (checkBuddie(tripOffers[AvailableTrips[i]].getOwner())) 
+			cout << endl  << TAB << " >>> Buddie Trip! <<< " << endl;
 
-			cout <<TAB<<  Estimated price for this trip: " << tripOffers[AvailableTrips[i]].getpriceStop() * stops" << "$." << endl<< endl;
+			
+			cout << endl << TAB << "Trip number: " << AvailableTrips[i];
+			cout << tripOffers[AvailableTrips[i]] << endl;
+
+			cout << TAB << "Estimated price for this trip (" << stops << " stops): " << tripOffers[AvailableTrips[i]].getpriceStop() * stops << "$." << endl;
+
+			if (i == 0) cout << endl << " ---------------------------------------------------------------------- " << endl << endl;
 		}
 	}
 	
@@ -419,6 +426,7 @@ void SharedRides::enterTrip() {
 	vector<Stretch> novo = tripOffers[choice].getWay();
 	
 	bool entrou = false;
+	bool jaexiste = false;
 	
 	
 	
@@ -430,14 +438,14 @@ void SharedRides::enterTrip() {
 		
 		while (!buffer.empty()) { // garante que o mesmo user nao entra
 			if (currentUser->getID() == buffer.top().getUserID()) {
-				entrou = false;
+				jaexiste = true;
 				buffer.pop();
 				break;
 			}
 			buffer.pop();
 		}
 
-		
+		if (jaexiste == true) break; 
 		if (novo[i].getCity() == firstPoint) {
 			novo[i].addtoHeap(u1);
 			entrou = true;
@@ -451,13 +459,13 @@ void SharedRides::enterTrip() {
 			novo[i].addtoHeap(u1);
 			entrou = true;
 			cout << endl << TAB << "You have been added to the waiting line for the trip. If you are friend of the driver you'll be prioritized.  " << endl;
-			cout << endl << TAB << "Press [ENTER] to return.  " << endl;
+			cout  << TAB << "Press [ENTER] to return.  " << endl;
 			break;
 		}
 	}
 
-	if (entrou == false) {
-		cout << endl << TAB << "You have not been added to the waiting line for the trip. Are you sure you aren't already assigned to this trip? " << endl;
+	if (entrou == false || jaexiste == true) {
+		cout << endl << TAB << "[ERROR] You have not been added to the waiting line for the trip." << endl << TAB << "Are you sure you aren't already assigned to this trip? " << endl;
 		cout << endl << TAB << "Press [ENTER] to return.  " << endl;
 		return;
 	}

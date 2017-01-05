@@ -25,6 +25,7 @@ class WaitingUser {
 	Time driveraway;
 	/** @brief	The ID of the driver. */
 	unsigned int driverID;
+	
 
 public:
 	/**********************************************************************************************//**
@@ -153,6 +154,7 @@ public:
 
 //bool operator<(const WaitingUser & WU, const WaitingUser &WU2);
 
+
 struct Comparator
 {
 	bool operator() (const WaitingUser &WU, const WaitingUser &WU2) const
@@ -165,13 +167,17 @@ struct Comparator
 			return false;
 
 		if (!WU.itsBuddie() && !WU2.itsBuddie()) {
-			if ( !(WU.getDriverAway() < WU2.getDriverAway() ))
+			if (WU.getDriverAway() == WU2.getDriverAway())
+				return false;
+			else if ( !(WU.getDriverAway() < WU2.getDriverAway() ))
 				return true;
 			else return false;
 		}
 
 		if (WU.itsBuddie() && WU2.itsBuddie()) {
-			if (!(WU.getDriverAway() < WU2.getDriverAway()))
+			if (WU.getDriverAway() == WU2.getDriverAway())
+				return false;
+			else if (!(WU.getDriverAway() < WU2.getDriverAway()))
 				return true;
 			else return false;
 		}

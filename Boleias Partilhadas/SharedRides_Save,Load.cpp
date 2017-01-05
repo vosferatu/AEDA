@@ -346,14 +346,14 @@ void SharedRides::loadWaitingTrips() {
 				
 				heap.push(u1);
 				
-				vectID.push_back(ID);
+				//vectID.push_back(ID);
 				
 				j++;
 			}
 			
 			Stretch str(stop, tonext);
 			//str.setvectID(vectID);
-			//str.setHeap(heap);
+			str.setHeap(heap);
 			viagem.push_back(str);
 			i++;
 		}

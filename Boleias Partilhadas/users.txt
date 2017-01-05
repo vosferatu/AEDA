@@ -1,5 +1,5 @@
 4
-1;godzilla;manel;0;Viseu;0;0;
-2;joao;manel;530;Porto;0;0;
-3;caramelo;123;201;Faro;0;1;1
-4;caramelo2;123;123;Porto;0;1;1
+1;joao;123;400;Porto;0;0;
+2;maria;123;3223;Lisboa;0;0;
+3;jose;123;0;Beja;0;2;1;2
+4;mario;123;1223;Viseu;0;0;
